@@ -210,20 +210,47 @@ static GetFoodDataTool *gf;
 
 #pragma mark ========================leancloud
 
+-(void)getListWithParentId:(NSString *)parentId  PassValue:(PassValue)passVallue
+{
+    dispatch_queue_t globl_t = dispatch_get_global_queue(0, 0);
+    NSMutableArray *ListArr = [NSMutableArray array];
+    dispatch_async(globl_t, ^{
+        
+        AVQuery *query = [AVQuery queryWithClassName:@"postList"];
+        [query whereKey:@"parentId" equalTo:parentId];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (!error) {
+                // 检索成功
+                for (AVQuery *q in objects) {
+                    FoodListModle *f = [[FoodListModle alloc]init];
+                    f.lid = [q valueForKey:@"lid"];
+                    f.name = [q valueForKey:@"name"];
+                    f.parentId = [q valueForKey:@"parentId"];
+                    [ListArr addObject:f];
+                }
+                passVallue(ListArr);
+            } else {
+                // 输出错误信息
+                NSLog(@"Error: %@ %@", error, [error userInfo]);
+            }
+        }];
+    });
+}
+
+
 //根据大分类名返回（标签集合）数据
 -(void)getModleWithName:(NSString *)name PassValue:(PassValue)passVallue
 {
     dispatch_queue_t globl_t = dispatch_get_global_queue(0, 0);
-    
+    self.dataListArr = [NSMutableArray array];
     dispatch_async(globl_t, ^{
-        self.dataListArr = [NSMutableArray array];
+        
         if ([[DataBaseHandler shareGetFoodData] findListByName:name] == nil) {
             AVQuery *query = [AVQuery queryWithClassName:@"postList"];
             [query whereKey:@"name" equalTo:name];
             [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
                 if (!error) {
                     // 检索成功
-                    NSLog(@"%ld",objects.count);
                     for (AVQuery *q in objects) {
                         FoodListModle *f = [[FoodListModle alloc]init];
                         f.lid = [q valueForKey:@"lid"];
@@ -231,7 +258,7 @@ static GetFoodDataTool *gf;
                         f.parentId = [q valueForKey:@"parentId"];
                         [self.dataListArr addObject:f];
                     }
-                    passVallue(self.dataListArr);
+                    passVallue(_dataListArr);
                     [[DataBaseHandler shareGetFoodData]insertPostListWith:self.dataListArr];
                 } else {
                     // 输出错误信息
@@ -250,9 +277,9 @@ static GetFoodDataTool *gf;
 -(void)getModleWithParentId:(NSString *)parentId PassValue:(PassValue)passVallue
 {
     dispatch_queue_t globl_t = dispatch_get_global_queue(0, 0);
-    
+    self.dataListArr = [NSMutableArray array];
     dispatch_async(globl_t, ^{
-        self.dataListArr = [NSMutableArray array];
+        
         if ([[DataBaseHandler shareGetFoodData] findListByParentId:parentId] == nil) {
             AVQuery *query = [AVQuery queryWithClassName:@"postList"];
             [query whereKey:@"parentId" equalTo:parentId];
@@ -267,7 +294,7 @@ static GetFoodDataTool *gf;
                         f.parentId = [q valueForKey:@"parentId"];
                         [self.dataListArr addObject:f];
                     }
-                    passVallue(self.dataListArr);
+                    passVallue(_dataListArr);
                     [[DataBaseHandler shareGetFoodData]insertPostListWith:self.dataListArr];
                     
                 } else {

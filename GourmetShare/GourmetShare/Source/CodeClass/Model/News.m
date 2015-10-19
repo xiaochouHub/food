@@ -49,7 +49,7 @@
             [tempArray addObject:[str substringFromIndex:6]];
         }else if ([[str substringToIndex:1] isEqualToString:@"/"])
         {
-            [tempArray addObject:[str substringFromIndex:8]];
+            [tempArray addObject:[str substringFromIndex:9]];
         }
     }
     _contents = tempArray;

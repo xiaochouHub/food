@@ -35,6 +35,7 @@ typedef void(^Stuff)(StuffModle *stuff);
 //根据大分类ID返回（标签集合）数据
 -(NSArray *)getModleWithParentId:(NSString *)parentId;
 -(void)getModleWithParentId:(NSString *)parentId PassValue:(PassValue)passVallue;
+-(void)getListWithParentId:(NSString *)parentId  PassValue:(PassValue)passVallue;
 
 //根据index返回（标签集合）数据
 -(NSArray *)getModleWithIndex:(NSInteger)index;
