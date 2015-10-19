@@ -33,6 +33,7 @@
 		3E9C41031BCFE26700C5392F /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E9C40F91BCFE26700C5392F /* user.png */; };
 		3EC8EBB61BD38C0A0092DBE1 /* News.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EC8EBB51BD38C0A0092DBE1 /* News.m */; settings = {ASSET_TAGS = (); }; };
 		3EC8EBB91BD38F7A0092DBE1 /* GetNewsDataTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EC8EBB81BD38F7A0092DBE1 /* GetNewsDataTool.m */; settings = {ASSET_TAGS = (); }; };
+		C20BA5F71BD47BBB005A10CC /* NewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C20BA5F61BD47BBB005A10CC /* NewsTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
 		C22F5E7B1BCFDD8700C05CC4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C22F5E401BCFDD8700C05CC4 /* AppDelegate.m */; };
 		C22F5E7C1BCFDD8700C05CC4 /* FoodInfoTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C22F5E431BCFDD8700C05CC4 /* FoodInfoTool.m */; };
 		C22F5E7D1BCFDD8700C05CC4 /* GetFoodDataTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C22F5E451BCFDD8700C05CC4 /* GetFoodDataTool.m */; };
@@ -121,6 +122,8 @@
 		3ED2EF1E1BCF64A60061EECF /* GourmetSharePCH.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GourmetSharePCH.pch; path = Source/GourmetSharePCH.pch; sourceTree = "<group>"; };
 		521B84BA7EF5D5CB375C6161 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		63050CD39EC203A909FE20A2 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libPods.a; path = "../../../Library/Developer/Xcode/DerivedData/GourmetShare-hlhhckjaavnvodaemgyloazbchhn/Build/Products/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
+		C20BA5F51BD47BBB005A10CC /* NewsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsTableViewCell.h; sourceTree = "<group>"; };
+		C20BA5F61BD47BBB005A10CC /* NewsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsTableViewCell.m; sourceTree = "<group>"; };
 		C22F5E3F1BCFDD8700C05CC4 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C22F5E401BCFDD8700C05CC4 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		C22F5E421BCFDD8700C05CC4 /* FoodInfoTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoodInfoTool.h; sourceTree = "<group>"; };
@@ -524,6 +527,8 @@
 				C22F5E961BCFDECC00C05CC4 /* MainView.m */,
 				3E9C40EC1BCFE19600C5392F /* DetailMenuTableViewCell.h */,
 				3E9C40ED1BCFE19600C5392F /* DetailMenuTableViewCell.m */,
+				C20BA5F51BD47BBB005A10CC /* NewsTableViewCell.h */,
+				C20BA5F61BD47BBB005A10CC /* NewsTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -719,6 +724,7 @@
 				3E00DF311BCF381200D9DE82 /* main.m in Sources */,
 				C22F5E891BCFDD8700C05CC4 /* PrivateListViewController.m in Sources */,
 				C22F5E8B1BCFDD8700C05CC4 /* FoodListModle.m in Sources */,
+				C20BA5F71BD47BBB005A10CC /* NewsTableViewCell.m in Sources */,
 				C22F5E7D1BCFDD8700C05CC4 /* GetFoodDataTool.m in Sources */,
 				C22F5E841BCFDD8700C05CC4 /* GourmetMainViewController.m in Sources */,
 				F8A1182E1BD11F2600DCA621 /* TagsTableViewCell.m in Sources */,
