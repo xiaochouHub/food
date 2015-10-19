@@ -28,6 +28,8 @@
 #import "StuffModle.h"
 #import "StepModle.h"
 #import "News.h"
+#import "PopNews.h"
+#import "NewsDetail.h"
 
 
 
