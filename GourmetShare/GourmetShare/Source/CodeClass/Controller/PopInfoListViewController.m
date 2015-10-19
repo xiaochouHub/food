@@ -8,6 +8,7 @@
 
 #import "PopInfoListViewController.h"
 #import "NewsTableViewCell.h"
+#import "NewsDetailTableViewController.h"
 
 @interface PopInfoListViewController ()
 @property(nonatomic,strong)NSMutableArray *dataArr;
@@ -68,6 +69,16 @@
 }
 
 #pragma mark - Table view data source
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+    
+    NewsDetailTableViewController *news = [[NewsDetailTableViewController alloc]init];
+    
+    [tempAppDelegate.LeftSlideVC closeLeftView];
+    
+    [tempAppDelegate.mainNavigationController pushViewController:news animated:YES];
+}
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
