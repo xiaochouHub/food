@@ -27,13 +27,41 @@
         });
         
     }];
+    [self setupRefresh];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
-
+-(void)setupRefresh
+{
+    //1.添加刷新控件
+    UIRefreshControl *control=[[UIRefreshControl alloc]init];
+    [control addTarget:self action:@selector(refreshStateChange:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:control];
+    
+    //2.马上进入刷新状态，并不会触发UIControlEventValueChanged事件
+    [control beginRefreshing];
+    
+    // 3.加载数据
+    [self refreshStateChange:control];
+    
+}
+-(void)refreshStateChange:(UIRefreshControl *)control
+{
+    
+    [[GetNewsDataTool shareGetNewsData]getNewsDataWithPassValue:^(NSArray *array) {
+        self.dataArr = (NSMutableArray *)array;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
+        
+    }];
+    // 3. 结束刷新
+        [control endRefreshing];
+        
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -63,6 +91,7 @@
     News *new = [[News alloc]init];
     new = self.dataArr[indexPath.row];
     cell.titleLabel.text = new.title;
+    // 有图片加载,没图片不加载
     if (new.image.count<1) {
         
     }
