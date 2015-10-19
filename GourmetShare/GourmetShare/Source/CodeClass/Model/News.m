@@ -29,4 +29,30 @@
     }
 }
 
+- (void)setContent:(NSString *)content
+{
+    NSArray *parArray = [content componentsSeparatedByString:@"<"];
+    NSMutableArray *tempArray = [NSMutableArray array];
+    for (NSString *str in parArray) {
+        if (str.length == 0 || [str isEqualToString:@"p>"]||
+            [str isEqualToString:@"/strong>"]||[str isEqualToString:@"/p>"]) {
+            continue;
+        }
+
+        if ([[str substringToIndex:1] isEqualToString:@"!"]) {
+            [tempArray addObject:@"img"];
+        }else if ([[str substringToIndex:1] isEqualToString:@"p"])
+        {
+            [tempArray addObject:[str substringFromIndex:2]];
+        }else if ([[str substringToIndex:1] isEqualToString:@"s"])
+        {
+            [tempArray addObject:[str substringFromIndex:6]];
+        }else if ([[str substringToIndex:1] isEqualToString:@"/"])
+        {
+            [tempArray addObject:[str substringFromIndex:8]];
+        }
+    }
+    _contents = tempArray;
+}
+
 @end

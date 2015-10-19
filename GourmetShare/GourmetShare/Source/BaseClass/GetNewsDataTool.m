@@ -48,7 +48,6 @@ static GetNewsDataTool *gd;
             }
             passValue(self.dataArr);
             
-            
         } failure: ^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"%@", error);
         }];

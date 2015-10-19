@@ -12,6 +12,7 @@
 
 @property (nonatomic,strong)NSString *cid; //新闻的ID
 @property (nonatomic,strong)NSString *content;//正文
+@property (nonatomic,strong)NSArray *contents;
 @property (nonatomic,strong)NSArray *image;//新闻图片
 @property (nonatomic,strong)NSString *title;//新闻标题
 @property (nonatomic,strong)NSArray *tags;//新闻标签
