@@ -1,5 +1,5 @@
 {
-  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "F2FE936F1B24D57D637162EBEC22D7C141512009",
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "5A9AB00E5EA974A2A33B0894649AA446BBFBF63C",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
 
   },
@@ -7,19 +7,26 @@
     "F2FE936F1B24D57D637162EBEC22D7C141512009" : 0,
     "89FB014616EC106CD077E67C20D7C8D43B7A6C6B" : 0,
     "BED22CC26B6DC033B58D98D422BF3D4A3C1E6558" : 0,
-    "B56BAAE2502858E02348492BF5B01C0F0055C671" : 0
+    "B56BAAE2502858E02348492BF5B01C0F0055C671" : 0,
+    "5A9AB00E5EA974A2A33B0894649AA446BBFBF63C" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "E46ACE09-53AB-42C4-A243-075C384A2F5A",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "F2FE936F1B24D57D637162EBEC22D7C141512009" : "Gourmet\/",
     "89FB014616EC106CD077E67C20D7C8D43B7A6C6B" : "%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E4%BB%B6%E5%A4%B9",
     "BED22CC26B6DC033B58D98D422BF3D4A3C1E6558" : "",
-    "B56BAAE2502858E02348492BF5B01C0F0055C671" : "project\/"
+    "B56BAAE2502858E02348492BF5B01C0F0055C671" : "project\/",
+    "5A9AB00E5EA974A2A33B0894649AA446BBFBF63C" : "food\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "GourmetShare",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "GourmetShare\/GourmetShare.xcworkspace",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/xiaochouHub\/food.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "5A9AB00E5EA974A2A33B0894649AA446BBFBF63C"
+    },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/JANG123\/GourmetShare.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
