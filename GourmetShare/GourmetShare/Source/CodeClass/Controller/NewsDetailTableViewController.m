@@ -1,88 +1,51 @@
 //
-//  PopInfoListViewController.m
+//  NewsDetailTableViewController.m
 //  GourmetShare
 //
-//  Created by jang on 15/10/15.
+//  Created by lanou3g on 15/10/19.
 //  Copyright © 2015年 jang. All rights reserved.
 //
 
-#import "PopInfoListViewController.h"
-#import "NewsTableViewCell.h"
 #import "NewsDetailTableViewController.h"
+#import "NewsDetailImageTableViewCell.h"
+#import "NewsDetailTableViewCell.h"
 
-@interface PopInfoListViewController ()
-@property(nonatomic,strong)NSMutableArray *dataArr;
+@interface NewsDetailTableViewController ()
+
 @end
 
-@implementation PopInfoListViewController
+@implementation NewsDetailTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor grayColor];
-    self.dataArr = [NSMutableArray array];
-    [self.tableView registerClass:[NewsTableViewCell class] forCellReuseIdentifier:@"news"];
-    [[GetNewsDataTool shareGetNewsData]getNewsDataWithPassValue:^(NSArray *array) {
-        self.dataArr = (NSMutableArray *)array;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
-        });
-        
-    }];
-    [self setupRefresh];
+    
+    [self.tableView registerClass:[NewsDetailImageTableViewCell class] forCellReuseIdentifier:@"newsImage"];
+    
+    [self.tableView registerClass:[NewsDetailTableViewCell class] forCellReuseIdentifier:@"newsLabel"];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
--(void)setupRefresh
-{
-    //1.添加刷新控件
-    UIRefreshControl *control=[[UIRefreshControl alloc]init];
-    [control addTarget:self action:@selector(refreshStateChange:) forControlEvents:UIControlEventValueChanged];
-    [self.tableView addSubview:control];
-    
-    //2.马上进入刷新状态，并不会触发UIControlEventValueChanged事件
-    [control beginRefreshing];
-    
-    // 3.加载数据
-    [self refreshStateChange:control];
-    
-}
--(void)refreshStateChange:(UIRefreshControl *)control
-{
-    
-    [[GetNewsDataTool shareGetNewsData]getNewsDataWithPassValue:^(NSArray *array) {
-        self.dataArr = (NSMutableArray *)array;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
-        });
-        
-    }];
-    // 3. 结束刷新
-        [control endRefreshing];
-        
-}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-    
-    NewsDetailTableViewController *news = [[NewsDetailTableViewController alloc]init];
-    
-    [tempAppDelegate.LeftSlideVC closeLeftView];
-    
-    [tempAppDelegate.mainNavigationController pushViewController:news animated:YES];
-}
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    if (indexPath.row % 2 == 0) {
+        return 50;
+    }
+    else
+    {
+        return 200;
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -92,30 +55,30 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete implementation, return the number of rows
-    return self.dataArr.count;
+    return 20;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"news" forIndexPath:indexPath];
     
-    News *new = [[News alloc]init];
-    new = self.dataArr[indexPath.row];
-    cell.titleLabel.text = new.title;
-    // 有图片加载,没图片不加载
-    if (new.image.count<1) {
-        
+    if (indexPath.row % 2 == 0) {
+        NewsDetailTableViewCell *newsLabel = [tableView dequeueReusableCellWithIdentifier:@"newsLabel"];
+        if (indexPath.row == 0) {
+            newsLabel.newsLabel.text = @"新闻的标题";
+            newsLabel.newsLabel.font = [UIFont systemFontOfSize:20];
+        }
+        newsLabel.newsLabel.text = @"新闻内容";
+        return newsLabel;
     }
     else
     {
-        NSMutableString *picStr = new.image[0];
-        NSLog(@"%@",picStr);
-        [cell.titleImage sd_setImageWithURL:[NSURL URLWithString:picStr]];
+        NewsDetailImageTableViewCell *newsImage = [tableView dequeueReusableCellWithIdentifier:@"newsImage"];
+        newsImage.newsImage.image = [UIImage imageNamed:@"2.jpg"];
+        return newsImage;
     }
-   
-    //[cell.titleImage sd_setImageWithURL:[NSURL URLWithString:new.image[0]]];
     
-    return cell;
+    // Configure the cell...
+    
 }
 
 
