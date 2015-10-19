@@ -12,6 +12,7 @@
 @interface AllCategoryTableViewController ()
 
 @property(nonatomic,strong)NSMutableArray *dataArr;
+@property(nonatomic,strong)NSMutableArray *btnArr;
 @end
 
 @implementation AllCategoryTableViewController
@@ -59,7 +60,7 @@
     CategoryDetailTableViewController *detail = [[CategoryDetailTableViewController alloc]init];
     FoodCategoryModel *model = self.dataArr[indexPath.row]; 
     detail.parid = model.parentId;
-    //NSLog(@"%@",model.parentId);
+    NSLog(@"第二个%@",model.parentId);
     [self.navigationController pushViewController:detail animated:YES];
     
 }
@@ -90,6 +91,17 @@
     FoodCategoryModel *categorymodel = [[FoodCategoryModel alloc]init];
     categorymodel = self.dataArr[indexPath.row];
     cell.categoryLabel.text = categorymodel.name;
+    self.btnArr = [NSMutableArray array];
+//    [[GetFoodDataTool shareGetFoodData]getModleWithParentId:categorymodel.parentId PassValue:^(NSArray *array) {
+//      
+//        self.btnArr = (NSMutableArray *)array;
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            
+//            [self.tableView reloadData];
+//        });
+//    }];
+    //[cell.categoryButton1 setTitle:self.btnArr[indexPath.row] forState:UIControlStateNormal];
+    
     cell.backgroundColor = [UIColor clearColor];
     // Configure the cell...
     

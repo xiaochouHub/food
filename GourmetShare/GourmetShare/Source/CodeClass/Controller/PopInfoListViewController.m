@@ -10,7 +10,7 @@
 #import "NewsTableViewCell.h"
 
 @interface PopInfoListViewController ()
-
+@property(nonatomic,strong)NSMutableArray *dataArr;
 @end
 
 @implementation PopInfoListViewController
@@ -18,8 +18,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor grayColor];
-    
+    self.dataArr = [NSMutableArray array];
     [self.tableView registerClass:[NewsTableViewCell class] forCellReuseIdentifier:@"news"];
+    [[GetNewsDataTool shareGetNewsData]getNewsDataWithPassValue:^(NSArray *array) {
+        self.dataArr = (NSMutableArray *)array;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
+        
+    }];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -46,14 +53,27 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete implementation, return the number of rows
-    return 20;
+    return self.dataArr.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"news" forIndexPath:indexPath];
     
-    // Configure the cell...
+    News *new = [[News alloc]init];
+    new = self.dataArr[indexPath.row];
+    cell.titleLabel.text = new.title;
+    if (new.image.count<1) {
+        
+    }
+    else
+    {
+        NSMutableString *picStr = new.image[0];
+        NSLog(@"%@",picStr);
+        [cell.titleImage sd_setImageWithURL:[NSURL URLWithString:picStr]];
+    }
+   
+    //[cell.titleImage sd_setImageWithURL:[NSURL URLWithString:new.image[0]]];
     
     return cell;
 }
