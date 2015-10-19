@@ -1,5 +1,5 @@
 //
-//  NewsDetailTableViewCell.h
+//  NewsDetailImageTableViewCell.h
 //  GourmetShare
 //
 //  Created by lanou3g on 15/10/19.
@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NewsDetailTableViewCell : UITableViewCell
+@interface NewsDetailImageTableViewCell : UITableViewCell
 
-@property (nonatomic,strong)UILabel *newsLabel;
+@property (nonatomic,strong)UIImageView *newsImage;
 
 @end

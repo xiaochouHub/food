@@ -15,6 +15,6 @@
 
 #define idURL @"http://apis.juhe.cn/cook/queryid?key=803b494db9b6893525d6295bd956909e&id="
 
-#define newsURL @"http://zzd.sm.cn/appservice/api/v1/channel/472933935?&sn=47b88028efbed68e90dc07685b068ed6&content_cnt=20&method=new&count=20"
+#define newsURL @"http://zzd.sm.cn/appservice/api/v1/channel/472933935?&content_cnt=20&method=new&count=20"
 
 #endif
