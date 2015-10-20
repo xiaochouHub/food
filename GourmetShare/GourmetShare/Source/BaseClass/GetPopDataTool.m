@@ -55,29 +55,32 @@ static GetPopDataTool *pData;
     return self.dataArray[index];
 }
 
--(NewsDetail *)getNewsDataWithDocid:(NSString *)docid
+-(void)getNewsDataWithDocid:(NSString *)docid Pdetail:(PDetail)detail
 {
-    self.detailArray = [NSMutableArray array];
+//    self.detailArray = [NSMutableArray array];
     NSString *urlStr = [NSString stringWithFormat:detailURL,docid];
-    NSURL *url = [NSURL URLWithString:urlStr];
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url];
     
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc]initWithRequest:request];
-    
-     NewsDetail *nDetail = [[NewsDetail alloc]init];
-    
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+    //1.请求管理器
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+  
+    //2.发起请求
+    [manager GET:urlStr parameters:nil success: ^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        // 检索成功
         NSString *html = operation.responseString;
-        NSData *data = [html dataUsingEncoding:NSUTF8StringEncoding];
+        NSData* data=[html dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-        
+        NSLog(@"%@",[[dict objectForKey:docid] allKeys]);
+        NewsDetail *nDetail = [[NewsDetail alloc]init];
         [nDetail setValuesForKeysWithDictionary:[dict objectForKey:docid]];
-        
-    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-        
+//        NSLog(@"%@--%@--%@--%@--%@",nDetail.body,nDetail.docid,nDetail.dkeys,nDetail.img,nDetail.title);
+        detail(nDetail);
+    }
+         failure: ^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@", error);
     }];
-    return nDetail;
+    
 }
 
 @end

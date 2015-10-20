@@ -11,6 +11,7 @@
 typedef void(^PassValue) (NSArray *array);
 typedef void(^PassID) (NSString *ID);
 typedef void(^PNews) (PopNews *news);
+typedef void(^PDetail) (NewsDetail *detail);
 
 @interface GetPopDataTool : NSObject
 
@@ -30,7 +31,7 @@ typedef void(^PNews) (PopNews *news);
 -(PopNews *)getPopNewsWithIndex:(NSInteger)index;
 
 //根据ID返回详情
--(NewsDetail *)getNewsDataWithDocid:(NSString *)docid;
+-(void)getNewsDataWithDocid:(NSString *)docid Pdetail:(PDetail)detail;
 
 //
 
