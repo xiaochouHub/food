@@ -12,7 +12,7 @@
 @interface GourmetMainViewController ()<SDCycleScrollViewDelegate>
 
 @property (nonatomic,strong)MainView *mView;
-
+@property(nonatomic,strong)NSMutableArray *dataArr;
 @end
 
 @implementation GourmetMainViewController
@@ -25,7 +25,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.dataArr = [NSMutableArray array];
+//    [[GetFoodDataTool shareGetFoodData] 
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            FoodCategoryModel *model1  = self.dataArr[0];
+//            [self.mView.oneImageView1 sd_setImageWithURL:[NSURL URLWithString:model1.]];
+//            
+//            
+//            FoodCategoryModel *model2  = self.dataArr[1];
+//            [self.mView.twoImageView1 sd_setImageWithURL:[NSURL URLWithString:model2.parentId]];
+//            
+//            
+//            FoodCategoryModel *model3  = self.dataArr[2];
+//            [self.mView.threeImageView1 sd_setImageWithURL:[NSURL URLWithString:model3.parentId]];
+//        });
+//        
+//    }];
+   
     self.mView.contentSize = CGSizeMake(self.mView.bounds.size.width, self.mView.bounds.size.height * 2);
     
     // 设置轮播图
@@ -36,6 +52,7 @@
     
     // 添加"更多"事件
     [self.mView.moreButton1 addTarget:self action:@selector(moreButton1Action:) forControlEvents:UIControlEventTouchUpInside];
+    
 //    self.mView.backgroundColor = [UIColor clearColor];
     
 

@@ -10,4 +10,5 @@
 
 @interface DetailMenuTableViewController : UITableViewController
 @property(nonatomic,strong)NSString *lastid;
+@property(nonatomic,strong)NSString *lastname;
 @end

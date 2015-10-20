@@ -48,6 +48,7 @@ typedef void(^Stuff)(StuffModle *stuff);
 //根据标签ID返回（菜谱列表）数据
 -(NSArray *)getFoodListInfoWithId:(NSString *)lid;
 -(void)getFoodListInfoWithId:(NSString *)lid PassValue:(PassValue)passVallue;
+-(void)getFoodListInfoWithName:(NSString *)name PassValue:(PassValue)passVallue;
 
 
 //根据index返回菜谱数据

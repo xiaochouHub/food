@@ -74,7 +74,17 @@
     
 //    [[UINavigationBar appearance]setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
 }
-
+// 点击tabbar刷新
+-(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
+{
+    if (viewController.tabBarItem.tag == 101) {
+        UINavigationController *navigation =(UINavigationController *)viewController;
+        PopInfoListViewController *pop = (PopInfoListViewController *)navigation.topViewController;
+        
+        //[pop p_data];
+        [pop setupRefresh];
+    }
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

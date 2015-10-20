@@ -21,13 +21,25 @@
     [self.tableView registerClass:[DetailMenuTableViewCell class] forCellReuseIdentifier:@"cell"];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"back.jpg"]]];
     self.dataArr = [NSMutableArray array];
-    [[GetFoodDataTool shareGetFoodData]getFoodListInfoWithId:self.lastid PassValue:^(NSArray *array) {
-        self.dataArr = (NSMutableArray *)array;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-                        [self.tableView reloadData];
-                    });
-    }];
+    if (self.lastid == nil) {
+        [[GetFoodDataTool shareGetFoodData]getFoodListInfoWithName:self.lastname PassValue:^(NSArray *array) {
+            self.dataArr = (NSMutableArray *)array;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [self.tableView reloadData];
+            });
+        }];
+    }
+    else{
+        [[GetFoodDataTool shareGetFoodData]getFoodListInfoWithId:self.lastid PassValue:^(NSArray *array) {
+            self.dataArr = (NSMutableArray *)array;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [self.tableView reloadData];
+            });
+        }];
+    }
+
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
