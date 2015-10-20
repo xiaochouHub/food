@@ -42,7 +42,7 @@
 //        
 //    }];
    
-    self.mView.contentSize = CGSizeMake(self.mView.bounds.size.width, self.mView.bounds.size.height * 2);
+    self.mView.contentSize = CGSizeMake(self.mView.bounds.size.width, self.mView.bounds.size.height + 50);
     
     // 设置轮播图
     NSArray *title = @[@"1",@"2",@"3",@"4",@"5"];

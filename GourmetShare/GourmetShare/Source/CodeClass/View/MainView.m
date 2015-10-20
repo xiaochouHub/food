@@ -25,19 +25,17 @@
     _mainCycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, self.bounds.size.width, 200) imagesGroup:arr];
     [self addSubview:_mainCycleScrollView];
     
-    
-    
     // 分组名
     _titleLabel1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.mainCycleScrollView.frame) + 10, CGRectGetMaxY(self.mainCycleScrollView.frame) + 5, 50, 30)];
-    _titleLabel1.backgroundColor = [UIColor grayColor];
+//    _titleLabel1.backgroundColor = [UIColor grayColor];
     _titleLabel1.text = @"美食";
     [self addSubview:_titleLabel1];
     
     // "更多"按钮
     _moreButton1 = [UIButton buttonWithType:UIButtonTypeSystem];
     _moreButton1.frame = CGRectMake(CGRectGetMaxX(self.bounds) - 60, CGRectGetMinY(self.titleLabel1.frame), 50, 30);
-    _moreButton1.backgroundColor = [UIColor grayColor];
-    [_moreButton1 setTitle:@"更多..." forState:UIControlStateNormal];
+//    _moreButton1.backgroundColor = [UIColor grayColor];
+    [_moreButton1 setTitle:@"更多＞" forState:UIControlStateNormal];
     [self addSubview:_moreButton1];
     
     // 三组图片及图片标题
@@ -80,7 +78,7 @@
     _moreButton2 = [UIButton buttonWithType:UIButtonTypeSystem];
     _moreButton2.frame = CGRectMake(CGRectGetMaxX(self.bounds) - 60, CGRectGetMinY(self.titleLabel2.frame), 50, 30);
     _moreButton2.backgroundColor = [UIColor grayColor];
-    [_moreButton2 setTitle:@"更多..." forState:UIControlStateNormal];
+    [_moreButton2 setTitle:@"更多＞" forState:UIControlStateNormal];
     [self addSubview:_moreButton2];
     
     // 三组图片及图片标题

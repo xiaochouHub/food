@@ -52,8 +52,7 @@
     self.flag = YES;
     self.height = 230;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"back.jpg"]]];
+//    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"back.jpg"]]];
     
 
     // Uncomment the following line to preserve selection between presentations.
@@ -146,7 +145,8 @@
 // 分区头标题
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    tableView.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:0.5];
+//    tableView.backgroundColor = [UIColor colorWithRed:200 / 255.0 green:200 / 255.0 blue:200 / 255.0 alpha:1];
+    tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"mosha.jpg"]];
     if (section == 0) {
         return @"菜名";
     }
@@ -239,9 +239,9 @@
         temprect.size.height = tempHeight;
         imtro.imtroLabel.frame = temprect;
         self.height = tempHeight;
-            return imtro;
-
         imtro.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:0.5];
+
+
         return imtro;
 
     }
@@ -279,6 +279,7 @@
         NSArray *arr1 = [s1 componentsSeparatedByString:@","];
         burden.nameLabel.text = [arr1 objectAtIndex:0];
         burden.numLabel.text = [arr1 objectAtIndex:1];
+        burden.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:0.5];
         return burden;
     }
     else if(indexPath.section == 5)

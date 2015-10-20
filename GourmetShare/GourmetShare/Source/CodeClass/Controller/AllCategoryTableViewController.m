@@ -29,9 +29,7 @@
             
                     });
     }];
-    
     [self.tableView registerClass:[AllCategoryTableViewCell class] forCellReuseIdentifier:@"cell"];
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"back.jpg"]]];
     self.tempArr = [NSMutableArray array];
     self.btnArr = [NSMutableArray array];
     self.str1 = [NSMutableString string];
@@ -70,7 +68,7 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return 140;
 }
 
 #pragma mark - Table view data source
@@ -135,7 +133,8 @@
         [cell.categoryButton6 addTarget:self action:@selector(button6Action:) forControlEvents:UIControlEventTouchUpInside];
         
     }];
-    cell.backgroundColor = [UIColor clearColor];
+//    cell.backgroundColor = [UIColor clearColor];
+    cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"mosha.jpg"]];
     // Configure the cell...
     
     return cell;

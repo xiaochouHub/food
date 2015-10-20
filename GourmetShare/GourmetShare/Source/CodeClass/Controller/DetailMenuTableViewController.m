@@ -19,7 +19,6 @@
     [super viewDidLoad];
     
     [self.tableView registerClass:[DetailMenuTableViewCell class] forCellReuseIdentifier:@"cell"];
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"back.jpg"]]];
     self.dataArr = [NSMutableArray array];
     if (self.lastid == nil) {
         [[GetFoodDataTool shareGetFoodData]getFoodListInfoWithName:self.lastname PassValue:^(NSArray *array) {
@@ -39,7 +38,7 @@
             });
         }];
     }
-
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"mosha.jpg"]];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -106,7 +105,6 @@
     cell.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:0.5];
     //cell.menuLabel.text = @"菜单";
     // Configure the cell...
-    
     return cell;
 }
 

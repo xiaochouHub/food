@@ -21,10 +21,10 @@
 
 -(void)p_setup
 {
-    self.contentView.backgroundColor = [UIColor yellowColor];
+//    self.contentView.backgroundColor = [UIColor yellowColor];
     
     self.albumsImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen] bounds]), 200)];
-    self.albumsImage.backgroundColor = [UIColor orangeColor];
+//    self.albumsImage.backgroundColor = [UIColor orangeColor];
     [self.contentView addSubview:_albumsImage];
     
     self.nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,CGRectGetMaxY(self.albumsImage.frame), CGRectGetWidth(self.albumsImage.frame), 20)];
