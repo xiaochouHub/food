@@ -54,4 +54,5 @@ static GetNewsDataTool *gd;
     });
 
 }
+
 @end
