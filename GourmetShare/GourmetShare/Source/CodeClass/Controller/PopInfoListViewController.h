@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface PopInfoListViewController : UITableViewController
-
+-(void)refreshStateChange:(UIRefreshControl *)control;
+-(void)setupRefresh;
 @end

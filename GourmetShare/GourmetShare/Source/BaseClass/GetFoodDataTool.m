@@ -365,6 +365,46 @@ static GetFoodDataTool *gf;
     });
 }
 
+
+-(void)getFoodListInfoWithName:(NSString *)name PassValue:(PassValue)passVallue
+{
+    dispatch_queue_t globl_t = dispatch_get_global_queue(0, 0);
+    
+    dispatch_async(globl_t, ^{
+        NSMutableArray *tempArr = [NSMutableArray array];
+        AVQuery *query = [AVQuery queryWithClassName:@"postStuff"];
+        [query whereKey:@"name" equalTo:name];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (!error) {
+                // 检索成功
+                NSLog(@"%ld",objects.count);
+                for (AVQuery *q in objects) {
+                    StuffModle *s = [[StuffModle alloc]init];
+                    s.albums = [q valueForKey:@"albums"];
+                    s.burden = [q valueForKey:@"burden"];
+                    s.sid = [q valueForKey:@"sid"];
+                    s.imtro = [q valueForKey:@"imtro"];
+                    s.ingredients = [q valueForKey:@"ingredients"];
+                    NSMutableArray *stArr = [NSMutableArray array];
+                    for (StepModle *st in [q valueForKey:@"steps"]) {
+                        [stArr addObject:st];
+                    }
+                    s.steps = stArr;
+                    s.tags = [q valueForKey:@"tags"];
+                    s.title = [q valueForKey:@"title"];
+                    [tempArr addObject:s];
+                }
+                passVallue(tempArr);
+            } else {
+                // 输出错误信息
+                NSLog(@"Error: %@ %@", error, [error userInfo]);
+            }
+        }];
+    });
+    
+}
+
+
 -(void)getFoodInfoWithSid:(NSString *)sid stuff:(Stuff)stuff
 {
     dispatch_queue_t globl_t = dispatch_get_global_queue(0, 0);

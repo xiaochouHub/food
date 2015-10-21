@@ -13,6 +13,8 @@
 
 @property(nonatomic,strong)NSMutableArray *dataArr;
 @property(nonatomic,strong)NSMutableArray *btnArr;
+@property(nonatomic,strong)NSMutableArray *tempArr;
+@property(nonatomic,strong)NSMutableString *str1;
 @end
 
 @implementation AllCategoryTableViewController
@@ -27,10 +29,10 @@
             
                     });
     }];
-    
     [self.tableView registerClass:[AllCategoryTableViewCell class] forCellReuseIdentifier:@"cell"];
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"back.jpg"]]];
-    
+    self.tempArr = [NSMutableArray array];
+    self.btnArr = [NSMutableArray array];
+    self.str1 = [NSMutableString string];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -60,13 +62,13 @@
     CategoryDetailTableViewController *detail = [[CategoryDetailTableViewController alloc]init];
     FoodCategoryModel *model = self.dataArr[indexPath.row]; 
     detail.parid = model.parentId;
-    NSLog(@"第二个%@",model.parentId);
+    //NSLog(@"第二个%@",model.parentId);
     [self.navigationController pushViewController:detail animated:YES];
     
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return 140;
 }
 
 #pragma mark - Table view data source
@@ -91,21 +93,121 @@
     FoodCategoryModel *categorymodel = [[FoodCategoryModel alloc]init];
     categorymodel = self.dataArr[indexPath.row];
     cell.categoryLabel.text = categorymodel.name;
-    self.btnArr = [NSMutableArray array];
-//    [[GetFoodDataTool shareGetFoodData]getModleWithParentId:categorymodel.parentId PassValue:^(NSArray *array) {
-//      
-//        self.btnArr = (NSMutableArray *)array;
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            
-//            [self.tableView reloadData];
-//        });
-//    }];
-    //[cell.categoryButton1 setTitle:self.btnArr[indexPath.row] forState:UIControlStateNormal];
     
-    cell.backgroundColor = [UIColor clearColor];
+    
+    [[GetFoodDataTool shareGetFoodData]getListWithParentId:categorymodel.parentId PassValue:^(NSArray *array) {
+        self.btnArr = (NSMutableArray *)array;
+        if (self.btnArr.count<=2) {
+            [cell.categoryButton1 setTitle:[self.btnArr[0]valueForKey:@"name"] forState:UIControlStateNormal];
+            [cell.categoryButton2 setTitle:[self.btnArr[1]valueForKey:@"name"] forState:UIControlStateNormal];
+        }
+        else if(self.btnArr.count <= 4)
+        {
+            [cell.categoryButton1 setTitle:[self.btnArr[0]valueForKey:@"name"] forState:UIControlStateNormal];
+            [cell.categoryButton2 setTitle:[self.btnArr[1]valueForKey:@"name"] forState:UIControlStateNormal];
+            [cell.categoryButton3 setTitle:[self.btnArr[2]valueForKey:@"name"] forState:UIControlStateNormal];
+            [cell.categoryButton4 setTitle:[self.btnArr[3]valueForKey:@"name"] forState:UIControlStateNormal];
+            
+        }
+        else
+        {
+            [cell.categoryButton1 setTitle:[self.btnArr[0]valueForKey:@"name"] forState:UIControlStateNormal];
+            [cell.categoryButton2 setTitle:[self.btnArr[1]valueForKey:@"name"] forState:UIControlStateNormal];
+            [cell.categoryButton3 setTitle:[self.btnArr[2]valueForKey:@"name"] forState:UIControlStateNormal];
+            [cell.categoryButton4 setTitle:[self.btnArr[3]valueForKey:@"name"] forState:UIControlStateNormal];
+            [cell.categoryButton5 setTitle:[self.btnArr[4]valueForKey:@"name"] forState:UIControlStateNormal];
+            [cell.categoryButton6 setTitle:[self.btnArr[5]valueForKey:@"name"] forState:UIControlStateNormal];
+
+        }
+        NSLog(@"%@",self.btnArr);
+
+        
+
+
+        [cell.categoryButton1 addTarget:self action:@selector(button1Action:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [cell.categoryButton2 addTarget:self action:@selector(button2Action:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.categoryButton3 addTarget:self action:@selector(button3Action:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.categoryButton4 addTarget:self action:@selector(button4Action:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.categoryButton5 addTarget:self action:@selector(button5Action:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.categoryButton6 addTarget:self action:@selector(button6Action:) forControlEvents:UIControlEventTouchUpInside];
+        
+    }];
+//    cell.backgroundColor = [UIColor clearColor];
+    cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"mosha.jpg"]];
     // Configure the cell...
     
     return cell;
+}
+-(void)button1Action:(UIButton *)sender
+{
+    DetailMenuTableViewController *menu = [[DetailMenuTableViewController alloc]init];
+    
+    NSString *sss = sender.titleLabel.text;
+    menu.lastname = sss;
+    [self.navigationController pushViewController:menu animated:YES];
+}
+-(void)button2Action:(UIButton *)sender
+{
+    DetailMenuTableViewController *menu = [[DetailMenuTableViewController alloc]init];
+    
+    NSString *sss = sender.titleLabel.text;
+    menu.lastname = sss;
+    [self.navigationController pushViewController:menu animated:YES];
+}
+-(void)button3Action:(UIButton *)sender
+{
+    DetailMenuTableViewController *menu = [[DetailMenuTableViewController alloc]init];
+    
+    NSString *sss = sender.titleLabel.text;
+    menu.lastname = sss;
+    [self.navigationController pushViewController:menu animated:YES];
+}
+-(void)button4Action:(UIButton *)sender
+{
+    DetailMenuTableViewController *menu = [[DetailMenuTableViewController alloc]init];
+    
+    NSString *sss = sender.titleLabel.text;
+    if (sender.titleLabel.text == nil) {
+        return;
+    }
+    else
+    {
+        menu.lastname = sss;
+        [self.navigationController pushViewController:menu animated:YES];
+        
+    }}
+-(void)button5Action:(UIButton *)sender
+{
+    DetailMenuTableViewController *menu = [[DetailMenuTableViewController alloc]init];
+    
+    NSString *sss = sender.titleLabel.text;
+    if (sender.titleLabel.text == nil) {
+        return;
+    }
+    else
+    {
+        menu.lastname = sss;
+        [self.navigationController pushViewController:menu animated:YES];
+        
+    }
+    
+}
+-(void)button6Action:(UIButton *)sender
+{
+    DetailMenuTableViewController *menu = [[DetailMenuTableViewController alloc]init];
+    
+    NSString *sss = sender.titleLabel.text;
+    if (sender.titleLabel.text == nil) {
+        return;
+    }
+    else
+    {
+        menu.lastname = sss;
+        [self.navigationController pushViewController:menu animated:YES];
+        
+    }
+    
 }
 
 /*
