@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class News;
+@class NewsDetail;
 @interface NewsDetailTableViewController : UITableViewController
-
+@property(nonatomic,strong)News *news;
+@property(nonatomic,strong)NSString *newid;
+@property(nonatomic,strong)NewsDetail *detailnews;
 @end

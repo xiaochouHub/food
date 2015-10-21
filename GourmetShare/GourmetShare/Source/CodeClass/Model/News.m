@@ -41,7 +41,9 @@
 
         if ([[str substringToIndex:1] isEqualToString:@"!"]) {
             [tempArray addObject:@"img"];
-        }else if ([[str substringToIndex:1] isEqualToString:@"p"])
+            
+        }
+        else if ([[str substringToIndex:1] isEqualToString:@"p"])
         {
             [tempArray addObject:[str substringFromIndex:2]];
         }else if ([[str substringToIndex:1] isEqualToString:@"s"])

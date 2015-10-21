@@ -9,8 +9,23 @@
 #import "NewsDetailTableViewController.h"
 #import "NewsDetailImageTableViewCell.h"
 #import "NewsDetailTableViewCell.h"
-
+#import "NewImage.h"
 @interface NewsDetailTableViewController ()
+@property(nonatomic,strong)NSMutableArray *conArr;// 新闻内容数组
+@property(nonatomic,strong)NSMutableArray *picArr;// 图片数组
+@property(nonatomic,strong)NSMutableString *conStr;
+@property(nonatomic,strong)NSMutableString *picStr;
+@property(nonatomic,strong)NSMutableArray *newconArr;
+@property(nonatomic,strong)NSMutableArray *newpicArr;
+@property(nonatomic,assign)int i;
+@property(nonatomic,assign)BOOL isImage;
+@property(nonatomic,assign)int curr;
+@property(nonatomic,strong)NSMutableDictionary *picDict;
+@property(nonatomic,strong)NSMutableDictionary *newpicDict;
+@property(nonatomic,assign)CGFloat height;// 正文的高度
+@property(nonatomic,assign)CGFloat height1;// 第一行的高度
+
+
 
 @end
 
@@ -18,18 +33,41 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self.tableView registerClass:[NewsDetailImageTableViewCell class] forCellReuseIdentifier:@"newsImage"];
-    
-    [self.tableView registerClass:[NewsDetailTableViewCell class] forCellReuseIdentifier:@"newsLabel"];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-}
+    self.i = 0;
 
+    //[self.tableView registerClass:[NewsDetailImageTableViewCell class] forCellReuseIdentifier:@"newsImage"];
+    
+    //[self.tableView registerClass:[NewsDetailTableViewCell class] forCellReuseIdentifier:@"newsLabel"];
+    
+    
+    self.conArr = [NSMutableArray array];
+    self.picArr = [NSMutableArray array];
+    self.conArr = (NSMutableArray *)self.news.contents;
+    self.picArr = (NSMutableArray *)self.news.image;
+    self.picDict = [NSMutableDictionary dictionary];
+    int index = 0;
+    int picIndex = 0;
+    
+    for (NSString *str in _conArr) {
+        if ([str isEqualToString:@"img"])
+        {
+            [_picDict setValue:_picArr[picIndex] forKey:[NSString stringWithFormat:@"%d",index]];
+            NSLog(@"%@第几%d个",_picArr[picIndex],index);
+            picIndex++;
+        }
+        index++;
+    }
+    
+    
+   
+}
+-(CGFloat)heightforlabel:(NSString *)str
+{
+    NSDictionary *dic = @{NSFontAttributeName:[UIFont systemFontOfSize:18.0]};
+    CGRect rect = [str boundingRectWithSize:CGSizeMake(kScreenWidth-20, 5000) options:NSStringDrawingUsesLineFragmentOrigin attributes:dic context:nil];
+    return rect.size.height;
+    
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -39,13 +77,18 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row % 2 == 0) {
-        return 50;
+    if (indexPath.row == 0 && indexPath.section == 0) {
+        return self.height1;
+    }
+    if (self.isImage == YES) {
+        return 200;
     }
     else
     {
-        return 200;
+        return self.height;
     }
+    
+   
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -55,29 +98,49 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete implementation, return the number of rows
-    return 20;
+    //NSLog(@"%ld",self.conArr.count + self.picArr.count +1);
+    return self.conArr.count +1 ;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (indexPath.row % 2 == 0) {
-        NewsDetailTableViewCell *newsLabel = [tableView dequeueReusableCellWithIdentifier:@"newsLabel"];
-        if (indexPath.row == 0) {
-            newsLabel.newsLabel.text = @"新闻的标题";
-            newsLabel.newsLabel.font = [UIFont systemFontOfSize:20];
-        }
-        newsLabel.newsLabel.text = @"新闻内容";
+
+    if (indexPath.row == 0) {
+        NewsDetailTableViewCell *newsLabel = [[NewsDetailTableViewCell alloc]init];
+        newsLabel.newsLabel.text = self.news.title;
+        self.height1 = [self heightforlabel:self.news.title];
+        CGRect temp = newsLabel.newsLabel.frame;
+        temp.size.height = self.height1;
+        newsLabel.newsLabel.frame = temp;
+        newsLabel.newsLabel.numberOfLines = 0;
+        self.isImage = NO;
         return newsLabel;
     }
-    else
-    {
-        NewsDetailImageTableViewCell *newsImage = [tableView dequeueReusableCellWithIdentifier:@"newsImage"];
-        newsImage.newsImage.image = [UIImage imageNamed:@"2.jpg"];
-        return newsImage;
+    else{
+        if ([self.conArr[indexPath.row-1] isEqualToString:@"img"]) {
+            NSLog(@"%ld",indexPath.row);
+            NSString *picStr = [_picDict valueForKey:[NSString stringWithFormat:@"%ld",indexPath.row-1]];
+            NSLog(@"%@",picStr);
+            NewsDetailImageTableViewCell *newsImage = [[NewsDetailImageTableViewCell alloc]init];
+            [newsImage.newsImage sd_setImageWithURL:[NSURL URLWithString:picStr]];
+            self.isImage = YES;
+            return newsImage;
+        }
+        else
+        {
+            //        NewsDetailTableViewCell *newsLabel = [tableView dequeueReusableCellWithIdentifier:@"newsLabel" forIndexPath:indexPath];
+            NewsDetailTableViewCell *newsLabel = [[NewsDetailTableViewCell alloc]init];
+            newsLabel.newsLabel.text = self.conArr[indexPath.row-1];
+            self.height = [self heightforlabel:self.conArr[indexPath.row-1]];
+            CGRect temp = newsLabel.newsLabel.frame;
+            temp.size.height = self.height;
+            newsLabel.newsLabel.frame = temp;
+            newsLabel.newsLabel.numberOfLines = 0;
+            self.isImage = NO;
+            return newsLabel;
+        }
+
     }
-    
-    // Configure the cell...
     
 }
 

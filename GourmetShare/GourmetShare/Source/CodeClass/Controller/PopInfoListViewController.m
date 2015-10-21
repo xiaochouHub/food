@@ -28,6 +28,7 @@
         });
         
     }];
+   
     [self setupRefresh];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -59,7 +60,8 @@
         });
         
     }];
-    // 3. 结束刷新
+    
+       // 3. 结束刷新
         [control endRefreshing];
         
 }
@@ -73,11 +75,13 @@
 {
     AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
-    NewsDetailTableViewController *news = [[NewsDetailTableViewController alloc]init];
-    
     [tempAppDelegate.LeftSlideVC closeLeftView];
+    News *new =[[News alloc]init];
+    new  =self.dataArr[indexPath.row];
+    NewsDetailTableViewController *newsdetail = [[NewsDetailTableViewController alloc]init];
+    newsdetail.news = new;
     
-    [tempAppDelegate.mainNavigationController pushViewController:news animated:YES];
+       [tempAppDelegate.mainNavigationController pushViewController:newsdetail animated:YES];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -112,6 +116,7 @@
         NSLog(@"%@",picStr);
         [cell.titleImage sd_setImageWithURL:[NSURL URLWithString:picStr]];
     }
+   
    
     //[cell.titleImage sd_setImageWithURL:[NSURL URLWithString:new.image[0]]];
     
