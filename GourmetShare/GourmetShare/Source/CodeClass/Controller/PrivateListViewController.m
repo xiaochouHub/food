@@ -7,8 +7,11 @@
 //
 
 #import "PrivateListViewController.h"
+#import "CollectTableViewController.h"
+#import "ShareTableViewController.h"
+#import "DownloadTableViewController.h"
 
-@interface PrivateListViewController ()
+@interface PrivateListViewController ()<UIAlertViewDelegate>
 
 @end
 
@@ -16,7 +19,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor cyanColor];
+//    self.view.backgroundColor = [UIColor cyanColor];
+    
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -30,26 +35,113 @@
 }
 
 #pragma mark - Table view data source
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 1) {
+        AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+        CollectTableViewController *collect = [[CollectTableViewController alloc]init];
+        [tempAppDelegate.LeftSlideVC closeLeftView];
+        [tempAppDelegate.mainNavigationController pushViewController:collect animated:YES];
+    }
+    else if (indexPath.row == 2)
+    {
+        AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+        ShareTableViewController *share = [[ShareTableViewController alloc]init];
+        [tempAppDelegate.LeftSlideVC closeLeftView];
+        [tempAppDelegate.mainNavigationController pushViewController:share animated:YES];
+    }
+    else if (indexPath.row == 3)
+    {
+        AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+        DownloadTableViewController *download = [[DownloadTableViewController alloc]init];
+        [tempAppDelegate.LeftSlideVC closeLeftView];
+        [tempAppDelegate.mainNavigationController pushViewController:download
+                                                            animated:YES];
+    }
+    else if (indexPath.row == 4)
+    {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"确定要清除缓存吗?" message:@"将清除本地缓存" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:@"取消", nil];
+        alert.tag = 101;
+        [alert show];
+        
+    }
+    else if (indexPath.row == 5)
+    {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"确定注销" message:@"注销" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:@"取消", nil];
+        alert.tag = 102;
+        [alert show];
+    }
+    else if (indexPath.row == 6)
+    {
+        
+        
+    }
+}
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 101 && buttonIndex == 0) {
+        UIAlertView *a = [[UIAlertView alloc]initWithTitle:@"已清除缓存!" message:nil delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil];
+        a.tag = 103;
+        [a show];
+    }
+    else if (alertView.tag == 102 && buttonIndex == 0)
+    {
+        UIAlertView *a = [[UIAlertView alloc]initWithTitle:@"已注销!" message:nil delegate:self cancelButtonTitle:@"确认" otherButtonTitles: nil];
+        a.tag = 104;
+        [a show];
+    }
+    else if (alertView.tag == 103 && buttonIndex == 0)
+    {
+        
+    }
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 #warning Incomplete implementation, return the number of sections
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete implementation, return the number of rows
-    return 0;
+    return 7;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     
+    if (indexPath.row == 0) {
+        cell.textLabel.text = @"个人信息";
+    }
+    else if (indexPath.row == 1)
+    {
+        cell.textLabel.text = @"我的收藏";
+    }
+    else if (indexPath.row == 2)
+    {
+        cell.textLabel.text = @"我的分享";
+    }
+    else if (indexPath.row == 3)
+    {
+        cell.textLabel.text = @"本地下载";
+    }
+    else if (indexPath.row == 4)
+    {
+        cell.textLabel.text = @"清除缓存";
+    }
+    else if (indexPath.row == 5)
+    {
+        cell.textLabel.text = @"注销";
+    }
+    else if (indexPath.row == 6)
+    {
+        cell.textLabel.text = @"关于我们";
+    }
     // Configure the cell...
     
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.
