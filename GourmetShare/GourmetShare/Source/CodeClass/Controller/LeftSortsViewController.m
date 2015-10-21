@@ -25,7 +25,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
+    
     self.backImage = [[UIImageView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
     self.backImage.image = [UIImage imageNamed:@"back.jpg"];
     _lv.backgroundColor = [UIColor colorWithPatternImage:self.backImage.image];
@@ -49,7 +49,7 @@
         
         [tempAppDelegate.mainNavigationController pushViewController:lv animated:NO];
     }
-
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -97,11 +97,45 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//    otherViewController *vc = [[otherViewController alloc] init];
-//    [tempAppDelegate.LeftSlideVC closeLeftView];//关闭左侧抽屉
-//    
-//    [tempAppDelegate.mainNavigationController pushViewController:vc animated:NO];
+    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (indexPath.row == 0) {
+        MainPageViewController *mc = [[MainPageViewController alloc] init];
+        
+        [tempAppDelegate.LeftSlideVC closeLeftView];//返回首页
+        
+        [tempAppDelegate.mainNavigationController pushViewController:mc animated:NO];
+    } else if (indexPath.row == 1) {
+        MainPageViewController *mc = [[MainPageViewController alloc] init];
+        
+        [tempAppDelegate.LeftSlideVC closeLeftView];//个人信息
+        
+        [tempAppDelegate.mainNavigationController pushViewController:mc animated:NO];
+    } else if (indexPath.row == 2) {
+        MainPageViewController *mc = [[MainPageViewController alloc] init];
+        
+        [tempAppDelegate.LeftSlideVC closeLeftView];//我的收藏
+        
+        [tempAppDelegate.mainNavigationController pushViewController:mc animated:NO];
+    } else if (indexPath.row == 3) {
+        MainPageViewController *mc = [[MainPageViewController alloc] init];
+        
+        [tempAppDelegate.LeftSlideVC closeLeftView];//我的分享
+        
+        [tempAppDelegate.mainNavigationController pushViewController:mc animated:NO];
+    } else if (indexPath.row == 4) {
+        MainPageViewController *mc = [[MainPageViewController alloc] init];
+        
+        [tempAppDelegate.LeftSlideVC closeLeftView];//本地下载
+        
+        [tempAppDelegate.mainNavigationController pushViewController:mc animated:NO];
+    } else if (indexPath.row == 5) {
+        
+    } else if (indexPath.row == 6) {
+        
+    } else if (indexPath.row == 7) {
+        
+    }
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -114,5 +148,6 @@
     view.backgroundColor = [UIColor clearColor];
     return view;
 }
+
 
 @end
