@@ -7,33 +7,49 @@
 //
 
 #import "LeftSortsViewController.h"
+#import "LeftSortsView.h"
 
 @interface LeftSortsViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITableView *tableview;
-@property (nonatomic,strong)UIImageView *backImage;
+@property (nonatomic,strong) UIImageView *backImage;
+@property (nonatomic,strong) LeftSortsView *lv;
 @end
 
 @implementation LeftSortsViewController
 
+-(void)loadView
+{
+    self.lv = [[LeftSortsView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    self.view = _lv;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    UIImageView *imageview = [[UIImageView alloc] initWithFrame:self.view.bounds];
-//    imageview.image = [UIImage imageNamed:@"leftbackiamge"];
-//    [self.view addSubview:imageview];
    
     self.backImage = [[UIImageView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
     self.backImage.image = [UIImage imageNamed:@"back.jpg"];
-    [self.view addSubview:_backImage];
+    _lv.backgroundColor = [UIColor colorWithPatternImage:self.backImage.image];
     
-    UITableView *tableview = [[UITableView alloc] init];
-    self.tableview = tableview;
-    tableview.frame = self.view.bounds;
-    tableview.dataSource = self;
-    tableview.delegate  = self;
-    tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.view addSubview:tableview];
+    _lv.tableview.dataSource = self;
+    _lv.tableview.delegate  = self;
+    _lv.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+    [_lv.headButton addTarget:self action:@selector(headButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    //button置为顶层view，不然事件不能触发
+    [_lv bringSubviewToFront:_lv.headButton];
     
+}
+
+- (void)headButtonAction:(UIButton *)sender
+{
+    if ([RegisterDataTool shareRegisterData].LoginName == nil) {
+        LoginViewController *lv = [[LoginViewController alloc]init];
+        AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        [tempAppDelegate.LeftSlideVC closeLeftView];//关闭左侧抽屉
+        
+        [tempAppDelegate.mainNavigationController pushViewController:lv animated:NO];
+    }
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -43,7 +59,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return 10;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -54,7 +70,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identifier];
     }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.textLabel.font = [UIFont systemFontOfSize:20.0f];
+    cell.textLabel.font = [UIFont systemFontOfSize:17.0];
     cell.backgroundColor = [UIColor clearColor];
     cell.textLabel.textColor = [UIColor whiteColor];
     

@@ -28,21 +28,25 @@
 #import "StuffModle.h"
 #import "StepModle.h"
 #import "News.h"
+#import "RegisterModer.h"
+
 
 
 
 
 #import "GetFoodDataTool.h"
 #import "GetNewsDataTool.h"
+#import "RegisterDataTool.h"
 
 
 
+#define kScreenSize           [[UIScreen mainScreen] bounds].size
+#define kScreenWidth          [[UIScreen mainScreen] bounds].size.width
+#define kScreenHeight         [[UIScreen mainScreen] bounds].size.height
 
+#define KisEqual @"no"
 
-
-
-
-
+#import "LoginViewController.h"
 
 
 
