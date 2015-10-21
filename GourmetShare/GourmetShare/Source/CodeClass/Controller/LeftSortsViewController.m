@@ -59,7 +59,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return 8;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -70,24 +70,26 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identifier];
     }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.textLabel.font = [UIFont systemFontOfSize:17.0];
+    cell.textLabel.font = [UIFont systemFontOfSize:18.0];
     cell.backgroundColor = [UIColor clearColor];
     cell.textLabel.textColor = [UIColor whiteColor];
     
     if (indexPath.row == 0) {
-        cell.textLabel.text = @"开通会员";
+        cell.textLabel.text = @"首  页";
     } else if (indexPath.row == 1) {
-        cell.textLabel.text = @"QQ钱包";
+        cell.textLabel.text = @"个人信息";
     } else if (indexPath.row == 2) {
-        cell.textLabel.text = @"网上营业厅";
-    } else if (indexPath.row == 3) {
-        cell.textLabel.text = @"个性装扮";
-    } else if (indexPath.row == 4) {
         cell.textLabel.text = @"我的收藏";
+    } else if (indexPath.row == 3) {
+        cell.textLabel.text = @"我的分享";
+    } else if (indexPath.row == 4) {
+        cell.textLabel.text = @"本地下载";
     } else if (indexPath.row == 5) {
-        cell.textLabel.text = @"我的相册";
+        cell.textLabel.text = @"清除缓存";
     } else if (indexPath.row == 6) {
-        cell.textLabel.text = @"我的文件";
+        cell.textLabel.text = @"注  销";
+    }else if (indexPath.row == 7) {
+        cell.textLabel.text = @"退  出";
     }
     return cell;
 }

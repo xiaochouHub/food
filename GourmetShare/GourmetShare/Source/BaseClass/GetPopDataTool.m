@@ -72,15 +72,15 @@ static GetPopDataTool *pData;
         NSData* data=[html dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
         NSLog(@"%@",[[dict objectForKey:docid] allKeys]);
-        NewsDetail *nDetail = [[NewsDetail alloc]init];
-        [nDetail setValuesForKeysWithDictionary:[dict objectForKey:docid]];
+       self.newsdetail = [[NewsDetail alloc]init];
+        [self.newsdetail setValuesForKeysWithDictionary:[dict objectForKey:docid]];
 //        NSLog(@"%@--%@--%@--%@--%@",nDetail.body,nDetail.docid,nDetail.dkeys,nDetail.img,nDetail.title);
-        detail(nDetail);
+        detail(self.newsdetail);
     }
          failure: ^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@", error);
     }];
-    
+ 
 }
 
 @end

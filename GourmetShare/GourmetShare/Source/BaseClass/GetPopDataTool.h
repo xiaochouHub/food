@@ -19,6 +19,8 @@ typedef void(^PDetail) (NewsDetail *detail);
 
 @property (nonatomic,strong)NSMutableArray *detailArray;
 
+@property(nonatomic,strong)NewsDetail *newsdetail;
+
 //pop界面数据加载
 
 +(GetPopDataTool *)shareGetPopData;
