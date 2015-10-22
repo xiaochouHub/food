@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class LTView;
 @interface LoginView : UIView
-@property (nonatomic,strong)UITextField *userNameText;
-@property (nonatomic,strong)UITextField *passWordText;
+@property (nonatomic,strong)LTView *userNameLT;
+@property (nonatomic,strong)LTView *passWordLT;
 @property (nonatomic,strong)UIButton *loginButton;
 @property (nonatomic,strong)UIButton *registButton;
 @end

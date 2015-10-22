@@ -7,7 +7,7 @@
 //
 
 #import "RegisterView.h"
-
+#import "LTView.h"
 @implementation RegisterView
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -22,41 +22,37 @@
 -(void)p_setupView
 {
     self.backgroundColor = [UIColor whiteColor];
-    self.userNameText = [[UITextField alloc]initWithFrame:CGRectMake(kScreenWidth/6, kScreenHeight/6, kScreenWidth/3*2, kScreenHeight/15)];
-    self.userNameText.backgroundColor = [UIColor redColor];
-    self.userNameText.placeholder = @"用  户  名";
-    self.userNameText.textAlignment = NSTextAlignmentCenter;
+    self.userNameText = [[LTView alloc]initWithFrame:CGRectMake(kScreenWidth/6, kScreenHeight/6, kScreenWidth/3*2, kScreenHeight/15) placeholder:@"用  户  名" imageName:@""];
     [self addSubview:_userNameText];
     
-    self.passWordText = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.userNameText.frame), CGRectGetMaxY(self.userNameText.frame)+30, CGRectGetWidth(self.userNameText.frame), CGRectGetHeight(self.userNameText.frame))];
-    self.passWordText.backgroundColor = [UIColor redColor];
-    self.passWordText.placeholder = @"密     码";
-    self.passWordText.textAlignment = NSTextAlignmentCenter;
+    self.passWordText = [[LTView alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.userNameText.frame), CGRectGetMaxY(self.userNameText.frame)+30, CGRectGetWidth(self.userNameText.frame), CGRectGetHeight(self.userNameText.frame))  placeholder:@"密     码" imageName:@""];
+    [_passWordText setSecureTextEnabled:YES];
     [self addSubview:_passWordText];
     
-    self.confirmText = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.passWordText.frame), CGRectGetMaxY(self.passWordText.frame)+30, CGRectGetWidth(self.passWordText.frame), CGRectGetHeight(self.passWordText.frame))];
-    self.confirmText.backgroundColor = [UIColor redColor];
-    self.confirmText.placeholder = @"确认密码";
-    self.confirmText.textAlignment = NSTextAlignmentCenter;
+    self.confirmText = [[LTView alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.passWordText.frame), CGRectGetMaxY(self.passWordText.frame)+30, CGRectGetWidth(self.passWordText.frame), CGRectGetHeight(self.passWordText.frame)) placeholder:@"确认密码" imageName:@""];
+    [_confirmText setSecureTextEnabled:YES];
     [self addSubview:_confirmText];
     
-    self.emailText = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.confirmText.frame), CGRectGetMaxY(self.confirmText.frame)+30, CGRectGetWidth(self.confirmText.frame), CGRectGetHeight(self.confirmText.frame))];
-    self.emailText.backgroundColor = [UIColor redColor];
-    self.emailText.placeholder = @"邮     箱";
-    self.emailText.textAlignment = NSTextAlignmentCenter;
+    self.emailText = [[LTView alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.confirmText.frame), CGRectGetMaxY(self.confirmText.frame)+30, CGRectGetWidth(self.confirmText.frame), CGRectGetHeight(self.confirmText.frame)) placeholder:@"邮     箱" imageName:@""];
     [self addSubview:_emailText];
     
-    self.phoneNumberText = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.emailText.frame), CGRectGetMaxY(self.emailText.frame)+30, CGRectGetWidth(self.emailText.frame), CGRectGetHeight(self.emailText.frame))];
-    self.phoneNumberText.backgroundColor = [UIColor redColor];
-    self.phoneNumberText.placeholder = @"手机号码";
-    self.phoneNumberText.textAlignment = NSTextAlignmentCenter;
+    self.phoneNumberText = [[LTView alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.emailText.frame), CGRectGetMaxY(self.emailText.frame)+30, CGRectGetWidth(self.emailText.frame), CGRectGetHeight(self.emailText.frame)) placeholder:@"手机号码" imageName:@""];
     [self addSubview:_phoneNumberText];
     
     
     self.registButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    self.registButton.frame = CGRectMake(CGRectGetMinX(self.phoneNumberText.frame)+50, CGRectGetMaxY(self.phoneNumberText.frame) + 40, CGRectGetWidth(self.phoneNumberText.frame) -100, CGRectGetHeight(self.phoneNumberText.frame));
-    [_registButton setImage:[[UIImage imageNamed:@"register_button"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
-    self.registButton.backgroundColor = [UIColor blueColor];
+    self.registButton.frame = CGRectMake(CGRectGetMinX(self.phoneNumberText.frame)+60, CGRectGetMaxY(self.phoneNumberText.frame) + 40, CGRectGetWidth(self.bounds) - CGRectGetMinX(_phoneNumberText.frame) *2-120, CGRectGetHeight(self.phoneNumberText.frame));
+    [self.registButton setTitle:@"登 录" forState:UIControlStateNormal];
+    _registButton.titleLabel.font = [UIFont systemFontOfSize: 17.0];
+    [_registButton.layer setMasksToBounds:YES];
+    [_registButton.layer setCornerRadius:10.0]; //设置矩形四个圆角半径
+    [_registButton.layer setBorderWidth:1.0]; //边框宽度
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    
+    CGColorRef colorref = CGColorCreate(colorSpace,(CGFloat[]){ 1, 0, 0, 1 });
+    
+    [_registButton.layer setBorderColor:colorref];//边框颜色
+    
     [self addSubview:_registButton];
 }
 @end

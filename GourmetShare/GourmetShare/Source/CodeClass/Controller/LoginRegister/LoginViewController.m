@@ -10,6 +10,7 @@
 #import "LoginView.h"
 #import "RegisterViewController.h"
 #import "MainPageViewController.h"
+#import "LTView.h"
 @interface LoginViewController ()
 @property (nonatomic,strong) UIImageView *backImage;
 @property (nonatomic,strong)LoginView *lv;
@@ -25,13 +26,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    self.backImage = [[UIImageView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
-//    self.backImage.image = [UIImage imageNamed:@"back.jpg"];
-//    _lv.backgroundColor = [UIColor colorWithPatternImage:self.backImage.image];
-    // Do any additional setup after loading the view.
+    self.backImage = [[UIImageView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
+    self.backImage.image = [UIImage imageNamed:@"bbb.jpg"];
+    _lv.backgroundColor = [UIColor colorWithPatternImage:self.backImage.image];
+    
     
     [_lv.registButton addTarget:self action:@selector(registButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [_lv.loginButton addTarget:self action:@selector(loginButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    //设置输入框的代理
+    [_lv.userNameLT setTextFieldDelegate:self];
+    [_lv.passWordLT setTextFieldDelegate:self];
 }
 
 -(void)registButtonAction:(UIButton *)sender
@@ -43,8 +47,16 @@
 
 -(void)loginButtonAction:(UIButton *)sender
 {
-    NSString *passWord = [[RegisterDataTool shareRegisterData]getLoginWithName:_lv.userNameText.text];
-    if ([_lv.passWordText.text isEqualToString:passWord]) {
+    //登录时，用户名和密码不能为空
+    if ([[_lv.userNameLT inputFieldText] isEqualToString:@""] || [[_lv.passWordLT inputFieldText]  isEqualToString:@""]) {
+        
+        [self p_showAlertView:@"提示" message:@"用户名和密码不能为空"];
+        return;
+    }
+    
+    NSString *passWord = [[RegisterDataTool shareRegisterData]
+                          getLoginWithName:[_lv.userNameLT inputFieldText]];
+    if ([[_lv.passWordLT inputFieldText] isEqualToString:passWord]) {
         MainPageViewController *mvc = [[MainPageViewController alloc]init];
         [self.navigationController pushViewController:mvc animated:YES];
     }
@@ -66,14 +78,12 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+//键盘回收
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    
+    return YES;
 }
-*/
 
 @end

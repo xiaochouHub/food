@@ -44,4 +44,17 @@
 
 //- (NSArray *)findStudentByNumber:(NSInteger)number;//条件查询
 
+#pragma mark ========================User
+//下载菜谱表
+- (void)createUserTable;
+
+//下载到本地的菜谱
+- (void)insertDownloadWithStuffModle:(StuffModle *)s;
+
+//查询
+- (NSArray *)findStuff;
+
+//返回图片文件路径
+- (NSString *)imageFilePath:(NSString *)aURL;
+
 @end

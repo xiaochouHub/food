@@ -31,10 +31,18 @@ static DataBaseHandler *dbh;
     return dbPath;
 }
 
+- (NSString *)dataImageFilePath
+{
+    //图片文件夹
+    NSString *documentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
+    NSString *dbPath = [documentPath stringByAppendingString:@"/food.sqlite"];
+    return dbPath;
+}
+
 -(FMDatabase *)db
 {
     if (_db == nil) {
-       self.db = [FMDatabase databaseWithPath:[self databaseFilePath]];
+        self.db = [FMDatabase databaseWithPath:[self databaseFilePath]];
     }
     return _db;
 }
@@ -70,12 +78,12 @@ static DataBaseHandler *dbh;
         // error
         return;
     }
-
+    
     for (FoodCategoryModel *f in foodArr) {
         
         NSString *sql = @"insert into postCategory (name, parentId) values (?, ?)";
         [_db executeUpdate:sql, f.name, f.parentId];
-
+        
     }
     
     [_db close];
@@ -104,7 +112,7 @@ static DataBaseHandler *dbh;
         
         f.name = [rs stringForColumn:@"name"];
         f.parentId = [rs stringForColumn:@"parentId"];
-        //将查询到的数据放入数组中。 
+        //将查询到的数据放入数组中。
         [CategoryArray addObject:f];
     }
     return CategoryArray;
@@ -332,9 +340,6 @@ static DataBaseHandler *dbh;
         NSDictionary *d =(NSDictionary *)[str objectFromJSONString];
         NSMutableArray *arr = [NSMutableArray array];
         for (StepModle *st in d) {
-//            StepModle *st = [[StepModle alloc]init];
-//            st.img = [dict valueForKey:@"img"];
-//            st.step = [dict valueForKey:@"step"];
             [arr addObject:st];
         }
         s.steps = arr;
@@ -349,5 +354,107 @@ static DataBaseHandler *dbh;
     }
     return ListArray;
 }
+
+#pragma mark ========================User
+- (void)createUserTable
+{
+    self.db = [FMDatabase databaseWithPath:[self databaseFilePath]];
+    //判断数据库是否已经打开，如果没有打开，提示失败
+    if (![_db open]) {
+        NSLog(@"数据库打开失败");
+        return;
+    }
+    
+    //为数据库设置缓存，提高查询效率
+    [_db setShouldCacheStatements:YES];
+    
+    //判断数据库中是否已经存在这个表，如果不存在则创建该表
+    if(![_db tableExists:@"User"])
+    {
+        NSString *sql = [NSString stringWithFormat:@"CREATE TABLE User (albums TEXT, burden TEXT,sid TEXT ,imtro TEXT, ingredients TEXT,steps TEXT ,tags TEXT, title TEXT) "];
+        if ([_db executeUpdate:sql]) {
+            NSLog(@"创建完成");
+        }
+    }
+}
+
+//下载到本地的菜谱
+- (void)insertDownloadWithStuffModle:(StuffModle *)s
+{
+    [self createUserTable];
+    if (![_db open]) {
+        // error
+        return;
+    }
+    NSString *sql = [NSString stringWithFormat:@"insert into User (albums, burden, sid, imtro, ingredients, steps, tags, title) values (?, ?, ?, ?, ?, ?, ?, ?)"];
+    NSError *err = nil;
+    
+    NSData *stepsJsonData = [NSJSONSerialization dataWithJSONObject:s.steps options:NSJSONWritingPrettyPrinted error:&err];
+    
+    for (StepModle *st in s.steps) {
+        [self downloadWithURL:st.img];
+    }
+    
+    NSString *jsonStrSteps = [[NSString alloc] initWithData:stepsJsonData encoding:NSUTF8StringEncoding];
+    
+    NSData *albumsJsonData = [NSJSONSerialization dataWithJSONObject:s.albums options:NSJSONWritingPrettyPrinted error:&err];
+    
+    NSString *jsonStrAlbums = [[NSString alloc] initWithData:albumsJsonData encoding:NSUTF8StringEncoding];
+    
+    [_db executeUpdate:sql,jsonStrAlbums, s.burden, s.sid, s.imtro, s.ingredients, jsonStrSteps, s.tags, s.title];
+    
+    [_db close];
+}
+
+- (NSArray *)findStuff
+{
+    NSString *sql =[NSString stringWithFormat:@"select * from User"] ;
+    return [self findStuffSql:sql];
+}
+
+
+
+//返回图片文件路径
+- (NSString *)imageFilePath:(NSString *)aURL
+{
+    
+    //新建文件夹
+    NSString *documentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
+    
+    NSFileManager *managerFile = [NSFileManager defaultManager];
+    
+    if (![managerFile fileExistsAtPath:[documentPath stringByAppendingString:@"/FoodImage"]]) {
+        [managerFile createDirectoryAtPath:[documentPath stringByAppendingString:@"/FoodImage"] withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    //并给文件起个文件名
+    NSArray *parArray = [aURL componentsSeparatedByString:@"/"];
+    NSString *fileName = [NSString stringWithFormat:@"/FoodImage/%@",[parArray lastObject]];
+    NSString *filePath = [documentPath stringByAppendingString:fileName];
+    
+    return filePath;
+}
+
+//下载到本地的图片
+- (void)downloadWithURL:(NSString *)aURL
+{
+    dispatch_queue_t globl_t = dispatch_get_global_queue(0, 0);
+    
+    dispatch_async(globl_t, ^{
+        
+        NSFileManager *managerFile = [NSFileManager defaultManager];
+        
+        NSString *filePath = [self imageFilePath:aURL];
+        
+        if (![managerFile fileExistsAtPath:filePath]) {
+            //将图片下载下来
+            UIImage *fileImage = [[UIImage alloc]initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:aURL]]];
+            
+            //将图片写到Documents文件
+            [UIImagePNGRepresentation(fileImage)writeToFile: filePath  atomically:YES];
+        }
+    });
+}
+
+
 
 @end
