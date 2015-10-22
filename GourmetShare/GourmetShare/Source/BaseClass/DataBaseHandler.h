@@ -49,7 +49,7 @@
 - (void)createUserTable;
 
 //下载到本地的菜谱
-- (void)insertDownloadWithStuffModle:(StuffModle *)s;
+- (BOOL)insertDownloadWithStuffModle:(StuffModle *)s;
 
 //查询
 - (NSArray *)findStuff;

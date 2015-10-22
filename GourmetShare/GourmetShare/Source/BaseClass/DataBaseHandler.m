@@ -379,12 +379,12 @@ static DataBaseHandler *dbh;
 }
 
 //下载到本地的菜谱
-- (void)insertDownloadWithStuffModle:(StuffModle *)s
+- (BOOL)insertDownloadWithStuffModle:(StuffModle *)s
 {
     [self createUserTable];
     if (![_db open]) {
         // error
-        return;
+        return YES;
     }
     NSString *sql = [NSString stringWithFormat:@"insert into User (albums, burden, sid, imtro, ingredients, steps, tags, title) values (?, ?, ?, ?, ?, ?, ?, ?)"];
     NSError *err = nil;
@@ -401,9 +401,11 @@ static DataBaseHandler *dbh;
     
     NSString *jsonStrAlbums = [[NSString alloc] initWithData:albumsJsonData encoding:NSUTF8StringEncoding];
     
-    [_db executeUpdate:sql,jsonStrAlbums, s.burden, s.sid, s.imtro, s.ingredients, jsonStrSteps, s.tags, s.title];
+    BOOL isInsert =  [_db executeUpdate:sql,jsonStrAlbums, s.burden, s.sid, s.imtro, s.ingredients, jsonStrSteps, s.tags, s.title];
     
     [_db close];
+    
+    return isInsert;
 }
 
 - (NSArray *)findStuff
