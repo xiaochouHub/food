@@ -23,17 +23,25 @@ static GetFavouriteDataTool *gf;
 
 -(BOOL)podFavouriteWith:(StuffModle *)stuff UserName:(NSString *)userName
 {
-    self.postFavourite = [AVObject objectWithClassName:@"postFavourite"];
-    [_postFavourite setObject:userName forKey:@"userName"];
-    [_postFavourite setObject:stuff.albums forKey:@"albums"];
-    [_postFavourite setObject:stuff.burden forKey:@"burden"];
-    [_postFavourite setObject:stuff.sid forKey:@"sid"];
-    [_postFavourite setObject:stuff.imtro forKey:@"imtro"];
-    [_postFavourite setObject:stuff.ingredients forKey:@"ingredients"];
-    [_postFavourite setObject:stuff.steps forKey:@"steps"];
-    [_postFavourite setObject:stuff.tags forKey:@"tags"];
-    [_postFavourite setObject:stuff.title forKey:@"title"];
-    return [_postFavourite save];
+    AVQuery *query = [AVQuery queryWithClassName:@"postFavourite"];
+    [query whereKey:@"userName" equalTo:userName];
+    [query whereKey:@"sid" equalTo:stuff.sid];
+    AVObject *q = [query getFirstObject];
+    if ([q valueForKey:@"sid"] ==nil) {
+        self.postFavourite = [AVObject objectWithClassName:@"postFavourite"];
+        [_postFavourite setObject:userName forKey:@"userName"];
+        [_postFavourite setObject:stuff.albums forKey:@"albums"];
+        [_postFavourite setObject:stuff.burden forKey:@"burden"];
+        [_postFavourite setObject:stuff.sid forKey:@"sid"];
+        [_postFavourite setObject:stuff.imtro forKey:@"imtro"];
+        [_postFavourite setObject:stuff.ingredients forKey:@"ingredients"];
+        [_postFavourite setObject:stuff.steps forKey:@"steps"];
+        [_postFavourite setObject:stuff.tags forKey:@"tags"];
+        [_postFavourite setObject:stuff.title forKey:@"title"];
+        return [_postFavourite save];
+
+    }
+    return YES;
 }
 
 -(void)getFavouriteWithUserName:(NSString *)userName PassValue:(PassValue)passVallue
@@ -67,5 +75,14 @@ static GetFavouriteDataTool *gf;
             NSLog(@"Error: %@ %@", error, [error userInfo]);
         }
     }];
+}
+
+-(void)deleteFavouriteWith:(StuffModle *)stuff UserName:(NSString *)userName
+{
+    AVQuery *query = [AVQuery queryWithClassName:@"postFavourite"];
+    [query whereKey:@"userName" equalTo:userName];
+    [query whereKey:@"sid" equalTo:stuff.sid];
+    AVObject *q = [query getFirstObject];
+    [q deleteInBackground];
 }
 @end

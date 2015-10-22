@@ -16,8 +16,13 @@ typedef void(^PassValue)(NSArray *array);
 //单例初始化工具类
 +(GetFavouriteDataTool *)shareFavouriteData;
 
+//收藏食谱
 -(BOOL)podFavouriteWith:(StuffModle *)stuff UserName:(NSString *)userName;
 
+//获取收藏
 -(void)getFavouriteWithUserName:(NSString *)userName PassValue:(PassValue)passVallue;
+
+//删除收藏
+-(void)deleteFavouriteWith:(StuffModle *)stuff UserName:(NSString *)userName;
 
 @end
