@@ -8,6 +8,9 @@
 
 #import "LeftSortsViewController.h"
 #import "LeftSortsView.h"
+#import "CollectTableViewController.h"
+#import "ShareTableViewController.h"
+#import "DownloadTableViewController.h"
 
 @interface LeftSortsViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITableView *tableview;
@@ -59,7 +62,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 8;
+    return 7;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -95,6 +98,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSString *userName = [RegisterDataTool shareRegisterData].LoginName;
     AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     if (indexPath.row == 0) {
         MainPageViewController *mc = [[MainPageViewController alloc] init];
@@ -109,31 +113,55 @@
         
         [tempAppDelegate.mainNavigationController pushViewController:mc animated:NO];
     } else if (indexPath.row == 2) {
-        MainPageViewController *mc = [[MainPageViewController alloc] init];
-        
-        [tempAppDelegate.LeftSlideVC closeLeftView];//我的收藏
-        
-        [tempAppDelegate.mainNavigationController pushViewController:mc animated:NO];
+        if (userName == nil) {
+            [self p_showAlertView:@"提示" message:@"未登录"];
+        }
+        else
+        {
+            CollectTableViewController *collect = [[CollectTableViewController alloc]init];
+            
+            collect.userName = userName;
+            
+            [tempAppDelegate.LeftSlideVC closeLeftView];
+            
+            [tempAppDelegate.mainNavigationController pushViewController:collect animated:YES];
+        }
     } else if (indexPath.row == 3) {
-        MainPageViewController *mc = [[MainPageViewController alloc] init];
         
-        [tempAppDelegate.LeftSlideVC closeLeftView];//我的分享
+        ShareTableViewController *share = [[ShareTableViewController alloc]init];
         
-        [tempAppDelegate.mainNavigationController pushViewController:mc animated:NO];
+        [tempAppDelegate.LeftSlideVC closeLeftView];
+        
+        [tempAppDelegate.mainNavigationController pushViewController:share animated:YES];
     } else if (indexPath.row == 4) {
-        MainPageViewController *mc = [[MainPageViewController alloc] init];
         
-        [tempAppDelegate.LeftSlideVC closeLeftView];//本地下载
+        DownloadTableViewController *download = [[DownloadTableViewController alloc]init];
         
-        [tempAppDelegate.mainNavigationController pushViewController:mc animated:NO];
+        [tempAppDelegate.LeftSlideVC closeLeftView];
+        
+        [tempAppDelegate.mainNavigationController pushViewController:download animated:YES];
     } else if (indexPath.row == 5) {
         
-    } else if (indexPath.row == 6) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"确定要清除缓存吗?" message:@"将清除本地缓存" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:@"取消", nil];
         
-    } else if (indexPath.row == 7) {
+        alert.tag = 101;
+        
+        [alert show];
+        
+    } else if (indexPath.row == 6) {
+        if (userName == nil) {
+            [self p_showAlertView:@"提示" message:@"未登录"];
+        }
+        else
+        {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"确定注销" message:@"注销" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:@"取消", nil];
+        
+        alert.tag = 102;
+        
+        [alert show];
+        }
         
     }
-    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -145,6 +173,36 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableview.bounds.size.width, 180)];
     view.backgroundColor = [UIColor clearColor];
     return view;
+}
+
+
+//显示提示框
+- (void)p_showAlertView:(NSString *)title message:(NSString *)message
+{
+    UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    [alertView show];
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 101 && buttonIndex == 0) {
+        
+        UIAlertView *a = [[UIAlertView alloc]initWithTitle:@"已清除缓存!" message:nil delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil];
+        a.tag = 103;
+        [a show];
+    }
+    else if (alertView.tag == 102 && buttonIndex == 0)
+    {
+        [RegisterDataTool shareRegisterData].LoginName = nil;
+        
+        UIAlertView *a = [[UIAlertView alloc]initWithTitle:@"已注销!" message:nil delegate:self cancelButtonTitle:@"确认" otherButtonTitles: nil];
+        a.tag = 104;
+        [a show];
+    }
+    else if (alertView.tag == 103 && buttonIndex == 0)
+    {
+        
+    }
 }
 
 

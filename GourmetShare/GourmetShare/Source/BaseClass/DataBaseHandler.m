@@ -386,6 +386,9 @@ static DataBaseHandler *dbh;
         // error
         return NO;
     }
+    if ([self findDownloadStuffBySid:s.sid]) {
+        return YES;
+    }
     NSString *sql = [NSString stringWithFormat:@"insert into User (albums, burden, sid, imtro, ingredients, steps, tags, title) values (?, ?, ?, ?, ?, ?, ?, ?)"];
     NSError *err = nil;
     
@@ -420,6 +423,16 @@ static DataBaseHandler *dbh;
 {
     NSString *sql =[NSString stringWithFormat:@"select * from User"] ;
     return [self findStuffSql:sql];
+}
+
+- (BOOL)findDownloadStuffBySid:(NSString *)sid
+{
+    NSString *sql = [NSString stringWithFormat:@"select * from User where sid = %@",sid];
+    ;
+    if ([self findStuffSql:sql] != 0) {
+        return YES;
+    }
+    return NO;
 }
 
 
