@@ -76,9 +76,17 @@
     }
     else if (indexPath.row == 5)
     {
+        NSString *name = [RegisterDataTool shareRegisterData].LoginName;
+        if (name == nil) {
+            [self p_showAlertView:@"提示" message:@"未登录"];
+        }
+        else
+        {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"确定注销" message:@"注销" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:@"取消", nil];
+        [RegisterDataTool shareRegisterData].LoginName = nil;
         alert.tag = 102;
         [alert show];
+        }
     }
     else if (indexPath.row == 6)
     {
