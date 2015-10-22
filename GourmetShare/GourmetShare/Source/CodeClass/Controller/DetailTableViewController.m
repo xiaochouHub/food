@@ -56,10 +56,14 @@
     [self.tableView registerClass:[BurdenTableViewCell class] forCellReuseIdentifier:@"burden"];
 //    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(LeftSAction:)];
 //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonItemAction:)];
-    UIBarButtonItem *download = [[UIBarButtonItem alloc]initWithTitle:@"下载" style:UIBarButtonItemStylePlain target:self action:@selector(downloadAction:)];
-    UIBarButtonItem *share = [[UIBarButtonItem alloc]initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(shareAction:)];
-    UIBarButtonItem *collect = [[UIBarButtonItem alloc]initWithTitle:@"收藏" style:UIBarButtonItemStylePlain target:self action:@selector(collectAction:)];
+//    UIBarButtonItem *download = [[UIBarButtonItem alloc]initWithTitle:@"下载" style:UIBarButtonItemStylePlain target:self action:@selector(downloadAction:)];
+//    UIBarButtonItem *share = [[UIBarButtonItem alloc]initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(shareAction:)];
+//    UIBarButtonItem *collect = [[UIBarButtonItem alloc]initWithTitle:@"收藏" style:UIBarButtonItemStylePlain target:self action:@selector(collectAction:)];
+    UIBarButtonItem *download = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"xiazai.png"] style:UIBarButtonItemStylePlain target:self action:@selector(downloadAction:)];
+    UIBarButtonItem *share = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"fenxiang.png"] style:UIBarButtonItemStylePlain target:self action:@selector(shareAction:)];
+    UIBarButtonItem *collect = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"shoucang.png"] style:UIBarButtonItemStylePlain target:self action:@selector(collectAction:)];
     NSMutableArray *buttonArr = [[NSMutableArray alloc]initWithObjects:share,collect, nil];
+    
     if (!self.isDownload) {
         [buttonArr addObject:download];
     }

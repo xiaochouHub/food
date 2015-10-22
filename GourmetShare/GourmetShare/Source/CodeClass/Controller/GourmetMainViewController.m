@@ -13,6 +13,8 @@
 
 @property (nonatomic,strong)MainView *mView;
 @property(nonatomic,strong)NSMutableArray *dataArr;
+@property(nonatomic,strong)NSMutableString *pic_url;
+@property(nonatomic,strong)UITapGestureRecognizer *tap;
 @end
 
 @implementation GourmetMainViewController
@@ -25,23 +27,50 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // 给imageview添加点击手势
+    self.tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction)];
+    self.mView.oneImageView1.userInteractionEnabled = YES;
+    [self.mView.oneImageView1 addGestureRecognizer:_tap];
+
     self.dataArr = [NSMutableArray array];
-//    [[GetFoodDataTool shareGetFoodData] 
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            FoodCategoryModel *model1  = self.dataArr[0];
-//            [self.mView.oneImageView1 sd_setImageWithURL:[NSURL URLWithString:model1.]];
-//            
-//            
-//            FoodCategoryModel *model2  = self.dataArr[1];
-//            [self.mView.twoImageView1 sd_setImageWithURL:[NSURL URLWithString:model2.parentId]];
-//            
-//            
-//            FoodCategoryModel *model3  = self.dataArr[2];
-//            [self.mView.threeImageView1 sd_setImageWithURL:[NSURL URLWithString:model3.parentId]];
-//        });
-//        
-//    }];
-   
+    [[GetFoodDataTool shareGetFoodData]getFoodListInfoWithId:@"1" PassValue:^(NSArray *array) {
+        self.dataArr = (NSMutableArray *)array;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            StuffModle *model = [[StuffModle alloc]init];
+            model =self.dataArr[1];
+            for (NSMutableString *str in model.albums) {
+                self.pic_url = str;
+            }
+
+            [self.mView.oneImageView1 sd_setImageWithURL:[NSURL URLWithString:self.pic_url]];
+            self.mView.oneLabel1.text = model.title;
+            
+            
+            StuffModle *model1 = [[StuffModle alloc]init];
+            model1 =self.dataArr[2];
+            for (NSMutableString *str in model1.albums) {
+                self.pic_url = str;
+            }
+            
+            [self.mView.twoImageView1 sd_setImageWithURL:[NSURL URLWithString:self.pic_url]];
+            self.mView.twoLabel1.text = model1.title;
+            
+            
+            StuffModle *model2 = [[StuffModle alloc]init];
+            model2 =self.dataArr[3];
+            for (NSMutableString *str in model2.albums) {
+                self.pic_url = str;
+            }
+            
+            [self.mView.threeImageView1 sd_setImageWithURL:[NSURL URLWithString:self.pic_url]];
+            self.mView.threeLabel1.text = model2.title;
+            
+            
+            
+        });
+    }];
+    
     self.mView.contentSize = CGSizeMake(self.mView.bounds.size.width, self.mView.bounds.size.height + 50);
     
     // 设置轮播图
@@ -61,6 +90,17 @@
     
     // Do any additional setup after loading the view.
 }
+
+// 手势点击事件
+-(void)tapAction
+{
+    DetailTableViewController *detail =[[DetailTableViewController alloc]init];
+    detail.stuffmodel = self.dataArr[1];
+    [self.navigationController pushViewController:detail animated:YES];
+}
+
+
+
 // "更多"点击事件
 -(void)moreButton1Action:(UIButton *)sender
 {
