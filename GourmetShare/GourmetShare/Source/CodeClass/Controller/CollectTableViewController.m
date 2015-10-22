@@ -9,6 +9,7 @@
 #import "CollectTableViewController.h"
 #import "GetFavouriteDataTool.h"
 #import "DetailTableViewController.h"
+#import "RegisterDataTool.h"
 @interface CollectTableViewController ()
 @property (nonatomic,strong) NSMutableArray *dataArr;
 @end
@@ -26,6 +27,7 @@
         });
     }];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"编辑" style:UIBarButtonItemStyleDone target:self action:@selector(rightAction:)];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -60,6 +62,27 @@
     dtVC.stuffmodel = self.dataArr[indexPath.row];
     [self.navigationController pushViewController:dtVC animated:YES];
 }
+
+-(void)rightAction:(UIBarButtonItem *)sender
+{
+    [self.tableView setEditing:!self.tableView.editing animated:YES];
+}
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+-(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewCellEditingStyleDelete;
+}
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
+    [[GetFavouriteDataTool shareFavouriteData]deleteFavouriteWith:self.dataArr[indexPath.row] UserName:[RegisterDataTool shareRegisterData].LoginName];
+    [self.dataArr removeObjectAtIndex:indexPath.row];
+    //    NSArray *temp = [NSArray arrayWithObject:indexPath];
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+}
+
 
 
 /*
