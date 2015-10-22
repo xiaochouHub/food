@@ -88,8 +88,6 @@
         cell.textLabel.text = @"清除缓存";
     } else if (indexPath.row == 6) {
         cell.textLabel.text = @"注  销";
-    }else if (indexPath.row == 7) {
-        cell.textLabel.text = @"退  出";
     }
     return cell;
 }
