@@ -384,7 +384,7 @@ static DataBaseHandler *dbh;
     [self createUserTable];
     if (![_db open]) {
         // error
-        return YES;
+        return NO;
     }
     NSString *sql = [NSString stringWithFormat:@"insert into User (albums, burden, sid, imtro, ingredients, steps, tags, title) values (?, ?, ?, ?, ?, ?, ?, ?)"];
     NSError *err = nil;
@@ -392,12 +392,15 @@ static DataBaseHandler *dbh;
     NSData *stepsJsonData = [NSJSONSerialization dataWithJSONObject:s.steps options:NSJSONWritingPrettyPrinted error:&err];
     
     for (StepModle *st in s.steps) {
-        [self downloadWithURL:st.img];
+        [self downloadWithURL:st.img Sid:s.sid];
     }
     
     NSString *jsonStrSteps = [[NSString alloc] initWithData:stepsJsonData encoding:NSUTF8StringEncoding];
     
     NSData *albumsJsonData = [NSJSONSerialization dataWithJSONObject:s.albums options:NSJSONWritingPrettyPrinted error:&err];
+    for (NSString *str in s.albums) {
+        [self downloadWithURL:str Sid:s.sid];
+    }
     
     NSString *jsonStrAlbums = [[NSString alloc] initWithData:albumsJsonData encoding:NSUTF8StringEncoding];
     
@@ -415,9 +418,49 @@ static DataBaseHandler *dbh;
 }
 
 
+//删除下载
+- (BOOL)deleteDownloadWithStuffModle:(StuffModle *)s
+{
+    [self createUserTable];
+    if (![_db open]) {
+        // error
+        return NO;
+    }
+    for (NSString *str in s.albums) {
+        [self deleteFile:str Sid:s.sid];
+    }
+    for (StepModle *st in s.steps) {
+        [self deleteFile:st.img Sid:s.sid];
+    }
+    
+    NSString *sql = [NSString stringWithFormat:@"DELETE FROM User WHERE sid = %@",s.sid];
+    return [self.db executeUpdate:sql];
+}
+
+-(void)deleteFile:(NSString *)aURL Sid:(NSString *)sid
+{
+    NSFileManager* fileManager=[NSFileManager defaultManager];
+    //文件名
+    NSString *uniquePath = [self imageFilePath:aURL Sid:sid];
+    BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:uniquePath];
+    if (!blHave) {
+        NSLog(@"no  have");
+        return ;
+    }else {
+        NSLog(@" have");
+        BOOL blDele= [fileManager removeItemAtPath:uniquePath error:nil];
+        if (blDele) {
+            NSLog(@"dele success");
+        }else {
+            NSLog(@"dele fail");
+        }
+        
+    }
+}
+
 
 //返回图片文件路径
-- (NSString *)imageFilePath:(NSString *)aURL
+- (NSString *)imageFilePath:(NSString *)aURL Sid:(NSString *)sid
 {
     
     //新建文件夹
@@ -430,14 +473,15 @@ static DataBaseHandler *dbh;
     }
     //并给文件起个文件名
     NSArray *parArray = [aURL componentsSeparatedByString:@"/"];
-    NSString *fileName = [NSString stringWithFormat:@"/FoodImage/%@",[parArray lastObject]];
+    NSString *fileName = [NSString stringWithFormat:@"/FoodImage/%@-%@",sid,[parArray lastObject]];
     NSString *filePath = [documentPath stringByAppendingString:fileName];
     
     return filePath;
 }
 
+
 //下载到本地的图片
-- (void)downloadWithURL:(NSString *)aURL
+- (void)downloadWithURL:(NSString *)aURL  Sid:(NSString *)sid
 {
     dispatch_queue_t globl_t = dispatch_get_global_queue(0, 0);
     
@@ -445,7 +489,7 @@ static DataBaseHandler *dbh;
         
         NSFileManager *managerFile = [NSFileManager defaultManager];
         
-        NSString *filePath = [self imageFilePath:aURL];
+        NSString *filePath = [self imageFilePath:aURL Sid:sid];
         
         if (![managerFile fileExistsAtPath:filePath]) {
             //将图片下载下来

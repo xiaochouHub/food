@@ -51,10 +51,13 @@
 //下载到本地的菜谱
 - (BOOL)insertDownloadWithStuffModle:(StuffModle *)s;
 
+//删除下载
+- (BOOL)deleteDownloadWithStuffModle:(StuffModle *)s;
+
 //查询
 - (NSArray *)findStuff;
 
 //返回图片文件路径
-- (NSString *)imageFilePath:(NSString *)aURL;
+- (NSString *)imageFilePath:(NSString *)aURL Sid:(NSString *)sid;
 
 @end
