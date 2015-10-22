@@ -10,6 +10,7 @@
 #import "CollectTableViewController.h"
 #import "ShareTableViewController.h"
 #import "DownloadTableViewController.h"
+#import "GetFavouriteDataTool.h"
 
 @interface PrivateListViewController ()<UIAlertViewDelegate>
 
@@ -39,22 +40,28 @@
 #pragma mark - Table view data source
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+    NSString *userName = [RegisterDataTool shareRegisterData].LoginName;
     if (indexPath.row == 1) {
-        AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-        CollectTableViewController *collect = [[CollectTableViewController alloc]init];
-        [tempAppDelegate.LeftSlideVC closeLeftView];
-        [tempAppDelegate.mainNavigationController pushViewController:collect animated:YES];
+        if (userName == nil) {
+            [self p_showAlertView:@"提示" message:@"未登录"];
+        }
+        else
+        {
+            CollectTableViewController *collect = [[CollectTableViewController alloc]init];
+            collect.userName = userName;
+            [tempAppDelegate.LeftSlideVC closeLeftView];
+            [tempAppDelegate.mainNavigationController pushViewController:collect animated:YES];
+        }
     }
     else if (indexPath.row == 2)
     {
-        AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
         ShareTableViewController *share = [[ShareTableViewController alloc]init];
         [tempAppDelegate.LeftSlideVC closeLeftView];
         [tempAppDelegate.mainNavigationController pushViewController:share animated:YES];
     }
     else if (indexPath.row == 3)
     {
-        AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
         DownloadTableViewController *download = [[DownloadTableViewController alloc]init];
         [tempAppDelegate.LeftSlideVC closeLeftView];
         [tempAppDelegate.mainNavigationController pushViewController:download
@@ -79,6 +86,14 @@
         
     }
 }
+
+//显示提示框
+- (void)p_showAlertView:(NSString *)title message:(NSString *)message
+{
+    UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    [alertView show];
+}
+
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (alertView.tag == 101 && buttonIndex == 0) {

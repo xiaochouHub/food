@@ -13,6 +13,9 @@
 #import "IngredientsTableViewCell.h"
 #import "StepTableViewCell.h"
 #import "BurdenTableViewCell.h"
+#import "DataBaseHandler.h"
+#import "CollectTableViewController.h"
+#import "GetFavouriteDataTool.h"
 
 @interface DetailTableViewController ()
 @property(nonatomic,strong)NSMutableArray *groupArr;
@@ -30,6 +33,7 @@
 @property(nonatomic,assign)CGFloat height; // 返回简介的高度
 @property(nonatomic,assign)CGFloat stepheight;// 步骤的高度
 
+@property (nonatomic,assign)BOOL isclick; // 收藏是否点击
 
 @end
 
@@ -37,6 +41,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.isclick = NO;
     
     [self.tableView registerClass:[TitleTableViewCell class] forCellReuseIdentifier:@"title"];
     
@@ -48,6 +54,17 @@
     
     [self.tableView registerClass:[StepTableViewCell class] forCellReuseIdentifier:@"step"];
     [self.tableView registerClass:[BurdenTableViewCell class] forCellReuseIdentifier:@"burden"];
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(LeftSAction:)];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonItemAction:)];
+    UIBarButtonItem *download = [[UIBarButtonItem alloc]initWithTitle:@"下载" style:UIBarButtonItemStylePlain target:self action:@selector(downloadAction:)];
+    UIBarButtonItem *share = [[UIBarButtonItem alloc]initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(shareAction:)];
+    UIBarButtonItem *collect = [[UIBarButtonItem alloc]initWithTitle:@"收藏" style:UIBarButtonItemStylePlain target:self action:@selector(collectAction:)];
+    NSMutableArray *buttonArr = [[NSMutableArray alloc]initWithObjects:share,collect, nil];
+    if (!self.isDownload) {
+        [buttonArr addObject:download];
+    }
+    self.navigationItem.rightBarButtonItems = buttonArr;
+    
     [self p_data];
     self.flag = YES;
     self.height = 230;
@@ -61,6 +78,7 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+
 // 简介字符串截取高度
 -(CGFloat)heightforstring:(NSString *)string
 {
@@ -216,7 +234,6 @@
     if (indexPath.section == 0) {
         TitleTableViewCell *title = [tableView dequeueReusableCellWithIdentifier:@"title"];
         title.albumsImage.image = [UIImage imageNamed:@"5.jpg"];
-
         self.pic_url = [NSMutableString string];
         for (NSMutableString *str in self.stuffmodel.albums) {
             self.pic_url = str;
@@ -309,49 +326,44 @@
     
 }
 
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+// 下载
+-(void)downloadAction:(UIBarButtonItem *)sender
+{
+    if ([[DataBaseHandler shareGetFoodData]insertDownloadWithStuffModle:self.stuffmodel]) {
+    [self p_showAlertView:@"提示" message:@"下载成功"];
+    }else
+    {
+    [self p_showAlertView:@"提示" message:@"下载失败"];
+    }
+    
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+//显示提示框
+- (void)p_showAlertView:(NSString *)title message:(NSString *)message
+{
+    UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    [alertView show];
 }
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+// 分享
+-(void)shareAction:(UIBarButtonItem *)sender
+{
+    
 }
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
+// 收藏
+-(void)collectAction:(UIBarButtonItem *)sender
+{
+    NSString *userName = [RegisterDataTool shareRegisterData].LoginName;
+    if (userName == nil) {
+        [self p_showAlertView:@"提示" message:@"未登录"];
+    }
+    else
+    {
+        if ([[GetFavouriteDataTool shareFavouriteData]podFavouriteWith:self.stuffmodel UserName:userName]) {
+            [self p_showAlertView:@"提示" message:@"已收藏"];
+        }
+    }
 }
-*/
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

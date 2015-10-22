@@ -58,6 +58,6 @@
 - (NSArray *)findStuff;
 
 //返回图片文件路径
-- (NSString *)imageFilePath:(NSString *)aURL Sid:(NSString *)sid;
+- (void)downloadWithURL:(NSString *)aURL Sid:(NSString *)sid;
 
 @end

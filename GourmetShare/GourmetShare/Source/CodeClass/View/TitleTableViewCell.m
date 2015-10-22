@@ -34,7 +34,7 @@
     
     self.collectButton = [UIButton buttonWithType:UIButtonTypeSystem];
     self.collectButton.frame = CGRectMake(CGRectGetMaxX(self.albumsImage.frame) - 50, CGRectGetMaxY(self.albumsImage.frame) - 50, 40, 40);
-    [self.collectButton setBackgroundImage:[UIImage imageNamed:@"home_songlist_love.tiff"] forState:UIControlStateNormal];
+    [self.collectButton setBackgroundImage:[UIImage imageNamed:@"home_songlist_unlove_hl.tiff"] forState:UIControlStateNormal];
     [self.albumsImage addSubview:_collectButton];
     
 }

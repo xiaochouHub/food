@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface CollectTableViewController : UITableViewController
-
+@property (nonatomic,strong)NSString *userName;
 @end

@@ -46,4 +46,13 @@
     NSLog(@"%@",_bodyArr);
 }
 
+-(void)setImg:(NSArray *)img
+{
+    self.imgArr = [NSMutableArray array];
+    for (NSDictionary *d in img) {
+        NSString *str = [d objectForKey:@"src"];
+        [self.imgArr addObject:str];
+    }
+}
+
 @end

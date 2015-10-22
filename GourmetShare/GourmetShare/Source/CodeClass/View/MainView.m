@@ -20,6 +20,7 @@
 
 -(void)p_setView
 {
+    self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"brownback.jpg"]];
     // 主循环滚动图
     NSArray *arr = @[[UIImage imageNamed:@"1.jpg"],[UIImage imageNamed:@"2.jpg"],[UIImage imageNamed:@"3.jpg"],[UIImage imageNamed:@"4.jpg"],[UIImage imageNamed:@"5.jpg"]];
     _mainCycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, self.bounds.size.width, 200) imagesGroup:arr];

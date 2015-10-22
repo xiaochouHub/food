@@ -21,7 +21,7 @@ static GetFavouriteDataTool *gf;
     return gf;
 }
 
--(void)podRegisterWith:(StuffModle *)stuff UserName:(NSString *)userName
+-(BOOL)podFavouriteWith:(StuffModle *)stuff UserName:(NSString *)userName
 {
     self.postFavourite = [AVObject objectWithClassName:@"postFavourite"];
     [_postFavourite setObject:userName forKey:@"userName"];
@@ -33,10 +33,10 @@ static GetFavouriteDataTool *gf;
     [_postFavourite setObject:stuff.steps forKey:@"steps"];
     [_postFavourite setObject:stuff.tags forKey:@"tags"];
     [_postFavourite setObject:stuff.title forKey:@"title"];
-    [_postFavourite save];
+    return [_postFavourite save];
 }
 
--(void)getRegisterWithUserName:(NSString *)userName PassValue:(PassValue)passVallue
+-(void)getFavouriteWithUserName:(NSString *)userName PassValue:(PassValue)passVallue
 {
     NSMutableArray *tempArr = [NSMutableArray array];
     AVQuery *query = [AVQuery queryWithClassName:@"postFavourite"];

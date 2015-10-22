@@ -391,16 +391,21 @@ static DataBaseHandler *dbh;
     
     NSData *stepsJsonData = [NSJSONSerialization dataWithJSONObject:s.steps options:NSJSONWritingPrettyPrinted error:&err];
     
-    for (StepModle *st in s.steps) {
-        [self downloadWithURL:st.img Sid:s.sid];
-    }
+
+    dispatch_queue_t globl_t = dispatch_get_global_queue(0, 0);
     
+    dispatch_async(globl_t, ^{
+        for (StepModle *st in s.steps) {
+            [self downloadWithURL:[st valueForKey:@"img"] Sid:s.sid];
+        }
+        
+        for (NSString *str in s.albums) {
+            [self downloadWithURL:str Sid:s.sid];
+        }
+    });
     NSString *jsonStrSteps = [[NSString alloc] initWithData:stepsJsonData encoding:NSUTF8StringEncoding];
     
     NSData *albumsJsonData = [NSJSONSerialization dataWithJSONObject:s.albums options:NSJSONWritingPrettyPrinted error:&err];
-    for (NSString *str in s.albums) {
-        [self downloadWithURL:str Sid:s.sid];
-    }
     
     NSString *jsonStrAlbums = [[NSString alloc] initWithData:albumsJsonData encoding:NSUTF8StringEncoding];
     
@@ -426,12 +431,16 @@ static DataBaseHandler *dbh;
         // error
         return NO;
     }
-    for (NSString *str in s.albums) {
-        [self deleteFile:str Sid:s.sid];
-    }
-    for (StepModle *st in s.steps) {
-        [self deleteFile:st.img Sid:s.sid];
-    }
+    dispatch_queue_t globl_t = dispatch_get_global_queue(0, 0);
+    
+    dispatch_async(globl_t, ^{
+        for (NSString *str in s.albums) {
+            [self deleteFile:str Sid:s.sid];
+        }
+        for (StepModle *st in s.steps) {
+            [self deleteFile:[st valueForKey:@"img"] Sid:s.sid];
+        }
+    });
     
     NSString *sql = [NSString stringWithFormat:@"DELETE FROM User WHERE sid = %@",s.sid];
     return [self.db executeUpdate:sql];

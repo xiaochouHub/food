@@ -33,6 +33,7 @@
     self.tempArr = [NSMutableArray array];
     self.btnArr = [NSMutableArray array];
     self.str1 = [NSMutableString string];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"whiteback.jpg"]];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -133,8 +134,8 @@
         [cell.categoryButton6 addTarget:self action:@selector(button6Action:) forControlEvents:UIControlEventTouchUpInside];
         
     }];
-//    cell.backgroundColor = [UIColor clearColor];
-    cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"mosha.jpg"]];
+    cell.backgroundColor = [UIColor clearColor];
+//    cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"mosha.jpg"]];
     // Configure the cell...
     
     return cell;

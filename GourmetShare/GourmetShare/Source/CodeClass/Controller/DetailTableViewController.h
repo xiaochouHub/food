@@ -10,4 +10,5 @@
 @class StuffModle ;
 @interface DetailTableViewController : UITableViewController
 @property(nonatomic,strong)StuffModle *stuffmodel;
+@property (nonatomic,assign)BOOL isDownload;
 @end

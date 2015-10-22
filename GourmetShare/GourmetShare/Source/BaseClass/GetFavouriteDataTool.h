@@ -16,8 +16,8 @@ typedef void(^PassValue)(NSArray *array);
 //单例初始化工具类
 +(GetFavouriteDataTool *)shareFavouriteData;
 
--(void)podRegisterWith:(StuffModle *)stuff UserName:(NSString *)userName;
+-(BOOL)podFavouriteWith:(StuffModle *)stuff UserName:(NSString *)userName;
 
--(void)getRegisterWithUserName:(NSString *)userName PassValue:(PassValue)passVallue;
+-(void)getFavouriteWithUserName:(NSString *)userName PassValue:(PassValue)passVallue;
 
 @end

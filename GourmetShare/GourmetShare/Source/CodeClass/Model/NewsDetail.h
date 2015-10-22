@@ -19,7 +19,7 @@
 @property (nonatomic,strong)NSArray *bodyArr;
 
 @property (nonatomic,strong)NSArray *img; // 图片
-
+@property (nonatomic,strong)NSMutableArray *imgArr;
 @property (nonatomic,strong)NSString *title; //标题
 
 @end

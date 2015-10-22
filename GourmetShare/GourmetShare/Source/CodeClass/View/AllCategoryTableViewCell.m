@@ -20,7 +20,7 @@
 
 -(void)p_setup
 {
-    self.contentView.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:0.5];
+    self.contentView.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:0.3];
     
     self.categoryButton1 = [UIButton buttonWithType:UIButtonTypeSystem];
     self.categoryButton1.frame = CGRectMake(CGRectGetMaxX(self.categoryLabel.frame) + 10, 30, CGRectGetWidth([[UIScreen mainScreen]bounds]) / 6 - 5, 30);

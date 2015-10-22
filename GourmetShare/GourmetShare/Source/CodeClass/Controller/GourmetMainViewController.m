@@ -52,7 +52,6 @@
     
     // 添加"更多"事件
     [self.mView.moreButton1 addTarget:self action:@selector(moreButton1Action:) forControlEvents:UIControlEventTouchUpInside];
-    
 //    self.mView.backgroundColor = [UIColor clearColor];
     
 
