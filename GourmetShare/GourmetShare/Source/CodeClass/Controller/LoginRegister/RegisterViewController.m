@@ -33,7 +33,7 @@
     // Do any additional setup after loading the view.
     
     self.backImage = [[UIImageView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
-    self.backImage.image = [UIImage imageNamed:@"bbb.jpg"];
+    self.backImage.image = [UIImage imageNamed:@"whiteback.jpg"];
     _rv.backgroundColor = [UIColor colorWithPatternImage:self.backImage.image];
     
     [_rv.registButton addTarget:self action:@selector(registButtonAction:) forControlEvents:UIControlEventTouchUpInside];

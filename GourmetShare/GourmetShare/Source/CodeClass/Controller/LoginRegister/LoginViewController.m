@@ -27,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.backImage = [[UIImageView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
-    self.backImage.image = [UIImage imageNamed:@"bbb.jpg"];
+    self.backImage.image = [UIImage imageNamed:@"whiteback.jpg"];
     _lv.backgroundColor = [UIColor colorWithPatternImage:self.backImage.image];
     
     
