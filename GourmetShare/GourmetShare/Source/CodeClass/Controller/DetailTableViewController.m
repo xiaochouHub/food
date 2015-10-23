@@ -351,6 +351,8 @@
 {
     self.screenshots = [NSMutableArray array];
     self.isShare = YES;//点击分享
+    
+    [self.tableView reloadData];
     self.tableView.contentOffset = CGPointMake(0, 0);//从tableview（0，0）处开始截图
     
     //获取tableviewContentSize大小
@@ -358,6 +360,7 @@
     
     //获取tableview的indexPaths集合
     NSArray *indexPaths = [self.tableView indexPathsForRowsInRect:shareContentSize];
+    
     
     for (NSIndexPath *tempImdexPath in indexPaths) {
         //循环选中每个cell
@@ -367,7 +370,7 @@
             [self.tableView.delegate tableView:self.tableView didSelectRowAtIndexPath:tempImdexPath];
         }
     }
-    
+    [self.tableView reloadData];
     //合成完整图片
     UIImage *image = [self verticalImageFromArray:_screenshots];
     
@@ -377,14 +380,25 @@
     //调整contentOffset
     self.tableView.contentOffset = CGPointMake(0, self.tableView.contentOffset.y -200);
     
-    NSFileManager *managerFile = [NSFileManager defaultManager];
+//    NSFileManager *managerFile = [NSFileManager defaultManager];
+//    
+//    NSString *filePath = @"/Users/mawenhao/Desktop/cell.png";
+//    
+//    if (![managerFile fileExistsAtPath:filePath]) {
+//        //将图片写到Documents文件
+//        [UIImagePNGRepresentation(image)writeToFile: filePath  atomically:YES];
+//    }
+    // 分享到新浪微博
+    [UMSocialSnsService presentSnsIconSheetView:self
+                                         appKey:@"507fcab25270157b37000010"
+                                      shareText:@"从美食广场APP分享"
+                                     shareImage:image
+                                shareToSnsNames:@[UMShareToSina]
+                                       delegate:nil];
+
     
-    NSString *filePath = @"/Users/jang/Desktop/项目资源/cell.png";
     
-    if (![managerFile fileExistsAtPath:filePath]) {
-        //将图片写到Documents文件
-        [UIImagePNGRepresentation(image)writeToFile: filePath  atomically:YES];
-    }
+    
 }
 // 收藏
 -(void)collectAction:(UIBarButtonItem *)sender
@@ -451,12 +465,14 @@
     //分享状态开始截图
     if (_isShare) {
         [tableView reloadData];//刷新tableview，否则无图
-        
         //获取选中cell
         UITableViewCell *tempCell = [self.tableView cellForRowAtIndexPath:indexPath];
         
         //获取当前cell截图
         UIImage *tempImage = [self imageWithUIView:tempCell];
+
+        
+        
 
         //移动contentOffset加载下一行，否则cell为nil
         self.tableView.contentOffset = CGPointMake(0, self.tableView.contentOffset.y +tempCell.frame.size.height);
@@ -464,6 +480,7 @@
         if (tempImage != nil) {
             [_screenshots addObject: tempImage];//加入截图数组
         }
+        
     }
 }
 

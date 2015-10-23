@@ -15,6 +15,7 @@
 #import "JSONKit.h"
 
 #import "UIImageView+WebCache.h"
+#import "UMSocial.h"
 
 
 #endif
