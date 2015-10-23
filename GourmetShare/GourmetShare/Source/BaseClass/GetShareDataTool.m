@@ -22,19 +22,31 @@ static GetShareDataTool *gs;
 }
 
 //用户分享食谱
--(void)podShareWith:(StuffModle *)stuff UserName:(NSString *)userName
+-(void)podShareWith:(StuffModle *)stuff UserName:(NSString *)userName Image:(UIImage *)image
 {
-    self.postShareite = [AVObject objectWithClassName:@"postFavourite"];
+    self.postShareite = [AVObject objectWithClassName:@"postShare"];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    NSDate *date = [NSDate  dateWithTimeIntervalSinceNow:3600*2];
+    [formatter setDateFormat:@"yyyy-MM-dd-HH-mm-ss"];
+    NSString * strdate = [formatter stringFromDate:date];
+    NSString *sid = [NSString stringWithFormat:@"%@-%@",userName,strdate];
+    NSString *fileName = [NSString stringWithFormat:@"%@-%@.PNG",userName,strdate];
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.05);
+    AVFile *file = [AVFile fileWithName:fileName data:imageData];
+    [file save];
+    [_postShareite setObject:sid forKey:@"sid"];
     [_postShareite setObject:userName forKey:@"userName"];
-    [_postShareite setObject:stuff.albums forKey:@"albums"];
+    [_postShareite setObject:file forKey:@"albums"];
+    
+    
     [_postShareite setObject:stuff.burden forKey:@"burden"];
-    [_postShareite setObject:stuff.sid forKey:@"sid"];
     [_postShareite setObject:stuff.imtro forKey:@"imtro"];
     [_postShareite setObject:stuff.ingredients forKey:@"ingredients"];
-    [_postShareite setObject:stuff.steps forKey:@"steps"];
     [_postShareite setObject:stuff.tags forKey:@"tags"];
     [_postShareite setObject:stuff.title forKey:@"title"];
-    [_postShareite save];
+    
+    
+    [_postShareite saveInBackground];
 }
 
 //获取用户分享列表
@@ -53,11 +65,6 @@ static GetShareDataTool *gs;
                 s.sid = [q valueForKey:@"sid"];
                 s.imtro = [q valueForKey:@"imtro"];
                 s.ingredients = [q valueForKey:@"ingredients"];
-                NSMutableArray *stArr = [NSMutableArray array];
-                for (StepModle *st in [q valueForKey:@"steps"]) {
-                    [stArr addObject:st];
-                }
-                s.steps = stArr;
                 s.tags = [q valueForKey:@"tags"];
                 s.title = [q valueForKey:@"title"];
                 self.mutabArray = [NSMutableArray array];
@@ -78,7 +85,7 @@ static GetShareDataTool *gs;
 -(void)getShareWithUserName:(NSString *)userName PassValue:(PassValue)passVallue
 {
     NSMutableArray *tempArr = [NSMutableArray array];
-    AVQuery *query = [AVQuery queryWithClassName:@"postFavourite"];
+    AVQuery *query = [AVQuery queryWithClassName:@"postShare"];
     [query whereKey:@"userName" equalTo:userName];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
