@@ -11,5 +11,6 @@
 @interface DetailMenuTableViewCell : UITableViewCell
 
 @property (nonatomic,strong)UILabel *menuLabel;
+@property(nonatomic,strong)UIImageView *menuimage;
 
 @end
