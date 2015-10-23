@@ -7,6 +7,7 @@
 //
 
 #import "ShareTableViewController.h"
+#import "ShareDetailViewController.h"
 
 @interface ShareTableViewController ()
 
@@ -16,6 +17,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"我要分享" style:UIBarButtonItemStyleDone target:self action:@selector(rightAction:)];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -29,6 +32,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)rightAction:(UIBarButtonItem *)sender
+{
+    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+    
+    ShareDetailViewController *detail = [[ShareDetailViewController alloc]init];
+    
+    [tempAppDelegate.LeftSlideVC closeLeftView];
+    
+    [tempAppDelegate.mainNavigationController pushViewController:detail animated:YES];
+    
+}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

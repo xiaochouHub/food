@@ -36,7 +36,7 @@
 // 右键"编辑"事件
 -(void)rightAction:(UIBarButtonItem *)sender
 {
-    [self.tableView setEditing:self.tableView.editing animated:YES];
+    [self.tableView setEditing:!self.tableView.editing animated:YES];
 }
 // 是否可以被编辑
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
