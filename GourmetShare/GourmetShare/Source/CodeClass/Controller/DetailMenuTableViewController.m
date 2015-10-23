@@ -11,6 +11,7 @@
 
 @interface DetailMenuTableViewController ()
 @property(nonatomic,strong)NSMutableArray *dataArr;
+@property(nonatomic,strong)NSMutableString *pic_url;
 @end
 
 @implementation DetailMenuTableViewController
@@ -102,12 +103,19 @@
     DetailMenuTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     StuffModle *model = self.dataArr[indexPath.row];
     cell.menuLabel.text = model.title;
+    for (NSMutableString *str in model.albums) {
+        self.pic_url = str;
+    }
+    [cell.menuimage sd_setImageWithURL:[NSURL URLWithString:self.pic_url]];
     cell.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:0.5];
     //cell.menuLabel.text = @"菜单";
     // Configure the cell...
     return cell;
 }
-
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 100;
+}
 
 /*
 // Override to support conditional editing of the table view.
