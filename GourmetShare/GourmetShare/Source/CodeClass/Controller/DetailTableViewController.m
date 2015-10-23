@@ -37,6 +37,8 @@
 
 @property(nonatomic,strong) NSMutableArray *screenshots;//截图cell
 @property(nonatomic,assign) BOOL isShare;//是否点击分享
+@property(nonatomic,assign)NSInteger indexSection;
+
 
 @end
 
@@ -66,6 +68,7 @@
     if (!self.isDownload) {
         [buttonArr addObject:download];
     }
+    self.indexSection = 0;
     self.navigationItem.rightBarButtonItems = buttonArr;
     
     [self p_data];
@@ -351,7 +354,7 @@
 {
     self.screenshots = [NSMutableArray array];
     self.isShare = YES;//点击分享
-    
+    self.indexSection = 0;
     [self.tableView reloadData];
     self.tableView.contentOffset = CGPointMake(0, 0);//从tableview（0，0）处开始截图
     
@@ -464,6 +467,19 @@
 {
     //分享状态开始截图
     if (_isShare) {
+        
+        if (indexPath.section == _indexSection) {
+            [self.tableView beginUpdates];
+            [self.tableView endUpdates];
+            UITableViewHeaderFooterView *headView = [tableView headerViewForSection:indexPath.section];
+            UIImage *tempHeadImage = [self imageWithUIView:headView];
+            if (tempHeadImage != nil) {
+                [_screenshots addObject: tempHeadImage];
+                self.tableView.contentOffset = CGPointMake(0, tableView.contentOffset.y + headView.frame.size.height);
+            }
+            _indexSection ++;
+        }
+        
         [tableView reloadData];//刷新tableview，否则无图
         //获取选中cell
         UITableViewCell *tempCell = [self.tableView cellForRowAtIndexPath:indexPath];
