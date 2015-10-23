@@ -11,6 +11,8 @@
 #import "ShareTableViewController.h"
 #import "DownloadTableViewController.h"
 #import "GetFavouriteDataTool.h"
+#import "MySelfTableViewController.h"
+#import "AboutUsViewController.h"
 
 @interface PrivateListViewController ()<UIAlertViewDelegate>
 
@@ -42,7 +44,12 @@
 {
     AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     NSString *userName = [RegisterDataTool shareRegisterData].LoginName;
-    if (indexPath.row == 1) {
+    if (indexPath.row == 0) {
+        MySelfTableViewController *my = [[MySelfTableViewController alloc]init];
+        [tempAppDelegate.LeftSlideVC closeLeftView];
+        [tempAppDelegate.mainNavigationController pushViewController:my animated:YES];
+    }
+    else if (indexPath.row == 1) {
         if (userName == nil) {
             [self p_showAlertView:@"提示" message:@"未登录"];
         }
@@ -90,7 +97,9 @@
     }
     else if (indexPath.row == 6)
     {
-        
+        AboutUsViewController *us = [[AboutUsViewController alloc]init];
+        [tempAppDelegate.LeftSlideVC closeLeftView];
+        [tempAppDelegate.mainNavigationController pushViewController:us animated:YES];
         
     }
 }
