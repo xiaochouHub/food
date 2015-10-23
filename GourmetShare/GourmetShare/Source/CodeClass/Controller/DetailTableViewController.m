@@ -35,6 +35,9 @@
 
 @property (nonatomic,assign)BOOL isclick; // 收藏是否点击
 
+@property(nonatomic,strong) NSMutableArray *screenshots;//截图cell
+@property(nonatomic,assign) BOOL isShare;//是否点击分享
+
 @end
 
 @implementation DetailTableViewController
@@ -54,11 +57,7 @@
     
     [self.tableView registerClass:[StepTableViewCell class] forCellReuseIdentifier:@"step"];
     [self.tableView registerClass:[BurdenTableViewCell class] forCellReuseIdentifier:@"burden"];
-//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(LeftSAction:)];
-//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonItemAction:)];
-//    UIBarButtonItem *download = [[UIBarButtonItem alloc]initWithTitle:@"下载" style:UIBarButtonItemStylePlain target:self action:@selector(downloadAction:)];
-//    UIBarButtonItem *share = [[UIBarButtonItem alloc]initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(shareAction:)];
-//    UIBarButtonItem *collect = [[UIBarButtonItem alloc]initWithTitle:@"收藏" style:UIBarButtonItemStylePlain target:self action:@selector(collectAction:)];
+
     UIBarButtonItem *download = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"xiazai.png"] style:UIBarButtonItemStylePlain target:self action:@selector(downloadAction:)];
     UIBarButtonItem *share = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"fenxiang.png"] style:UIBarButtonItemStylePlain target:self action:@selector(shareAction:)];
     UIBarButtonItem *collect = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"shoucang.png"] style:UIBarButtonItemStylePlain target:self action:@selector(collectAction:)];
@@ -73,6 +72,7 @@
     self.flag = YES;
     self.height = 230;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.isShare = NO;//默认分享状态为NO
 //    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"back.jpg"]]];
     
 
@@ -246,7 +246,7 @@
         title.nameLabel.text = self.stuffmodel.title;
 
         title.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:0.5];
-
+        title.selectionStyle = UITableViewCellSelectionStyleNone;
         return title;
     }
     else if(indexPath.section == 1)
@@ -262,7 +262,7 @@
         self.height = tempHeight;
         imtro.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:0.5];
 
-
+        imtro.selectionStyle = UITableViewCellSelectionStyleNone;
         return imtro;
 
     }
@@ -274,7 +274,7 @@
         tags.tagsLabel.text = self.stuffmodel.tags;
 
         tags.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:0.5];
-
+        tags.selectionStyle = UITableViewCellSelectionStyleNone;
         return tags;
     }
     else if (indexPath.section == 3)
@@ -290,7 +290,7 @@
         ingredients.numLabel.text = [arr objectAtIndex:1];
 
         ingredients.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:0.5];
-
+        ingredients.selectionStyle = UITableViewCellSelectionStyleNone;
         return ingredients;
     }
     else if (indexPath.section == 4)
@@ -301,6 +301,7 @@
         burden.nameLabel.text = [arr1 objectAtIndex:0];
         burden.numLabel.text = [arr1 objectAtIndex:1];
         burden.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:0.5];
+        burden.selectionStyle = UITableViewCellSelectionStyleNone;
         return burden;
     }
     else if(indexPath.section == 5)
@@ -318,13 +319,10 @@
         self.stepheight = tempHeight;
         
         step.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:0.5];
-        
+        step.selectionStyle = UITableViewCellSelectionStyleNone;
         return step;
     }
     return 0;
-    
-    
-    
     
     // Configure the cell...
     
@@ -351,7 +349,42 @@
 // 分享
 -(void)shareAction:(UIBarButtonItem *)sender
 {
+    self.screenshots = [NSMutableArray array];
+    self.isShare = YES;//点击分享
+    self.tableView.contentOffset = CGPointMake(0, 0);//从tableview（0，0）处开始截图
     
+    //获取tableviewContentSize大小
+    CGRect shareContentSize = CGRectMake(0, 0, self.tableView.contentSize.width, self.tableView.contentSize.height);
+    
+    //获取tableview的indexPaths集合
+    NSArray *indexPaths = [self.tableView indexPathsForRowsInRect:shareContentSize];
+    
+    for (NSIndexPath *tempImdexPath in indexPaths) {
+        //循环选中每个cell
+        [self.tableView selectRowAtIndexPath:tempImdexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+        //触发选中事件
+        if ([self.tableView.delegate respondsToSelector:@selector(tableView:didSelectRowAtIndexPath:)]) {
+            [self.tableView.delegate tableView:self.tableView didSelectRowAtIndexPath:tempImdexPath];
+        }
+    }
+    
+    //合成完整图片
+    UIImage *image = [self verticalImageFromArray:_screenshots];
+    
+    //分享截图结束
+    self.isShare = NO;
+    
+    //调整contentOffset
+    self.tableView.contentOffset = CGPointMake(0, self.tableView.contentOffset.y -200);
+    
+    NSFileManager *managerFile = [NSFileManager defaultManager];
+    
+    NSString *filePath = @"/Users/jang/Desktop/项目资源/cell.png";
+    
+    if (![managerFile fileExistsAtPath:filePath]) {
+        //将图片写到Documents文件
+        [UIImagePNGRepresentation(image)writeToFile: filePath  atomically:YES];
+    }
 }
 // 收藏
 -(void)collectAction:(UIBarButtonItem *)sender
@@ -364,6 +397,72 @@
     {
         if ([[GetFavouriteDataTool shareFavouriteData]podFavouriteWith:self.stuffmodel UserName:userName]) {
             [self p_showAlertView:@"提示" message:@"已收藏"];
+        }
+    }
+}
+
+
+- (UIImage*) imageWithUIView:(UIView*) view{
+    // 创建一个bitmap的context
+    // 并把它设置成为当前正在使用的context
+    UIGraphicsBeginImageContext(view.bounds.size);
+    CGContextRef currnetContext = UIGraphicsGetCurrentContext();
+    //[view.layer drawInContext:currnetContext];
+    [view.layer renderInContext:currnetContext];
+    // 从当前context中创建一个改变大小后的图片
+    UIImage* image = UIGraphicsGetImageFromCurrentImageContext();
+    // 使当前的context出堆栈
+    UIGraphicsEndImageContext();
+    return image;
+}
+
+- (UIImage *)verticalImageFromArray:(NSArray *)imagesArray
+{
+    UIImage *unifiedImage = nil;
+    CGSize totalImageSize = [self verticalAppendedTotalImageSizeFromImagesArray:imagesArray];
+    UIGraphicsBeginImageContextWithOptions(totalImageSize, NO, 0.f);
+    // For each image found in the array, create a new big image vertically
+    int imageOffsetFactor = 0;
+    for (UIImage *img in imagesArray) {
+        [img drawAtPoint:CGPointMake (0, imageOffsetFactor)];
+        imageOffsetFactor += img.size.height;
+    }
+    
+    unifiedImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return unifiedImage;
+}
+
+- (CGSize)verticalAppendedTotalImageSizeFromImagesArray:(NSArray *)imagesArray
+{
+    CGSize totalSize = CGSizeZero;
+    for (UIImage *im in imagesArray) {
+        CGSize imSize = [im size];
+        totalSize.height += imSize.height;
+        // The total width is gonna be always the wider found on the array
+        totalSize.width = MAX(totalSize.width, imSize.width);
+    }
+    return totalSize;
+}
+
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //分享状态开始截图
+    if (_isShare) {
+        [tableView reloadData];//刷新tableview，否则无图
+        
+        //获取选中cell
+        UITableViewCell *tempCell = [self.tableView cellForRowAtIndexPath:indexPath];
+        
+        //获取当前cell截图
+        UIImage *tempImage = [self imageWithUIView:tempCell];
+
+        //移动contentOffset加载下一行，否则cell为nil
+        self.tableView.contentOffset = CGPointMake(0, self.tableView.contentOffset.y +tempCell.frame.size.height);
+        
+        if (tempImage != nil) {
+            [_screenshots addObject: tempImage];//加入截图数组
         }
     }
 }
