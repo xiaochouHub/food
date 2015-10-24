@@ -34,13 +34,22 @@
 
 -(void)rightAction:(UIBarButtonItem *)sender
 {
-    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-    
-    ShareDetailViewController *detail = [[ShareDetailViewController alloc]init];
-    
-    [tempAppDelegate.LeftSlideVC closeLeftView];
-    
-    [tempAppDelegate.mainNavigationController pushViewController:detail animated:YES];
+    if ([RegisterDataTool shareRegisterData].LoginName == nil) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您还未登陆" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+        
+    }
+    else
+    {
+        AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+        
+        ShareDetailViewController *detail = [[ShareDetailViewController alloc]init];
+        
+        [tempAppDelegate.LeftSlideVC closeLeftView];
+        
+        [tempAppDelegate.mainNavigationController pushViewController:detail animated:YES];
+
+    }
     
 }
 #pragma mark - Table view data source

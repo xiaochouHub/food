@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class StuffModle;
 @interface MoreShareViewController : UIViewController
-
+@property(nonatomic,strong)StuffModle *stuff;
 @end

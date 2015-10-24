@@ -8,13 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import <AVOSCloud/AVOSCloud.h>
-
+@class UserInfoModle;
 @interface RegisterDataTool : NSObject
 
 
 @property (nonatomic,strong)AVObject *postRegister;
 @property (nonatomic,strong)NSString *LoginName;
 @property (nonatomic,strong)AVUser *user;
+@property (nonatomic,strong)UserInfoModle *userInfo;
+
 
 //单例初始化工具类
 +(RegisterDataTool *)shareRegisterData;
@@ -36,5 +38,8 @@
 
 //忘记密码
 -(BOOL)ForgetPasswordWithEmail:(NSString *)aEmail;
+
+//修改资料
+-(BOOL)ChangeUserInfoWith:(UserInfoModle *)userInfo;
 
 @end

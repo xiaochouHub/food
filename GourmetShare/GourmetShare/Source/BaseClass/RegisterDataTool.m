@@ -7,6 +7,7 @@
 //
 
 #import "RegisterDataTool.h"
+#import "UserInfoModle.h"
 static RegisterDataTool *rd;
 //static NSString *LoginName = nil;
 @implementation RegisterDataTool
@@ -87,7 +88,12 @@ static RegisterDataTool *rd;
     _user.username = regist.emailText;
     _user.password = regist.passWordText;
     _user.email = regist.emailText;
-    [_user setObject:regist.userNameText forKey:@"nickname"];
+    [_user setObject:regist.userNameText forKey:@"nickname"];//昵称
+    [_user setObject:nil forKey:@"headImage"];//头像
+    [_user setObject:nil forKey:@"gender"];//性别
+    [_user setObject:nil forKey:@"hobby"];//爱好
+    [_user setObject:nil forKey:@"likeFood"];//喜欢的菜
+    [_user setObject:nil forKey:@"skill"];//会做的菜
     NSError *error = [[NSError alloc]init];
     if ([_user signUp:&error]) {
         return 2;//注册成功
@@ -101,21 +107,43 @@ static RegisterDataTool *rd;
 {
     self.LoginName = [NSString string];
     NSError *error = [[NSError alloc]init];
+    AVQuery *query = [AVUser query];
+    self.userInfo= [[UserInfoModle alloc]init];
     
+    [query whereKey:@"nickname" equalTo:userName];
     //邮箱登陆
     if ([AVUser logInWithUsername:userName password:password error:&error]) {
         _LoginName = userName;
+        AVObject *q = [query findObjects][0];
+
+        _userInfo.headImage = [q valueForKey:@"headImage"];
+        _userInfo.nickname = [q valueForKey:@"nickname"];
+        _userInfo.email = [q valueForKey:@"email"];
+        _userInfo.gender = [q valueForKey:@"gender"];
+        _userInfo.hobby = [q valueForKey:@"hobby"];
+        _userInfo.likeFood = [q valueForKey:@"likeFood"];
+        _userInfo.skill = [q valueForKey:@"skill"];
+        
         return YES;
     }
+
     
     //用户名登陆
-    AVQuery *query = [AVUser query];
-    [query whereKey:@"username" equalTo:userName];
     if ([query findObjects].count >0) {
         AVQuery *q = [query findObjects][0];
         NSString *email = [q valueForKey:@"email"];
         if ([AVUser logInWithUsername:email password:password error:&error]) {
+            
             _LoginName = email;
+            
+            _userInfo.headImage = [q valueForKey:@"headImage"];
+            _userInfo.nickname = [q valueForKey:@"nickname"];
+            _userInfo.email = [q valueForKey:@"email"];
+            _userInfo.gender = [q valueForKey:@"gender"];
+            _userInfo.hobby = [q valueForKey:@"hobby"];
+            _userInfo.likeFood = [q valueForKey:@"likeFood"];
+            _userInfo.skill = [q valueForKey:@"skill"];
+            
             return YES;
         }
     }
@@ -142,6 +170,34 @@ static RegisterDataTool *rd;
     NSError *error = [[NSError alloc]init];
     
     return [AVUser requestPasswordResetForEmail:aEmail error:&error];
+}
+
+//修改资料
+-(BOOL)ChangeUserInfoWith:(UserInfoModle *)userInfo
+{
+    AVQuery *query = [AVUser query];
+    [query whereKey:@"username" equalTo:_LoginName];
+    
+    NSLog(@"%ld",[query findObjects].count);
+    
+    NSString *objectId = [[query findObjects][0] valueForKey:@"objectId"];
+    
+    AVObject *post = [AVObject objectWithoutDataWithClassName:@"_User" objectId:objectId];
+    [post setObject:userInfo.nickname forKey:@"nickname"];
+    [post setObject:userInfo.email forKey:@"email"];
+    [post setObject:userInfo.gender forKey:@"gender"];
+    [post setObject:userInfo.hobby forKey:@"hobby"];
+    [post setObject:userInfo.likeFood forKey:@"likeFood"];
+    [post setObject:userInfo.skill forKey:@"skill"];
+    NSError *error = [[NSError alloc]init];
+    if ([post save:&error]) {
+        _userInfo = userInfo;
+        return YES;
+    }else
+    {
+        return NO;
+    }
+    
 }
 
 @end
