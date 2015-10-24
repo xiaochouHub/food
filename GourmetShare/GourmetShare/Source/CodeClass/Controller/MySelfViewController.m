@@ -91,7 +91,6 @@
             _userInfo = tempInfo;
         }
     }
-    
 }
 
 - (void)didReceiveMemoryWarning {
