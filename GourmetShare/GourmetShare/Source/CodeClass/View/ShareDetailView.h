@@ -18,14 +18,16 @@
 
 @property (nonatomic,strong)UILabel *nameLabel;
 
-@property (nonatomic,strong)UITextField *nameText; // 菜名
+@property (nonatomic,strong)UITextView *nameText; // 菜名
 
 @property (nonatomic,strong)UILabel *materLabel;
 
-@property (nonatomic,strong)UITextField *materialText; // 材料和配料
+@property (nonatomic,strong)UITextView *materialText; // 材料和配料
 
 @property (nonatomic,strong)UILabel *stepLabel;
 
-@property (nonatomic,strong)UITextField *stepText; // 制作步骤
+@property (nonatomic,strong)UITextView *stepText; // 制作步骤
+
+@property (nonatomic,strong)UIButton *shareButton; // 分享按键
 
 @end
