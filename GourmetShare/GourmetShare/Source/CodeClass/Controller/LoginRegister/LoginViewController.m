@@ -82,7 +82,7 @@
 {
     UIAlertView *customAlertView = [[UIAlertView alloc] initWithTitle:@"请输入您的注册邮箱" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     
-    [customAlertView setAlertViewStyle:UIAlertViewStyleLoginAndPasswordInput];
+    [customAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
 
     UITextField *emailField = [customAlertView textFieldAtIndex:0];
     emailField.placeholder = @"邮箱";
