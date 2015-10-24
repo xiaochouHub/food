@@ -8,6 +8,7 @@
 
 #import "GourmetMainViewController.h"
 #import "MainView.h"
+#import "MoreShareTableViewController.h"
 
 @interface GourmetMainViewController ()<SDCycleScrollViewDelegate>
 
@@ -156,7 +157,7 @@
     
     // 添加"更多"事件
     [self.mView.moreButton1 addTarget:self action:@selector(moreButton1Action:) forControlEvents:UIControlEventTouchUpInside];
-    
+    [self.mView.moreButton2 addTarget:self action:@selector(moreButton2Action:) forControlEvents:UIControlEventTouchUpInside];
     
     [self setupRefresh];
     
@@ -310,7 +311,7 @@
         
     }];
     [self nethandle];
-    self.mView.contentSize = CGSizeMake(self.mView.bounds.size.width, self.mView.bounds.size.height + 50);
+    self.mView.contentSize = CGSizeMake(self.mView.bounds.size.width, self.mView.bounds.size.height + 120);
     
     
     // 添加"更多"事件
@@ -388,6 +389,16 @@
     
     [tempAppDelegate.mainNavigationController pushViewController:all animated:YES];
     
+}
+-(void)moreButton2Action:(UIButton *)sender
+{
+    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+    
+    MoreShareTableViewController *more = [[MoreShareTableViewController alloc]init];
+    
+    [tempAppDelegate.LeftSlideVC closeLeftView];
+    
+    [tempAppDelegate.mainNavigationController pushViewController:more animated:YES];
 }
 
 
