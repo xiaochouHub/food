@@ -16,6 +16,6 @@
 
 #import "UIImageView+WebCache.h"
 #import "UMSocial.h"
-
+#import "MBProgressHUD.h"
 
 #endif

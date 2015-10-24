@@ -14,6 +14,8 @@
 
 @property (nonatomic,strong)ShareDetailView *share;
 @property(nonatomic,assign)BOOL isFullScreen;
+@property(nonatomic,assign)BOOL flag;
+@property(nonatomic,strong)MBProgressHUD *hud;
 
 @end
 
@@ -51,20 +53,44 @@
     [self.share.materialText setInputAccessoryView:topView];
     [self.share.nameText setInputAccessoryView:topView];
 }
+// 第三方小菊花
+- (void)p_setupProgressHud
+{
+    self.hud = [[MBProgressHUD alloc] initWithView:self.view];
+    _hud.frame = self.view.bounds;
+    _hud.minSize = CGSizeMake(100, 100);
+    _hud.mode = MBProgressHUDModeIndeterminate;
+    [self.view addSubview:_hud];
+    
+    [_hud show:YES];
+}
+// 分享
 -(void)shareAction:(UIButton *)sender
 {
-    if ([RegisterDataTool shareRegisterData].LoginName == nil) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您还为登陆" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    if ([self.share.nameText.text isEqualToString:@""] || [self.share.stepText.text isEqualToString:@""]) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"不能输入为空,请填写完整再分享" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alert show];
         return;
     }
     else
     {
+        [self p_setupProgressHud];
         StuffModle *model = [[StuffModle alloc]init];
         model.title = self.share.nameText.text;
         model.imtro =self.share.stepText.text;
         model.ingredients = self.share.materialText.text;
-        [[GetShareDataTool shareShareData]podShareWith:model UserName:[RegisterDataTool shareRegisterData].LoginName Image:self.share.shareImage.image];
+        self.flag = [[GetShareDataTool shareShareData]podShareWith:model UserName:[RegisterDataTool shareRegisterData].LoginName Image:self.share.shareImage.image];
+        
+        if (self.flag) {
+            UIAlertView * suc = [[UIAlertView alloc]initWithTitle:@"提示" message:@"分享成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [suc show];
+        }
+        else
+        {
+            UIAlertView * fail = [[UIAlertView alloc]initWithTitle:@"提示" message:@"分享失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [fail show];
+        }
+        self.hud.hidden = YES;
     }
 }
 
