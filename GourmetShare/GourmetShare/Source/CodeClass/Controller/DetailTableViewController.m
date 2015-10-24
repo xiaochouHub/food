@@ -376,7 +376,7 @@
     [self.tableView reloadData];
     //合成完整图片
     UIImage *image = [self verticalImageFromArray:_screenshots];
-    
+    image = [UIImage imageWithData:UIImageJPEGRepresentation(image, 0.1)];// 比例压缩
     //分享截图结束
     self.isShare = NO;
     

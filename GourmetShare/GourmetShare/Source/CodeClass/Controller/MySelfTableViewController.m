@@ -20,9 +20,9 @@
     
     [self.tableView registerClass:[MySelfImageTableViewCell class] forCellReuseIdentifier:@"cell1"];
     [self.tableView registerClass:[MySelfLabelTableViewCell class] forCellReuseIdentifier:@"cell2"];
-    UINavigationBar *bar = self.navigationController.navigationBar;
-    [bar setBackgroundImage:[UIImage imageNamed:@"1.jpg"] forBarMetrics:UIBarMetricsCompactPrompt];
-    self.extendedLayoutIncludesOpaqueBars = YES;
+//    UINavigationBar *bar = self.navigationController.navigationBar;
+//    [bar setBackgroundImage:[UIImage imageNamed:@"1.jpg"] forBarMetrics:UIBarMetricsCompactPrompt];
+//    self.extendedLayoutIncludesOpaqueBars = YES;
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -60,7 +60,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         MySelfImageTableViewCell *cell1 = [tableView dequeueReusableCellWithIdentifier:@"cell1" ];
-        cell1.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"orangeback.jpg"]];
+        cell1.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"purpleback.jpg"]];
         return cell1;
     }
     else
@@ -90,7 +90,7 @@
         }
         if (indexPath.row == 6) {
             cell2.titleLabel.text = @"会做的菜:";
-            cell2.textLabeltext.text = @".........";
+            cell2.textLabeltext.text = @"........";
         }
         return cell2;
     }
