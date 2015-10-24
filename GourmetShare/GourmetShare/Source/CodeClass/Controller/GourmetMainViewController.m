@@ -162,6 +162,7 @@
     
     
     [self setupRefresh];
+    
 //    self.mView.backgroundColor = [UIColor clearColor];
     
 
