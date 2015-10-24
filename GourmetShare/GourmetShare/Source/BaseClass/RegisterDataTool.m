@@ -106,26 +106,30 @@ static RegisterDataTool *rd;
 {
     self.LoginName = [NSString string];
     NSError *error = [[NSError alloc]init];
-    AVQuery *query = [AVUser query];
     self.userInfo= [[UserInfoModle alloc]init];
-    
-    [query whereKey:@"nickname" equalTo:userName];
     //邮箱登陆
     if ([AVUser logInWithUsername:userName password:password error:&error]) {
         _LoginName = userName;
-        AVObject *q = [query findObjects][0];
+        AVQuery *queryemail = [AVUser query];
+        [queryemail whereKey:@"email" equalTo:userName];
+        NSLog(@"%ld",[queryemail findObjects].count);
+        if ([queryemail findObjects].count > 0) {
+            
+            AVObject *q = [queryemail findObjects][0];
 
-        _userInfo.headImage = [q valueForKey:@"headImage"];
-        _userInfo.nickname = [q valueForKey:@"nickname"];
-        _userInfo.email = [q valueForKey:@"email"];
-        _userInfo.gender = [q valueForKey:@"gender"];
-        _userInfo.hobby = [q valueForKey:@"hobby"];
-        _userInfo.likeFood = [q valueForKey:@"likeFood"];
-        _userInfo.skill = [q valueForKey:@"skill"];
-        
+            _userInfo.headImage = [q valueForKey:@"headImage"];
+            _userInfo.nickname = [q valueForKey:@"nickname"];
+            _userInfo.email = [q valueForKey:@"email"];
+            _userInfo.gender = [q valueForKey:@"gender"];
+            _userInfo.hobby = [q valueForKey:@"hobby"];
+            _userInfo.likeFood = [q valueForKey:@"likeFood"];
+            _userInfo.skill = [q valueForKey:@"skill"];
+        }
+
         return YES;
     }
-    
+    AVQuery *query = [AVUser query];
+    [query whereKey:@"nickname" equalTo:userName];
     //用户名登陆
     if ([query findObjects].count >0) {
         AVQuery *q = [query findObjects][0];
