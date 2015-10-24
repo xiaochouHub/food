@@ -30,7 +30,7 @@ static GetShareDataTool *gs;
     [formatter setDateFormat:@"yyyy-MM-dd-HH-mm-ss"];
     NSString * strdate = [formatter stringFromDate:date];
     NSString *sid = [NSString stringWithFormat:@"%@-%@",userName,strdate];
-    NSString *fileName = [NSString stringWithFormat:@"%@-%@.PNG",userName,strdate];
+    NSString *fileName = [NSString stringWithFormat:@"%@-%@.JPEG",userName,strdate];
     NSData *imageData = UIImageJPEGRepresentation(image, 0.05);
     AVFile *file = [AVFile fileWithName:fileName data:imageData];
     [file save];

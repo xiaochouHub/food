@@ -13,4 +13,5 @@
 @property (nonatomic,strong)LTView *passWordLT;
 @property (nonatomic,strong)UIButton *loginButton;
 @property (nonatomic,strong)UIButton *registButton;
+@property (nonatomic,strong)UIButton *changeButton;
 @end

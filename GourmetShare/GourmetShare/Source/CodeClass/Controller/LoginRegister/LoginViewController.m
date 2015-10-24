@@ -11,7 +11,7 @@
 #import "RegisterViewController.h"
 #import "MainPageViewController.h"
 #import "LTView.h"
-@interface LoginViewController ()
+@interface LoginViewController ()<UIAlertViewDelegate> 
 @property (nonatomic,strong) UIImageView *backImage;
 @property (nonatomic,strong)LoginView *lv;
 @end
@@ -33,6 +33,7 @@
     
     [_lv.registButton addTarget:self action:@selector(registButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [_lv.loginButton addTarget:self action:@selector(loginButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_lv.changeButton addTarget:self action:@selector(changeButton:) forControlEvents:UIControlEventTouchUpInside];
     //设置输入框的代理
     [_lv.userNameLT setTextFieldDelegate:self];
     [_lv.passWordLT setTextFieldDelegate:self];
@@ -47,13 +48,15 @@
 
 -(void)loginButtonAction:(UIButton *)sender
 {
+    NSString *name = [_lv.userNameLT inputFieldText];
+    NSString *password = [_lv.passWordLT inputFieldText];
     //登录时，用户名和密码不能为空
-    if ([[_lv.userNameLT inputFieldText] isEqualToString:@""] || [[_lv.passWordLT inputFieldText]  isEqualToString:@""]) {
+    if ([name isEqualToString:@""] || [password isEqualToString:@""]) {
         
         [self p_showAlertView:@"提示" message:@"用户名和密码不能为空"];
         return;
     }
-    
+    /*
     NSString *passWord = [[RegisterDataTool shareRegisterData]
                           getLoginWithName:[_lv.userNameLT inputFieldText]];
     if ([[_lv.passWordLT inputFieldText] isEqualToString:passWord]) {
@@ -64,7 +67,27 @@
     {
         [self p_showAlertView:@"提示" message:@"登录名或密码错误"];
     }
+     */
+    if ([[RegisterDataTool shareRegisterData]LoginWithUserName:name Password:password]) {
+        MainPageViewController *mvc = [[MainPageViewController alloc]init];
+        [self.navigationController pushViewController:mvc animated:YES];
+    }
+    else
+    {
+        [self p_showAlertView:@"提示" message:@"登录名或密码错误"];
+    }
+    
 }
+-(void)changeButton:(UIButton *)sender
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@" " delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"修改",nil];
+    UITextField * txt = [[UITextField alloc] init];
+    txt.backgroundColor = [UIColor whiteColor];
+    txt.frame = CGRectMake(alert.center.x+65,alert.center.y+48, 150,23);
+    [alert addSubview:txt];
+    [alert show];
+}
+
 
 //显示提示框
 - (void)p_showAlertView:(NSString *)title message:(NSString *)message
