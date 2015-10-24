@@ -126,7 +126,6 @@ static RegisterDataTool *rd;
         
         return YES;
     }
-
     
     //用户名登陆
     if ([query findObjects].count >0) {
@@ -150,7 +149,6 @@ static RegisterDataTool *rd;
     
     return NO;
 }
-
 
 //修改密码
 -(BOOL)ChangePasswordWithNewPassword:(NSString *)newPassword

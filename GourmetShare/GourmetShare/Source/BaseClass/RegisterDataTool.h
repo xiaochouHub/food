@@ -15,7 +15,7 @@
 @property (nonatomic,strong)AVObject *postRegister;
 @property (nonatomic,strong)NSString *LoginName;
 @property (nonatomic,strong)AVUser *user;
-@property (nonatomic,strong)UserInfoModle *userInfo;
+@property (nonatomic,strong)UserInfoModle *userInfo;//用户信息
 
 
 //单例初始化工具类
