@@ -12,7 +12,6 @@ static RegisterDataTool *rd;
 //static NSString *LoginName = nil;
 @implementation RegisterDataTool
 
-
 +(RegisterDataTool *)shareRegisterData
 {
 

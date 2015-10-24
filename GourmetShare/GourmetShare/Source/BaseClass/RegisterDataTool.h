@@ -13,7 +13,7 @@
 
 
 @property (nonatomic,strong)AVObject *postRegister;
-@property (nonatomic,strong)NSString *LoginName;
+@property (nonatomic,strong)NSString *LoginName;//登录用户
 @property (nonatomic,strong)AVUser *user;
 @property (nonatomic,strong)UserInfoModle *userInfo;//用户信息
 
