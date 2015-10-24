@@ -37,117 +37,114 @@
     return num;
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
-    
-}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     
-    // 轮播图图片数组
-    self.picArr = [NSMutableArray array];
-    // 轮播图标题
-    self.titleArr = [NSMutableArray array];
-
-    // 给imageview添加点击手势
-    self.tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction)];
-    self.mView.oneImageView1.userInteractionEnabled = YES;
-    [self.mView.oneImageView1 addGestureRecognizer:_tap];
-
-    self.tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction1)];
-    self.mView.twoImageView1.userInteractionEnabled = YES;
-    [self.mView.twoImageView1 addGestureRecognizer:_tap1];
-
-    
-    self.tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction2)];
-    self.mView.threeImageView1.userInteractionEnabled = YES;
-    [self.mView.threeImageView1 addGestureRecognizer:_tap2];
-
-    self.fdataArr = [NSMutableArray array];
-    self.dataArr = [NSMutableArray array];
-    self.number = [self randomnum];
-    [[GetFoodDataTool shareGetFoodData]getListWithParentId:[NSMutableString stringWithFormat:@"%ld",self.number] PassValue:^(NSArray *array) {
-        self.fdataArr = (NSMutableArray *)array;
-            FoodListModle *model = self.fdataArr[0];
-            [[GetFoodDataTool shareGetFoodData]getFoodListInfoWithId:model.lid PassValue:^(NSArray *array) {
-                
-                self.dataArr = (NSMutableArray *)array;
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    
-                    StuffModle *model = [[StuffModle alloc]init];
-                    model =self.dataArr[4];
-                    for (NSMutableString *str in model.albums) {
-                        self.pic_url = str;
-                    }
-                    
-                    [self.mView.oneImageView1 sd_setImageWithURL:[NSURL URLWithString:self.pic_url]];
-                    self.mView.oneLabel1.text = model.title;
-                    
-                    
-                    StuffModle *model1 = [[StuffModle alloc]init];
-                    model1 =self.dataArr[5];
-                    for (NSMutableString *str in model1.albums) {
-                        self.pic_url = str;
-                    }
-                    
-                    [self.mView.twoImageView1 sd_setImageWithURL:[NSURL URLWithString:self.pic_url]];
-                    self.mView.twoLabel1.text = model1.title;
-                    
-                    
-                    StuffModle *model2 = [[StuffModle alloc]init];
-                    model2 =self.dataArr[3];
-                    for (NSMutableString *str in model2.albums) {
-                        self.pic_url = str;
-                    }
-                    
-                    [self.mView.threeImageView1 sd_setImageWithURL:[NSURL URLWithString:self.pic_url]];
-                    self.mView.threeLabel1.text = model2.title;
-                    
-                    // 轮播图数据
-                    StuffModle *model3 = self.dataArr[0];
-                    for (NSMutableString *str in model3.albums) {
-                        self.pic_url = str;
-                        UIImage *img1 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.pic_url]]];
-                        [self.picArr addObject:img1];
-                        [self.titleArr addObject:model3.title];
-                        
-                        
-                    }
-                    
-                    StuffModle *model4 = self.dataArr[1];
-                    for (NSMutableString *str in model4.albums) {
-                        self.pic_url = str;
-                        UIImage *img2 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.pic_url]]];
-                        [self.picArr addObject:img2];
-                        [self.titleArr addObject:model4.title];
-                        
-                    }
-                    
-                    StuffModle *model5 = self.dataArr[2];
-                    for (NSMutableString *str in model5.albums) {
-                        self.pic_url = str;
-                        UIImage *img3 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.pic_url]]];
-                        [self.picArr addObject:img3];
-                        [self.titleArr addObject:model5.title];
-                        
-                    }
-                    
-                    self.view1 = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kScreenWidth, 200) imagesGroup:self.picArr];
-                    self.view1.titlesGroup = self.titleArr;
-                    self.view1.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
-                    self.view1.delegate = self;
-                    [self.view addSubview:_view1];
-                    // 断网处理
-                    [self nethandle];
-                });
-                
-                
-                
-            }];
-        
-    }];
+//    // 轮播图图片数组
+//    self.picArr = [NSMutableArray array];
+//    // 轮播图标题
+//    self.titleArr = [NSMutableArray array];
+//
+//    // 给imageview添加点击手势
+//    self.tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction)];
+//    self.mView.oneImageView1.userInteractionEnabled = YES;
+//    [self.mView.oneImageView1 addGestureRecognizer:_tap];
+//
+//    self.tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction1)];
+//    self.mView.twoImageView1.userInteractionEnabled = YES;
+//    [self.mView.twoImageView1 addGestureRecognizer:_tap1];
+//
+//    
+//    self.tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction2)];
+//    self.mView.threeImageView1.userInteractionEnabled = YES;
+//    [self.mView.threeImageView1 addGestureRecognizer:_tap2];
+//
+//    self.fdataArr = [NSMutableArray array];
+//    self.dataArr = [NSMutableArray array];
+//    self.number = [self randomnum];
+//    [[GetFoodDataTool shareGetFoodData]getListWithParentId:[NSMutableString stringWithFormat:@"%ld",self.number] PassValue:^(NSArray *array) {
+//        self.fdataArr = (NSMutableArray *)array;
+//            FoodListModle *model = self.fdataArr[0];
+//            [[GetFoodDataTool shareGetFoodData]getFoodListInfoWithId:model.lid PassValue:^(NSArray *array) {
+//                
+//                self.dataArr = (NSMutableArray *)array;
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    
+//                    StuffModle *model = [[StuffModle alloc]init];
+//                    model =self.dataArr[4];
+//                    for (NSMutableString *str in model.albums) {
+//                        self.pic_url = str;
+//                    }
+//                    
+//                    [self.mView.oneImageView1 sd_setImageWithURL:[NSURL URLWithString:self.pic_url]];
+//                    self.mView.oneLabel1.text = model.title;
+//                    
+//                    
+//                    StuffModle *model1 = [[StuffModle alloc]init];
+//                    model1 =self.dataArr[5];
+//                    for (NSMutableString *str in model1.albums) {
+//                        self.pic_url = str;
+//                    }
+//                    
+//                    [self.mView.twoImageView1 sd_setImageWithURL:[NSURL URLWithString:self.pic_url]];
+//                    self.mView.twoLabel1.text = model1.title;
+//                    
+//                    
+//                    StuffModle *model2 = [[StuffModle alloc]init];
+//                    model2 =self.dataArr[3];
+//                    for (NSMutableString *str in model2.albums) {
+//                        self.pic_url = str;
+//                    }
+//                    
+//                    [self.mView.threeImageView1 sd_setImageWithURL:[NSURL URLWithString:self.pic_url]];
+//                    self.mView.threeLabel1.text = model2.title;
+//                    
+//                    // 轮播图数据
+//                    StuffModle *model3 = self.dataArr[0];
+//                    for (NSMutableString *str in model3.albums) {
+//                        self.pic_url = str;
+//                        UIImage *img1 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.pic_url]]];
+//                        [self.picArr addObject:img1];
+//                        [self.titleArr addObject:model3.title];
+//                        
+//                        
+//                    }
+//                    
+//                    StuffModle *model4 = self.dataArr[1];
+//                    for (NSMutableString *str in model4.albums) {
+//                        self.pic_url = str;
+//                        UIImage *img2 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.pic_url]]];
+//                        [self.picArr addObject:img2];
+//                        [self.titleArr addObject:model4.title];
+//                        
+//                    }
+//                    
+//                    StuffModle *model5 = self.dataArr[2];
+//                    for (NSMutableString *str in model5.albums) {
+//                        self.pic_url = str;
+//                        UIImage *img3 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.pic_url]]];
+//                        [self.picArr addObject:img3];
+//                        [self.titleArr addObject:model5.title];
+//                        
+//                    }
+//                    
+//                    self.view1 = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kScreenWidth, 200) imagesGroup:self.picArr];
+//                    self.view1.titlesGroup = self.titleArr;
+//                    self.view1.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
+//                    self.view1.delegate = self;
+//                    [self.view addSubview:_view1];
+//                    // 断网处理
+//                    [self nethandle];
+//                });
+//                
+//                
+//                
+//            }];
+//        
+//    }];
     [self nethandle];
     self.mView.contentSize = CGSizeMake(self.mView.bounds.size.width, self.mView.bounds.size.height + 50);
     
@@ -315,11 +312,6 @@
     [self nethandle];
     self.mView.contentSize = CGSizeMake(self.mView.bounds.size.width, self.mView.bounds.size.height + 50);
     
-    // 设置轮播图
-    //NSArray *title = @[@"1",@"2",@"3",@"4",@"5"];
-    // self.mView.mainCycleScrollView.titlesGroup = title;
-    //self.mView.mainCycleScrollView.delegate = self;
-    //self.mView.mainCycleScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
     
     // 添加"更多"事件
     [self.mView.moreButton1 addTarget:self action:@selector(moreButton1Action:) forControlEvents:UIControlEventTouchUpInside];
