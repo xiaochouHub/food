@@ -8,7 +8,7 @@
 
 #import "MoreShareViewController.h"
 #import "MoreShareView.h"
-
+#import "GetShareDataTool.h"
 @interface MoreShareViewController ()
 
 @property (nonatomic,strong)MoreShareView *more;
@@ -20,10 +20,21 @@
 {
     self.more = [[MoreShareView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
     self.view = _more;
+    
+    
 }
-
+-(void)p_data
+{
+    self.more.nameLabel.text = self.stuff.title;
+    [self.more.myImage sd_setImageWithURL:[NSURL URLWithString:self.stuff.albums[0]]];
+    self.more.materLabel.text = self.stuff.ingredients;
+    self.more.stepLabel.text = self.stuff.imtro;
+    NSLog(@"===%@",self.stuff.imtro);
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.more.back.contentSize  = CGSizeMake(kScreenWidth, 900);
+    [self p_data];
     // Do any additional setup after loading the view.
 }
 
