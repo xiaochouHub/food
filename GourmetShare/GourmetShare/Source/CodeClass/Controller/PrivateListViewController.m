@@ -13,6 +13,7 @@
 #import "GetFavouriteDataTool.h"
 #import "MySelfTableViewController.h"
 #import "AboutUsViewController.h"
+#import "MySelfViewController.h"
 
 @interface PrivateListViewController ()<UIAlertViewDelegate>
 
@@ -45,7 +46,7 @@
     AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     NSString *userName = [RegisterDataTool shareRegisterData].LoginName;
     if (indexPath.row == 0) {
-        MySelfTableViewController *my = [[MySelfTableViewController alloc]init];
+        MySelfViewController *my = [[MySelfViewController alloc]init];
         [tempAppDelegate.LeftSlideVC closeLeftView];
         [tempAppDelegate.mainNavigationController pushViewController:my animated:YES];
     }

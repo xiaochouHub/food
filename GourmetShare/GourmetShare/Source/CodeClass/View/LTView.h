@@ -18,6 +18,9 @@
 //获取输入框的内容
 - (NSString *)inputFieldText;
 
+//设置输入框内容
+-(void)outputFileText:(NSString *)text;
+
 //输入框是否 密码格式
 - (void)setSecureTextEnabled:(BOOL)isSecureText;
 

@@ -11,6 +11,8 @@
 #import "CollectTableViewController.h"
 #import "ShareTableViewController.h"
 #import "DownloadTableViewController.h"
+#import "MySelfTableViewController.h"
+#import "MySelfViewController.h"
 
 @interface LeftSortsViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITableView *tableview;
@@ -101,17 +103,13 @@
     NSString *userName = [RegisterDataTool shareRegisterData].LoginName;
     AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     if (indexPath.row == 0) {
-        MainPageViewController *mc = [[MainPageViewController alloc] init];
-        
         [tempAppDelegate.LeftSlideVC closeLeftView];//返回首页
-        
-        [tempAppDelegate.mainNavigationController pushViewController:mc animated:NO];
     } else if (indexPath.row == 1) {
-        MainPageViewController *mc = [[MainPageViewController alloc] init];
+        MySelfViewController *msVC = [[MySelfViewController alloc] init];
         
         [tempAppDelegate.LeftSlideVC closeLeftView];//个人信息
         
-        [tempAppDelegate.mainNavigationController pushViewController:mc animated:NO];
+        [tempAppDelegate.mainNavigationController pushViewController:msVC animated:NO];
     } else if (indexPath.row == 2) {
         if (userName == nil) {
             [self p_showAlertView:@"提示" message:@"未登录"];

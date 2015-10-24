@@ -9,8 +9,11 @@
 #import "MySelfTableViewController.h"
 #import "MySelfImageTableViewCell.h"
 #import "MySelfLabelTableViewCell.h"
-@interface MySelfTableViewController ()
-
+#import "RegisterDataTool.h"
+#import "UserInfoModle.h"
+#import "LTView.h"
+@interface MySelfTableViewController ()<UITextFieldDelegate>
+@property (nonatomic,strong)UserInfoModle *userInfo;
 @end
 
 @implementation MySelfTableViewController
@@ -20,15 +23,13 @@
     
     [self.tableView registerClass:[MySelfImageTableViewCell class] forCellReuseIdentifier:@"cell1"];
     [self.tableView registerClass:[MySelfLabelTableViewCell class] forCellReuseIdentifier:@"cell2"];
-//    UINavigationBar *bar = self.navigationController.navigationBar;
-//    [bar setBackgroundImage:[UIImage imageNamed:@"1.jpg"] forBarMetrics:UIBarMetricsCompactPrompt];
-//    self.extendedLayoutIncludesOpaqueBars = YES;
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
+    UIBarButtonItem *changInfo = [[UIBarButtonItem alloc]initWithTitle:@"修改资料" style:UIBarButtonItemStylePlain target:self action:@selector(changInfo:)];
+    self.navigationItem.rightBarButtonItem = changInfo;
+    if ([RegisterDataTool shareRegisterData].LoginName != nil) {
+        self.userInfo = [[UserInfoModle alloc]init];
+        _userInfo = [RegisterDataTool shareRegisterData].userInfo;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -58,6 +59,49 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if ([RegisterDataTool shareRegisterData].LoginName != nil) {
+        if (indexPath.row == 0) {
+            MySelfImageTableViewCell *cell1 = [tableView dequeueReusableCellWithIdentifier:@"cell1" ];
+            cell1.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"purpleback.jpg"]];
+            return cell1;
+        }
+        else
+        {
+            MySelfLabelTableViewCell *cell2 = [tableView dequeueReusableCellWithIdentifier:@"cell2"];
+            
+            cell2.titleLabel.textAlignment = NSTextAlignmentRight;
+            if (indexPath.row == 1) {
+                cell2.titleLabel.text = @"昵称:";
+                [cell2.textFiled outputFileText:_userInfo.nickname];
+            }
+            if (indexPath.row == 2) {
+                cell2.titleLabel.text = @"账号:";
+                [cell2.textFiled outputFileText:_userInfo.email];
+            }
+            if (indexPath.row == 3) {
+                cell2.titleLabel.text = @"性别:";
+
+                [cell2.textFiled outputFileText:_userInfo.gender];
+            }
+            if (indexPath.row == 4) {
+                cell2.titleLabel.text = @"个人爱好:";
+
+                [cell2.textFiled outputFileText:_userInfo.hobby];
+            }
+            if (indexPath.row == 5) {
+                cell2.titleLabel.text = @"爱吃的菜:";
+
+                [cell2.textFiled outputFileText:_userInfo.likeFood];
+            }
+            if (indexPath.row == 6) {
+                cell2.titleLabel.text = @"会做的菜:";
+                [cell2.textFiled outputFileText:_userInfo.skill];
+            }
+            return cell2;
+        }
+    }
+    
     if (indexPath.row == 0) {
         MySelfImageTableViewCell *cell1 = [tableView dequeueReusableCellWithIdentifier:@"cell1" ];
         cell1.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"purpleback.jpg"]];
@@ -66,31 +110,34 @@
     else
     {
         MySelfLabelTableViewCell *cell2 = [tableView dequeueReusableCellWithIdentifier:@"cell2"];
-        cell2.textLabeltext.textAlignment = NSTextAlignmentCenter;
+        
         cell2.titleLabel.textAlignment = NSTextAlignmentRight;
         if (indexPath.row == 1) {
             cell2.titleLabel.text = @"昵称:";
-            cell2.textLabeltext.text = @"某某某";
+            [cell2.textFiled outputFileText:@"--"];
         }
         if (indexPath.row == 2) {
             cell2.titleLabel.text = @"账号:";
-            cell2.textLabeltext.text = @"123456";
+            [cell2.textFiled outputFileText:@"--"];
         }
         if (indexPath.row == 3) {
             cell2.titleLabel.text = @"性别:";
-            cell2.textLabeltext.text = @"男";
+            
+            [cell2.textFiled outputFileText:@"--"];
         }
         if (indexPath.row == 4) {
             cell2.titleLabel.text = @"个人爱好:";
-            cell2.textLabeltext.text = @"吃!吃!吃!";
+            
+            [cell2.textFiled outputFileText:@"--"];
         }
         if (indexPath.row == 5) {
             cell2.titleLabel.text = @"爱吃的菜:";
-            cell2.textLabeltext.text = @"红烧鱼 糖醋里脊";
+            
+            [cell2.textFiled outputFileText:@"--"];
         }
         if (indexPath.row == 6) {
             cell2.titleLabel.text = @"会做的菜:";
-            cell2.textLabeltext.text = @"........";
+            [cell2.textFiled outputFileText:@"--"];
         }
         return cell2;
     }
@@ -99,49 +146,33 @@
   
 }
 
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
+//键盘回收
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    
     return YES;
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+//显示提示框
+- (void)p_showAlertView:(NSString *)title message:(NSString *)message
+{
+    UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    [alertView show];
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+-(void)changInfo:(UIBarButtonItem *)sender
+{
+    if ([sender.title isEqualToString:@"修改资料"]) {
+        if ([RegisterDataTool shareRegisterData].LoginName != nil) {
+            
+        }
+        else
+        {
+            [self p_showAlertView:@"提示" message:@"未登录"];
+        }
+    }
+
 }
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

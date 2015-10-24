@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class LTView;
 @interface MySelfLabelTableViewCell : UITableViewCell
 
 @property (nonatomic,strong)UILabel *titleLabel;
 
-@property (nonatomic,strong)UILabel *textLabeltext;
+@property (nonatomic,strong)LTView *textFiled;
 
 @end

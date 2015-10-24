@@ -7,7 +7,7 @@
 //
 
 #import "MySelfLabelTableViewCell.h"
-
+#import "LTView.h"
 @implementation MySelfLabelTableViewCell
 
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -21,12 +21,12 @@
 -(void)p_setup
 {
     self.titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 15, CGRectGetWidth([[UIScreen mainScreen]bounds]) / 3 - 20, 30)];
-//    self.titleLabel.backgroundColor = [UIColor lightGrayColor];
+
     [self.contentView addSubview:_titleLabel];
     
-    self.textLabeltext = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.titleLabel.frame), CGRectGetMinY(self.titleLabel.frame), CGRectGetWidth([[UIScreen mainScreen]bounds]) / 3 * 2 - 20, CGRectGetHeight(self.titleLabel.frame))];
-//    self.textLabeltext.backgroundColor = [UIColor blueColor];
-    [self.contentView addSubview:_textLabeltext];
+    self.textFiled = [[LTView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.titleLabel.frame)+10, CGRectGetMinY(self.titleLabel.frame)-5, CGRectGetWidth([[UIScreen mainScreen]bounds]) / 3 * 2 - 30, CGRectGetHeight(self.titleLabel.frame)+10) placeholder:nil imageName:nil];
+
+    [self.contentView addSubview:_textFiled];
 }
 
 

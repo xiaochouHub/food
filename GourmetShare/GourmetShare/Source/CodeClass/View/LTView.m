@@ -42,6 +42,9 @@
 {
     self = [self initWithFrame:frame];
     if (self) {
+        if ([placeholderText isEqualToString:@"---"]) {
+            self.inputField.userInteractionEnabled = NO;
+        }
         self.inputField.placeholder = placeholderText;
     }
     
@@ -53,6 +56,11 @@
 - (NSString *)inputFieldText
 {
     return _inputField.text;
+}
+
+-(void)outputFileText:(NSString *)text
+{
+    _inputField.text = text;
 }
 
 //输入框是否 密码格式
