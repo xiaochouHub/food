@@ -17,7 +17,7 @@ typedef void(^PassValue)(NSArray *array);
 +(GetShareDataTool *)shareShareData;
 
 //用户分享食谱
--(void)podShareWith:(StuffModle *)stuff UserName:(NSString *)userName Image:(UIImage *)image;
+-(BOOL)podShareWith:(StuffModle *)stuff UserName:(NSString *)userName Image:(UIImage *)image;
 
 //获取用户分享列表
 -(void)getShareWithPassValue:(PassValue)passVallue;

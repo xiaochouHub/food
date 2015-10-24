@@ -22,7 +22,7 @@ static GetShareDataTool *gs;
 }
 
 //用户分享食谱
--(void)podShareWith:(StuffModle *)stuff UserName:(NSString *)userName Image:(UIImage *)image
+-(BOOL)podShareWith:(StuffModle *)stuff UserName:(NSString *)userName Image:(UIImage *)image
 {
     self.postShareite = [AVObject objectWithClassName:@"postShare"];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
@@ -45,8 +45,8 @@ static GetShareDataTool *gs;
     [_postShareite setObject:stuff.tags forKey:@"tags"];
     [_postShareite setObject:stuff.title forKey:@"title"];
     
-    
-    [_postShareite saveInBackground];
+    NSError *error = [[NSError alloc]init];
+    return [_postShareite save:&error];
 }
 
 //获取用户分享列表
