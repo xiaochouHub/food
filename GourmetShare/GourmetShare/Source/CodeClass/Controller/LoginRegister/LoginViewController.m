@@ -80,14 +80,30 @@
 }
 -(void)changeButton:(UIButton *)sender
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@" " delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"修改",nil];
-    UITextField * txt = [[UITextField alloc] init];
-    txt.backgroundColor = [UIColor whiteColor];
-    txt.frame = CGRectMake(alert.center.x+65,alert.center.y+48, 150,23);
-    [alert addSubview:txt];
-    [alert show];
+    UIAlertView *customAlertView = [[UIAlertView alloc] initWithTitle:@"请输入您的注册邮箱" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    
+    [customAlertView setAlertViewStyle:UIAlertViewStyleLoginAndPasswordInput];
+
+    UITextField *emailField = [customAlertView textFieldAtIndex:0];
+    emailField.placeholder = @"邮箱";
+
+    [customAlertView show];
 }
 
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (buttonIndex == alertView.firstOtherButtonIndex) {
+        UITextField *emailField = [alertView textFieldAtIndex:0];
+        if ([[RegisterDataTool shareRegisterData]ForgetPasswordWithEmail:emailField.text]) {
+            [self p_showAlertView:@"提示" message:@"已发送"];
+        }
+        else{
+            [self p_showAlertView:@"提示" message:@"请输入正确邮箱"];
+        }
+        
+    }
+    
+}
 
 //显示提示框
 - (void)p_showAlertView:(NSString *)title message:(NSString *)message
