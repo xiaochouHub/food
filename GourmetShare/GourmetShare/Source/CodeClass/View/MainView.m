@@ -27,9 +27,9 @@
     [self addSubview:_mainCycleScrollView];
     
     // 分组名
-    _titleLabel1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.mainCycleScrollView.frame) + 10, CGRectGetMaxY(self.mainCycleScrollView.frame) + 5, 50, 30)];
+    _titleLabel1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.mainCycleScrollView.frame) + 10, CGRectGetMaxY(self.mainCycleScrollView.frame) + 5, 100, 30)];
 //    _titleLabel1.backgroundColor = [UIColor grayColor];
-    _titleLabel1.text = @"美食";
+    _titleLabel1.text = @"美食食谱";
     [self addSubview:_titleLabel1];
     
     // "更多"按钮
@@ -70,9 +70,9 @@
     
     
     // 分组名
-    _titleLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.mainCycleScrollView.frame) + 10, CGRectGetMaxY(self.threeLabel1.frame) + 5, 50, 30)];
+    _titleLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.mainCycleScrollView.frame) + 10, CGRectGetMaxY(self.threeLabel1.frame) + 5, 100, 30)];
     _titleLabel2.backgroundColor = [UIColor grayColor];
-    _titleLabel2.text = @"其他";
+    _titleLabel2.text = @"用户分享";
     [self addSubview:_titleLabel2];
     
     // "更多"按钮
