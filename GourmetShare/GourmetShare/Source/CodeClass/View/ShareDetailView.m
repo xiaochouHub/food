@@ -44,7 +44,7 @@
     self.nameLabel.backgroundColor = [UIColor lightGrayColor];
     [self.backScroll addSubview:_nameLabel];
     
-    self.nameText = [[UITextField alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(self.nameLabel.frame) + 20, CGRectGetWidth([[UIScreen mainScreen]bounds]) - CGRectGetWidth(self.shareImage.frame) - 60, CGRectGetHeight(self.nameLabel.frame))];
+    self.nameText = [[UITextView alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(self.nameLabel.frame) + 20, CGRectGetWidth([[UIScreen mainScreen]bounds]) - CGRectGetWidth(self.shareImage.frame) - 60, CGRectGetHeight(self.nameLabel.frame))];
     self.nameText.backgroundColor = [UIColor lightGrayColor];
     [self.backScroll addSubview:_nameText];
     
@@ -53,7 +53,7 @@
     self.materLabel.text = @"食材和配料";
     [self.backScroll addSubview:_materLabel];
     
-    self.materialText = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.materLabel.frame),CGRectGetMaxY(self.materLabel.frame) + 5 , CGRectGetWidth([[UIScreen mainScreen]bounds]) - 20, 300)];
+    self.materialText = [[UITextView alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.materLabel.frame),CGRectGetMaxY(self.materLabel.frame) + 5 , CGRectGetWidth([[UIScreen mainScreen]bounds]) - 20, 100)];
     self.materialText.backgroundColor = [UIColor lightGrayColor];
     [self.backScroll addSubview:_materialText];
     
@@ -62,9 +62,15 @@
     self.stepLabel.backgroundColor = [UIColor lightGrayColor];
     [self.backScroll addSubview:_stepLabel];
     
-    self.stepText = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.stepLabel.frame), CGRectGetMaxY(self.stepLabel.frame) + 5, CGRectGetWidth(self.materialText.frame), CGRectGetHeight(self.materialText.frame))];
+    self.stepText = [[UITextView alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.stepLabel.frame), CGRectGetMaxY(self.stepLabel.frame) + 5, CGRectGetWidth(self.materialText.frame), CGRectGetHeight(self.materialText.frame)+200)];
     self.stepText.backgroundColor = [UIColor lightGrayColor];
     [self.backScroll addSubview:_stepText];
+    
+    self.shareButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    self.shareButton.frame = CGRectMake(CGRectGetMaxX([[UIScreen mainScreen]bounds]) / 2 - 35, CGRectGetMaxY(self.stepText.frame) + 10, 70, 30);
+    [self.shareButton setTitle:@"分享/保存" forState:UIControlStateNormal];
+    self.shareButton.backgroundColor = [UIColor orangeColor];
+    [self.backScroll addSubview:_shareButton];
     
     
     
