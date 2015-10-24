@@ -42,10 +42,6 @@
 {
     self = [self initWithFrame:frame];
     if (self) {
-        UIImageView *image = [[UIImageView alloc]initWithImage:[UIImage imageNamed:imageNmae]];
-        image.frame = CGRectMake(0, 0, self.frame.size.width/6, self.frame.size.height);
-        _inputField.leftView = image;
-        _inputField.leftViewMode = UITextFieldViewModeAlways;
         self.inputField.placeholder = placeholderText;
     }
     

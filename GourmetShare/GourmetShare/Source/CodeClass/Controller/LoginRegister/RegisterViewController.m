@@ -67,8 +67,21 @@
         [self p_showAlertView:@"提示" message:@"输入必须大于六位"];
         return;
     }
+    
+    //注册时，必须输入邮箱
+    if ([registUser.emailText isEqualToString:@""]) {
+        
+        [self p_showAlertView:@"提示" message:@"为日后找回密码，请输入正确邮箱"];
+        return;
+    }
+    /*
     NSInteger isRegister = [[RegisterDataTool shareRegisterData]getRegisterWith:registUser];
     if (isRegister == 2) {
+        if (![[RegisterDataTool shareRegisterData]podRegisterWithEmail:registUser]) {
+            [self p_showAlertView:@"提示" message:@"请输入正确邮箱，或者此邮箱已注册，找回密码"];
+            return;
+        }
+        
         [[RegisterDataTool shareRegisterData]podRegisterWith:registUser];
         if ([[RegisterDataTool shareRegisterData]getRegisterWith:registUser] == 0) {
             [self p_showAlertView:@"提示" message:@"注册成功"];
@@ -81,13 +94,20 @@
         [self p_showAlertView:@"提示" message:@"用户名已存在"];
         return;
     }
-    if (isRegister == 1) {
-        [self p_showAlertView:@"提示" message:@"手机号存在"];
+    */
+    
+    NSInteger isRegister = [[RegisterDataTool shareRegisterData]podRegisterWithEmail:registUser];
+    if (isRegister == 0) {
+        [self p_showAlertView:@"提示" message:@"用户名已存在"];
         return;
     }
-    
-    
-    
+    if (isRegister == 1) {
+        [self p_showAlertView:@"提示" message:@"请输入正确邮箱，或者此邮箱已注册，请找回密码"];
+        return;
+    }
+    if(isRegister == 2) {
+        [self p_showAlertView:@"提示" message:@"注册成功"];
+    }
     //注册完成后，返回登陆页面
     [self.navigationController popViewControllerAnimated:YES];
     

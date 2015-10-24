@@ -22,7 +22,7 @@
 -(void)p_setupView
 {
     self.backgroundColor = [UIColor whiteColor];
-    self.userNameText = [[LTView alloc]initWithFrame:CGRectMake(kScreenWidth/6, kScreenHeight/6, kScreenWidth/3*2, kScreenHeight/15) placeholder:@"用  户  名" imageName:@""];
+    self.userNameText = [[LTView alloc]initWithFrame:CGRectMake(0, kScreenHeight/5, kScreenWidth, kScreenHeight/15) placeholder:@"用  户  名" imageName:@""];
     [self addSubview:_userNameText];
     
     self.passWordText = [[LTView alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.userNameText.frame), CGRectGetMaxY(self.userNameText.frame)+30, CGRectGetWidth(self.userNameText.frame), CGRectGetHeight(self.userNameText.frame))  placeholder:@"密     码" imageName:@""];
@@ -36,13 +36,10 @@
     self.emailText = [[LTView alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.confirmText.frame), CGRectGetMaxY(self.confirmText.frame)+30, CGRectGetWidth(self.confirmText.frame), CGRectGetHeight(self.confirmText.frame)) placeholder:@"邮     箱" imageName:@""];
     [self addSubview:_emailText];
     
-    self.phoneNumberText = [[LTView alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.emailText.frame), CGRectGetMaxY(self.emailText.frame)+30, CGRectGetWidth(self.emailText.frame), CGRectGetHeight(self.emailText.frame)) placeholder:@"手机号码" imageName:@""];
-    [self addSubview:_phoneNumberText];
-    
     
     self.registButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    self.registButton.frame = CGRectMake(CGRectGetMinX(self.phoneNumberText.frame)+60, CGRectGetMaxY(self.phoneNumberText.frame) + 40, CGRectGetWidth(self.bounds) - CGRectGetMinX(_phoneNumberText.frame) *2-120, CGRectGetHeight(self.phoneNumberText.frame));
-    [self.registButton setTitle:@"登 录" forState:UIControlStateNormal];
+    self.registButton.frame = CGRectMake(CGRectGetMinX(self.emailText.frame)+60, CGRectGetMaxY(self.emailText.frame) + 40, CGRectGetWidth(self.bounds) - CGRectGetMinX(_emailText.frame) *2-120, CGRectGetHeight(self.emailText.frame));
+    [self.registButton setTitle:@"注  册" forState:UIControlStateNormal];
     _registButton.titleLabel.font = [UIFont systemFontOfSize: 17.0];
     [_registButton.layer setMasksToBounds:YES];
     [_registButton.layer setCornerRadius:10.0]; //设置矩形四个圆角半径
