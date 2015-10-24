@@ -8,10 +8,12 @@
 
 #import "ShareDetailViewController.h"
 #import "ShareDetailView.h"
+#import "GetShareDataTool.h"
 
-@interface ShareDetailViewController ()
+@interface ShareDetailViewController ()<UITextViewDelegate>
 
 @property (nonatomic,strong)ShareDetailView *share;
+@property(nonatomic,assign)BOOL isFullScreen;
 
 @end
 
@@ -24,12 +26,234 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.share.myButton addTarget:self action:@selector(choosepictureAction) forControlEvents:UIControlEventTouchUpInside];
     
-    self.share.backScroll.contentSize = CGSizeMake(CGRectGetWidth([[UIScreen mainScreen]bounds]), CGRectGetHeight([[UIScreen mainScreen]bounds]) * 2);
-    
-    
+    // 分享button的事件
+    [self.share.shareButton addTarget:self action:@selector(shareAction:) forControlEvents:UIControlEventTouchUpInside];
+    self.share.backScroll.contentSize = CGSizeMake(CGRectGetWidth([[UIScreen mainScreen]bounds]), CGRectGetHeight([[UIScreen mainScreen]bounds]) + 200);
+    self.share.stepText.delegate = self;
+    self.share.materialText.delegate = self;
+    self.share.nameText.delegate = self;
     // Do any additional setup after loading the view.
+    UIToolbar * topView = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
+    [topView setBarStyle:UIBarStyleBlackTranslucent];
+    
+    UIBarButtonItem * btnSpace = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(2, 5, CGRectGetWidth([[UIScreen mainScreen]bounds]), 25);
+    [btn addTarget:self action:@selector(dismissKeyBoard) forControlEvents:UIControlEventTouchUpInside];
+    [btn setTitle:@"   ↓收起↓" forState:UIControlStateNormal];
+    UIBarButtonItem *doneBtn = [[UIBarButtonItem alloc]initWithCustomView:btn];
+    NSArray * buttonsArray = [NSArray arrayWithObjects:btnSpace,doneBtn,nil];
+    [topView setItems:buttonsArray];
+    [self.share.stepText setInputAccessoryView:topView];
+    [self.share.materialText setInputAccessoryView:topView];
+    [self.share.nameText setInputAccessoryView:topView];
 }
+-(void)shareAction:(UIButton *)sender
+{
+    if ([RegisterDataTool shareRegisterData].LoginName == nil) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您还为登陆" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+        return;
+    }
+    else
+    {
+        StuffModle *model = [[StuffModle alloc]init];
+        model.title = self.share.nameText.text;
+        model.imtro =self.share.stepText.text;
+        model.ingredients = self.share.materialText.text;
+        [[GetShareDataTool shareShareData]podShareWith:model UserName:[RegisterDataTool shareRegisterData].LoginName Image:self.share.shareImage.image];
+    }
+}
+
+
+// 选择图片
+-(void)choosepictureAction
+{
+    UIActionSheet *sheet;
+    
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+        
+    {
+        sheet  = [[UIActionSheet alloc] initWithTitle:@"选择" delegate:self cancelButtonTitle:nil destructiveButtonTitle:@"取消" otherButtonTitles:@"拍照",@"从相册选择", nil];
+        
+    }
+    
+    else {
+        
+        sheet = [[UIActionSheet alloc] initWithTitle:@"选择" delegate:self cancelButtonTitle:nil destructiveButtonTitle:@"取消" otherButtonTitles:@"从相册选择", nil];
+        
+    }
+    
+    sheet.tag = 255;
+    
+    [sheet showInView:self.view];
+}
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (actionSheet.tag == 255) {
+        
+        NSUInteger sourceType = 0;
+        
+        // 判断是否支持相机
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            
+            switch (buttonIndex) {
+                case 0:
+                    // 取消
+                    return;
+                case 1:
+                    // 相机
+                    sourceType = UIImagePickerControllerSourceTypeCamera;
+                    break;
+                    
+                case 2:
+                    // 相册
+                    sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                    break;
+            }
+        }
+        else {
+            if (buttonIndex == 0) {
+                
+                return;
+            } else {
+                sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+            }
+        }
+        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+        
+        imagePickerController.delegate = self;
+        
+        imagePickerController.allowsEditing = YES;
+        
+        imagePickerController.sourceType = sourceType;
+        
+        [self presentViewController:imagePickerController animated:YES completion:^{}];
+        
+        
+    }
+}
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    [picker dismissViewControllerAnimated:YES completion:^{}];
+    
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    /* 此处info 有六个值
+     * UIImagePickerControllerMediaType; // an NSString UTTypeImage)
+     * UIImagePickerControllerOriginalImage;  // a UIImage 原始图片
+     * UIImagePickerControllerEditedImage;    // a UIImage 裁剪后图片
+     * UIImagePickerControllerCropRect;       // an NSValue (CGRect)
+     * UIImagePickerControllerMediaURL;       // an NSURL
+     * UIImagePickerControllerReferenceURL    // an NSURL that references an asset in the AssetsLibrary framework
+     * UIImagePickerControllerMediaMetadata    // an NSDictionary containing metadata from a captured photo
+     */
+    // 保存图片至本地，方法见下文
+    [self saveImage:image withName:@"currentImage.png"];
+    
+    NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"currentImage.png"];
+    
+    UIImage *savedImage = [[UIImage alloc] initWithContentsOfFile:fullPath];
+    
+    _isFullScreen = NO;
+    
+    [self.share.shareImage setImage:savedImage];
+    
+    self.share.shareImage.tag = 100;
+}
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [self dismissViewControllerAnimated:YES completion:^{}];
+}
+NSData * UIImageJPEGRepresentation ( UIImage *image, CGFloat compressionQuality);
+- (void) saveImage:(UIImage *)currentImage withName:(NSString *)imageName
+{
+    
+    NSData *imageData = UIImageJPEGRepresentation(currentImage, 0.5);
+    // 获取沙盒目录
+    
+    NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:imageName];
+    // 将图片写入文件
+    
+    [imageData writeToFile:fullPath atomically:NO];
+}
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    
+    _isFullScreen = !_isFullScreen;
+    UITouch *touch = [touches anyObject];
+    
+    CGPoint touchPoint = [touch locationInView:self.view];
+    
+    CGPoint imagePoint = self.share.shareImage.frame.origin;
+    //touchPoint.x ，touchPoint.y 就是触点的坐标
+    
+    // 触点在imageView内，点击imageView时 放大,再次点击时缩小
+    if(imagePoint.x <= touchPoint.x && imagePoint.x +self.share.shareImage.frame.size.width >=touchPoint.x && imagePoint.y <=  touchPoint.y && imagePoint.y+self.share.shareImage.frame.size.height >= touchPoint.y)
+    {
+        // 设置图片放大动画
+        [UIView beginAnimations:nil context:nil];
+        // 动画时间
+        [UIView setAnimationDuration:1];
+        
+        if (_isFullScreen) {
+            // 放大尺寸
+            
+            self.share.shareImage.frame = CGRectMake(0, 0, 320, 480);
+        }
+        else {
+            // 缩小尺寸
+            self.share.shareImage.frame = CGRectMake(50, 65, 90, 115);
+        }
+        
+        // commit动画
+        [UIView commitAnimations];
+        
+    }
+    
+}
+
+
+-(void)dismissKeyBoard
+{
+    [self.share.stepText resignFirstResponder];
+    [self.share.materialText resignFirstResponder];
+    [self.share.nameText resignFirstResponder];
+}
+
+// 防止键盘遮挡
+-(BOOL)textViewShouldBeginEditing:(UITextView *)textView
+{
+    CGFloat offset = self.view.frame.size.height - (textView.frame.origin.y + textView.frame.size.height + 210);
+    if (offset <= 0) {
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect frame = self.view.frame;
+            frame.origin.y = offset;
+            self.view.frame = frame;
+        }];
+    }
+    return YES;
+}
+
+-(BOOL)textViewShouldEndEditing:(UITextView *)textView
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        CGRect frame = self.view.frame;
+        frame.origin.y = 0.0;
+        self.view.frame = frame;
+    }];
+    return YES;
+}
+
+-(void)ba
+{
+    [self.share.stepText resignFirstResponder];
+    [self.share.materialText resignFirstResponder];
+    [self.share.nameText resignFirstResponder];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
