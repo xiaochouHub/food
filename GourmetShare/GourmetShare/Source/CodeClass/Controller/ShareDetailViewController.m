@@ -32,7 +32,7 @@
     
     // 分享button的事件
     [self.share.shareButton addTarget:self action:@selector(shareAction:) forControlEvents:UIControlEventTouchUpInside];
-    self.share.backScroll.contentSize = CGSizeMake(CGRectGetWidth([[UIScreen mainScreen]bounds]), CGRectGetHeight([[UIScreen mainScreen]bounds]) + 200);
+    self.share.backScroll.contentSize = CGSizeMake(CGRectGetWidth([[UIScreen mainScreen]bounds]), CGRectGetHeight([[UIScreen mainScreen]bounds]) + 300);
     self.share.stepText.delegate = self;
     self.share.materialText.delegate = self;
     self.share.nameText.delegate = self;

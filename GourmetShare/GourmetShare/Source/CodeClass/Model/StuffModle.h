@@ -18,5 +18,6 @@
 @property (nonatomic,strong)NSMutableArray *steps;//步骤
 @property (nonatomic,strong)NSString *tags;//标签
 @property (nonatomic,strong)NSString *title;//菜名
+@property (nonatomic,strong)NSString *shareName;//分享菜谱用户名
 
 @end

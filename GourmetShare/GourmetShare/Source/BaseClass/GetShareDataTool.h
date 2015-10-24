@@ -24,4 +24,7 @@ typedef void(^PassValue)(NSArray *array);
 
 //获取我的用户分享
 -(void)getShareWithUserName:(NSString *)userName PassValue:(PassValue)passVallue;
+
+//用户删除分享
+-(BOOL)deleteShareWithUserName:(NSString *)userName Sid:(NSString *)sid;
 @end
