@@ -9,18 +9,23 @@
 #import "MoreShareTableViewController.h"
 #import "MoreShareTableViewCell.h"
 #import "MoreShareViewController.h"
-
+#import "GetShareDataTool.h"
 @interface MoreShareTableViewController ()
-
+@property(nonatomic,strong)NSMutableArray *dataArr;
 @end
 
 @implementation MoreShareTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.dataArr = [NSMutableArray array];
     [self.tableView registerClass:[MoreShareTableViewCell class] forCellReuseIdentifier:@"cell"];
-    
+    [[GetShareDataTool shareShareData]getShareWithPassValue:^(NSArray *array) {
+        self.dataArr = (NSMutableArray *)array;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
+    }];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -36,7 +41,9 @@
 #pragma mark - Table view data source
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    StuffModle *model = self.dataArr[indexPath.row];
     MoreShareViewController *more = [[MoreShareViewController alloc]init];
+    more.stuff = model;
     [self.navigationController pushViewController:more animated:YES];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -50,15 +57,16 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete implementation, return the number of rows
-    return 10;
+    return self.dataArr.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MoreShareTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    cell.myImage.image = [UIImage imageNamed:@"1.jpg"];
-    cell.nameLabel.text = @"111";
-    cell.userLabel.text = @"222";
+    StuffModle *stuf = self.dataArr[indexPath.row];
+    [cell.myImage sd_setImageWithURL:[NSURL URLWithString:stuf.albums[0]]];
+    cell.nameLabel.text = stuf.title;
+    cell.userLabel.text = stuf.shareName;
     // Configure the cell...
     
     return cell;

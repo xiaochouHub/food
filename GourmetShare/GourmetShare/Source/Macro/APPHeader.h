@@ -52,7 +52,7 @@
 #define KisEqual @"no"
 
 #import "LoginViewController.h"
-
+#import "MoreShareViewController.h"
 
 
 

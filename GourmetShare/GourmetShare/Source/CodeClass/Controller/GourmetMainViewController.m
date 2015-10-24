@@ -9,6 +9,7 @@
 #import "GourmetMainViewController.h"
 #import "MainView.h"
 #import "MoreShareTableViewController.h"
+#import "GetShareDataTool.h"
 
 @interface GourmetMainViewController ()<SDCycleScrollViewDelegate>
 
@@ -18,11 +19,15 @@
 @property(nonatomic,strong)UITapGestureRecognizer *tap;
 @property(nonatomic,strong)UITapGestureRecognizer *tap1;
 @property(nonatomic,strong)UITapGestureRecognizer *tap2;
+@property(nonatomic,strong)UITapGestureRecognizer *tap3;
+@property(nonatomic,strong)UITapGestureRecognizer *tap4;
+@property(nonatomic,strong)UITapGestureRecognizer *tap5;
 @property(nonatomic,assign)NSInteger number;
 @property(nonatomic,strong)NSMutableArray *fdataArr;
 @property(nonatomic,strong)NSMutableArray *picArr;
 @property(nonatomic,strong)NSMutableArray *titleArr;
 @property(nonatomic,strong)SDCycleScrollView *view1;
+@property(nonatomic,strong)NSMutableArray *comdataArr;
 @end
 
 @implementation GourmetMainViewController
@@ -43,7 +48,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    self.comdataArr = [NSMutableArray array];
 //    // 轮播图图片数组
 //    self.picArr = [NSMutableArray array];
 //    // 轮播图标题
@@ -188,6 +193,18 @@
             self.view1.delegate = self;
 
         }
+    if (self.comdataArr.count<1) {
+        self.mView.oneImageView2.userInteractionEnabled = NO;
+        self.mView.twoImageView2.userInteractionEnabled = NO;
+        self.mView.threeImageView2.userInteractionEnabled = NO;
+    }
+    else
+    {
+        self.mView.oneImageView2.userInteractionEnabled = YES;
+        self.mView.twoImageView2.userInteractionEnabled = YES;
+        self.mView.threeImageView2.userInteractionEnabled = YES;
+
+    }
    
 }
 
@@ -226,6 +243,22 @@
     self.tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction2)];
     self.mView.threeImageView1.userInteractionEnabled = YES;
     [self.mView.threeImageView1 addGestureRecognizer:_tap2];
+    
+    
+    self.tap3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction3)];
+    self.mView.oneImageView2.userInteractionEnabled = YES;
+    [self.mView.oneImageView2 addGestureRecognizer:_tap3];
+    
+    
+    self.tap4 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction4)];
+    self.mView.twoImageView2.userInteractionEnabled = YES;
+    [self.mView.twoImageView2 addGestureRecognizer:_tap4];
+
+    
+    self.tap5 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction5)];
+    self.mView.threeImageView2.userInteractionEnabled = YES;
+    [self.mView.threeImageView2 addGestureRecognizer:_tap5];
+
     
     self.fdataArr = [NSMutableArray array];
     self.dataArr = [NSMutableArray array];
@@ -310,6 +343,45 @@
         }];
         
     }];
+    [[GetShareDataTool shareShareData]getShareWithPassValue:^(NSArray *array) {
+      
+        self.comdataArr = (NSMutableArray *)array;
+        if (array.count<1) {
+            return ;
+        }
+        else if (array.count<2)
+        {
+            StuffModle *stu1 = self.comdataArr[0];
+            [self.mView.oneImageView2 sd_setImageWithURL:[NSURL URLWithString:stu1.albums[0]]];
+            self.mView.oneLabel2.text =  stu1.title;
+        }
+        else if (array.count<3)
+        {
+            StuffModle *stu1 = self.comdataArr[0];
+            [self.mView.oneImageView2 sd_setImageWithURL:[NSURL URLWithString:stu1.albums[0]]];
+            self.mView.oneLabel2.text =  stu1.title;
+            
+            StuffModle *stu2 = self.comdataArr[1];
+            [self.mView.twoImageView2 sd_setImageWithURL:[NSURL URLWithString:stu2.albums[0]]];
+            self.mView.twoLabel2.text =  stu2.title;
+        }
+        else if (array.count<4)
+        {
+            StuffModle *stu1 = self.comdataArr[0];
+            [self.mView.oneImageView2 sd_setImageWithURL:[NSURL URLWithString:stu1.albums[0]]];
+            self.mView.oneLabel2.text =  stu1.title;
+            
+            StuffModle *stu2 = self.comdataArr[1];
+            [self.mView.twoImageView2 sd_setImageWithURL:[NSURL URLWithString:stu2.albums[0]]];
+            self.mView.twoLabel2.text =  stu2.title;
+            
+            StuffModle *stu3 = self.comdataArr[2];
+            [self.mView.threeImageView2 sd_setImageWithURL:[NSURL URLWithString:stu3.albums[0]]];
+            self.mView.threeLabel2.text =  stu3.title;
+        }
+        [self nethandle];
+    }];
+    
     [self nethandle];
     self.mView.contentSize = CGSizeMake(self.mView.bounds.size.width, self.mView.bounds.size.height + 120);
     
@@ -373,6 +445,41 @@
     detail.stuffmodel = self.dataArr[3];
     [tempAppDelegate.LeftSlideVC closeLeftView];
     [tempAppDelegate.mainNavigationController pushViewController:detail animated:YES];
+}
+
+-(void)tapAction3
+{
+    
+    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+    
+    MoreShareViewController *more = [[MoreShareViewController alloc]init];
+    more.stuff = self.comdataArr[0];
+    [tempAppDelegate.LeftSlideVC closeLeftView];
+    [tempAppDelegate.mainNavigationController pushViewController:more animated:YES];
+}
+
+
+-(void)tapAction4
+{
+    
+    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+    
+    MoreShareViewController *more = [[MoreShareViewController alloc]init];
+    more.stuff = self.comdataArr[1];
+    [tempAppDelegate.LeftSlideVC closeLeftView];
+    [tempAppDelegate.mainNavigationController pushViewController:more animated:YES];
+}
+
+
+-(void)tapAction5
+{
+    
+    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+    
+    MoreShareViewController *more = [[MoreShareViewController alloc]init];
+    more.stuff = self.comdataArr[2];
+    [tempAppDelegate.LeftSlideVC closeLeftView];
+    [tempAppDelegate.mainNavigationController pushViewController:more animated:YES];
 }
 
 
