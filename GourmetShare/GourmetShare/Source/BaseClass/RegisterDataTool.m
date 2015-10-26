@@ -124,6 +124,13 @@ static RegisterDataTool *rd;
             _userInfo.hobby = [q valueForKey:@"hobby"];
             _userInfo.likeFood = [q valueForKey:@"likeFood"];
             _userInfo.skill = [q valueForKey:@"skill"];
+            
+            //文件名
+            NSString *uniquePath = [self imageFilePath:_LoginName];
+            BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:uniquePath];
+            if (!blHave) {
+                [self downloadWithURL:_userInfo.headImage];
+            }
         }
 
         return YES;
@@ -145,6 +152,13 @@ static RegisterDataTool *rd;
             _userInfo.hobby = [q valueForKey:@"hobby"];
             _userInfo.likeFood = [q valueForKey:@"likeFood"];
             _userInfo.skill = [q valueForKey:@"skill"];
+            
+            //文件名
+            NSString *uniquePath = [self imageFilePath:_LoginName];
+            BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:uniquePath];
+            if (!blHave) {
+                [self downloadWithURL:_userInfo.headImage];
+            }
             
             return YES;
         }
@@ -179,8 +193,6 @@ static RegisterDataTool *rd;
     AVQuery *query = [AVUser query];
     [query whereKey:@"username" equalTo:_LoginName];
     
-    NSLog(@"%ld",[query findObjects].count);
-    
     NSString *objectId = [[query findObjects][0] valueForKey:@"objectId"];
     
     AVObject *post = [AVObject objectWithoutDataWithClassName:@"_User" objectId:objectId];
@@ -199,6 +211,103 @@ static RegisterDataTool *rd;
         return NO;
     }
     
+}
+
+-(BOOL)ChangeUserHeadImage:(UIImage *)headImage
+{
+    AVQuery *query = [AVUser query];
+    self.oldHeadImageUrl = [NSString string];
+    
+    [query whereKey:@"username" equalTo:_LoginName];
+    
+    NSString *objectId = [[query findObjects][0] valueForKey:@"objectId"];
+    
+    _oldHeadImageUrl = [[query findObjects][0] valueForKey:@"headImage"];
+    
+    AVObject *postImage = [AVObject objectWithoutDataWithClassName:@"_User" objectId:objectId];
+
+    NSString *fileName = [NSString stringWithFormat:@"%@.JPEG",_LoginName];
+    NSData *imageData = UIImageJPEGRepresentation(headImage, 0.01);
+    
+    AVFile *file = [AVFile fileWithName:fileName data:imageData];
+    [file save];
+    [postImage setObject:file.url forKey:@"headImage"];
+    
+    NSError *error = [[NSError alloc]init];
+    if ([postImage save:&error]) {
+        _userInfo.headImage = file.url;
+        
+        [self deleteFile:[self imageFilePath:_LoginName]];
+        
+        [self downloadWithURL:_userInfo.headImage];
+//        AVQuery *imageQuery = [AVQuery queryWithClassName:@"_File"];
+//        [imageQuery whereKey:@"url" equalTo:_oldHeadImageUrl];
+//        
+//        AVFile *deleteFile = [AVFile fileWithAVObject:[imageQuery findObjects][0]];
+//        [deleteFile deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//        
+//        }];
+        return YES;
+    }
+    
+    [file deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    }];
+    
+    
+    return NO;
+}
+
+//返回图片文件路径
+- (NSString *)imageFilePath:(NSString *)name
+{
+    
+    //新建文件夹
+    NSString *documentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
+    
+    NSFileManager *managerFile = [NSFileManager defaultManager];
+    
+    if (![managerFile fileExistsAtPath:[documentPath stringByAppendingString:@"/HeadImage"]]) {
+        [managerFile createDirectoryAtPath:[documentPath stringByAppendingString:@"/HeadImage"] withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    //并给文件起个文件名
+    NSString *fileName = [NSString stringWithFormat:@"/HeadImage/%@.JPEG",name];
+    NSString *filePath = [documentPath stringByAppendingString:fileName];
+    
+    return filePath;
+}
+
+
+-(void)deleteFile:(NSString *)aURL
+{
+    NSFileManager* fileManager=[NSFileManager defaultManager];
+    //文件名
+    NSString *uniquePath = aURL;
+    BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:uniquePath];
+    if (!blHave) {
+        return ;
+    }else {
+        [fileManager removeItemAtPath:uniquePath error:nil];
+    }
+}
+
+//下载到本地的图片
+- (void)downloadWithURL:(NSString *)aURL
+{
+    dispatch_queue_t globl_t = dispatch_get_global_queue(0, 0);
+    
+    dispatch_async(globl_t, ^{
+        NSFileManager *managerFile = [NSFileManager defaultManager];
+        
+        NSString *filePath = [self imageFilePath:_LoginName];
+        
+        if (![managerFile fileExistsAtPath:filePath]) {
+            //将图片下载下来
+            UIImage *fileImage = [[UIImage alloc]initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:aURL]]];
+            
+            //将图片写到Documents文件
+            [UIImagePNGRepresentation(fileImage)writeToFile: filePath  atomically:YES];
+        }
+    });
 }
 
 @end

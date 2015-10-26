@@ -16,6 +16,7 @@
 @property (nonatomic,strong)NSString *LoginName;//登录用户
 @property (nonatomic,strong)AVUser *user;
 @property (nonatomic,strong)UserInfoModle *userInfo;//用户信息
+@property (nonatomic,strong)NSString *oldHeadImageUrl;
 
 
 //单例初始化工具类
@@ -41,5 +42,10 @@
 
 //修改资料
 -(BOOL)ChangeUserInfoWith:(UserInfoModle *)userInfo;
+//修改头像
+-(BOOL)ChangeUserHeadImage:(UIImage *)headImage;
+
+//返回图片文件路径
+- (NSString *)imageFilePath:(NSString *)name;
 
 @end
