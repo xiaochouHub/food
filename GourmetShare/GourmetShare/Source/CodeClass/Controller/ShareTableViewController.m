@@ -9,14 +9,17 @@
 #import "ShareTableViewController.h"
 #import "ShareDetailViewController.h"
 #import "GetShareDataTool.h"
-@interface ShareTableViewController ()
+@interface ShareTableViewController ()<UIAlertViewDelegate>
 @property(nonatomic,strong)NSMutableArray *dataArr;
+@property(nonatomic,strong)UIAlertView *alert;
 @end
 
 @implementation ShareTableViewController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
+    self.alert.delegate = self;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     self.dataArr = [NSMutableArray array];
     if ([RegisterDataTool shareRegisterData].LoginName == nil) {
@@ -51,8 +54,9 @@
 -(void)rightAction:(UIBarButtonItem *)sender
 {
     if ([RegisterDataTool shareRegisterData].LoginName == nil) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您还未登陆" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alert show];
+        self.alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您还未登陆" delegate:self cancelButtonTitle:@"去登陆" otherButtonTitles:@"取消", nil];
+        //self.alert.tag = 101;
+        [_alert show];
         
     }
     else
@@ -65,6 +69,14 @@
         
         [tempAppDelegate.mainNavigationController pushViewController:detail animated:YES];
 
+    }
+    
+}
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        LoginViewController *login = [[LoginViewController alloc]init];
+        [self.navigationController pushViewController:login animated:YES];
     }
     
 }

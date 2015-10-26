@@ -39,11 +39,35 @@
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(2, 5, CGRectGetWidth([[UIScreen mainScreen]bounds]), 25);
     [btn addTarget:self action:@selector(dismissKeyBoard) forControlEvents:UIControlEventTouchUpInside];
-    [btn setTitle:@"   ↓收起↓" forState:UIControlStateNormal];
+    [btn setTitle:@"   ↓收起键盘↓" forState:UIControlStateNormal];
     UIBarButtonItem *doneBtn = [[UIBarButtonItem alloc]initWithCustomView:btn];
     NSArray * buttonsArray = [NSArray arrayWithObjects:btnSpace,doneBtn,nil];
     [topView setItems:buttonsArray];
+    [self.sv.search setInputAccessoryView:topView];
+  
    
+}
+-(BOOL)textViewShouldBeginEditing:(UITextView *)textView
+{
+    CGFloat offset = self.view.frame.size.height - (textView.frame.origin.y + textView.frame.size.height + 210);
+    if (offset <= 0) {
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect frame = self.view.frame;
+            frame.origin.y = offset;
+            self.view.frame = frame;
+        }];
+    }
+    return YES;
+}
+
+-(BOOL)textViewShouldEndEditing:(UITextView *)textView
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        CGRect frame = self.view.frame;
+        frame.origin.y = 0.0;
+        self.view.frame = frame;
+    }];
+    return YES;
 }
 -(void)dismissKeyBoard
 {
