@@ -23,7 +23,14 @@
     [[GetShareDataTool shareShareData]getShareWithPassValue:^(NSArray *array) {
         self.dataArr = (NSMutableArray *)array;
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
+            if (self.dataArr.count<1) {
+                //return ;
+            }
+            else
+            {
+                [self.tableView reloadData];
+            }
+            
         });
     }];
     // Uncomment the following line to preserve selection between presentations.
@@ -64,9 +71,15 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MoreShareTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     StuffModle *stuf = self.dataArr[indexPath.row];
-    [cell.myImage sd_setImageWithURL:[NSURL URLWithString:stuf.albums[0]]];
+    
     cell.nameLabel.text = stuf.title;
     cell.userLabel.text = stuf.shareName;
+    dispatch_queue_t globl_t = dispatch_get_global_queue(0, 0);
+    
+    dispatch_async(globl_t, ^{
+        
+       [cell.myImage sd_setImageWithURL:[NSURL URLWithString:stuf.albums[0]]];
+    });
     // Configure the cell...
     
     return cell;
