@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface myshareTableViewCell : UITableViewCell
-
+@property(nonatomic,strong)UIImageView *picture;
+@property(nonatomic,strong)UILabel *name;
 @end
