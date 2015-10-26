@@ -9,15 +9,19 @@
 #import "ShareTableViewController.h"
 #import "ShareDetailViewController.h"
 #import "GetShareDataTool.h"
-@interface ShareTableViewController ()
+#import "myshareTableViewCell.h"
+@interface ShareTableViewController ()<UIAlertViewDelegate>
 @property(nonatomic,strong)NSMutableArray *dataArr;
+@property(nonatomic,strong)UIAlertView *alert;
 @end
 
 @implementation ShareTableViewController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+    self.alert.delegate = self;
+    [self.tableView registerClass:[myshareTableViewCell class] forCellReuseIdentifier:@"cell"];
     self.dataArr = [NSMutableArray array];
     if ([RegisterDataTool shareRegisterData].LoginName == nil) {
         
@@ -51,8 +55,9 @@
 -(void)rightAction:(UIBarButtonItem *)sender
 {
     if ([RegisterDataTool shareRegisterData].LoginName == nil) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您还未登陆" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alert show];
+        self.alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您还未登陆" delegate:self cancelButtonTitle:@"去登陆" otherButtonTitles:@"取消", nil];
+        //self.alert.tag = 101;
+        [_alert show];
         
     }
     else
@@ -65,6 +70,14 @@
         
         [tempAppDelegate.mainNavigationController pushViewController:detail animated:YES];
 
+    }
+    
+}
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        LoginViewController *login = [[LoginViewController alloc]init];
+        [self.navigationController pushViewController:login animated:YES];
     }
     
 }
@@ -83,15 +96,27 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    myshareTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     StuffModle *model = self.dataArr[indexPath.row];
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.albums[0]]];
-    cell.textLabel.text = model.title;
+    [cell.picture sd_setImageWithURL:[NSURL URLWithString:model.albums[0]]];
+    cell.name.text = model.title;
+//    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.albums[0]]];
+//    cell.textLabel.text = model.title;
     
     return cell;
 }
-
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    StuffModle *model = self.dataArr[indexPath.row];
+    MoreShareViewController *share = [[MoreShareViewController alloc]init];
+    share.stuff = model;
+    [self.navigationController pushViewController:share animated:YES];
+    
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 100;
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

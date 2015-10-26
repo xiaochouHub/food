@@ -477,5 +477,26 @@ static GetFoodDataTool *gf;
 //}
 
 
+-(StuffModle *)getPopFoodInfoWithSid:(NSString *)sid
+{
+    AVQuery *query = [AVQuery queryWithClassName:@"postStuff"];
+    [query whereKey:@"sid" equalTo:sid];
+    AVQuery *q = [query findObjects][0];
+    StuffModle *s = [[StuffModle alloc]init];
+    s.albums = [q valueForKey:@"albums"];
+    s.burden = [q valueForKey:@"burden"];
+    s.sid = [q valueForKey:@"sid"];
+    s.imtro = [q valueForKey:@"imtro"];
+    s.ingredients = [q valueForKey:@"ingredients"];
+    NSMutableArray *tempArr = [NSMutableArray array];
+    for (StepModle *sm in [q valueForKey:@"steps"]) {
+        [tempArr addObject:sm];
+    }
+    s.steps = tempArr;
+    s.tags = [q valueForKey:@"tags"];
+    s.title = [q valueForKey:@"title"];
+    return s;
+}
+
 
 @end
