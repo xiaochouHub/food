@@ -239,7 +239,7 @@ static RegisterDataTool *rd;
         
         [self deleteFile:[self imageFilePath:_LoginName]];
         
-        [self downloadWithURL:_userInfo.headImage];
+        [UIImagePNGRepresentation(headImage)writeToFile:[self imageFilePath:_LoginName]   atomically:YES];
 //        AVQuery *imageQuery = [AVQuery queryWithClassName:@"_File"];
 //        [imageQuery whereKey:@"url" equalTo:_oldHeadImageUrl];
 //        
