@@ -56,6 +56,7 @@ typedef void(^Stuff)(StuffModle *stuff);
 
 //根据菜谱ID返回菜谱数据
 -(StuffModle *)getFoodInfoWithSid:(NSString *)sid;
+-(StuffModle *)getPopFoodInfoWithSid:(NSString *)sid;
 -(void)getFoodInfoWithSid:(NSString *)sid stuff:(Stuff)stuff;
 
 //根据菜名返回菜谱数据
