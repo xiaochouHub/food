@@ -21,6 +21,8 @@
 
 -(void)p_setView
 {
+    self.contentSize = CGSizeMake(kScreenWidth, kScreenHeight*1.1);
+    
     self.headImage = [[UIImageView alloc]initWithFrame:CGRectMake(kScreenWidth/2-kScreenWidth/8, kScreenHeight/9, kScreenWidth/4, kScreenWidth/4)];
     self.headImage.layer.cornerRadius = kScreenWidth/8;
     self.headImage.layer.masksToBounds = YES;

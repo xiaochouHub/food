@@ -21,6 +21,7 @@
 
 -(void)p_setupView
 {
+    
     self.backgroundColor = [UIColor whiteColor];
     self.userNameText = [[LTView alloc]initWithFrame:CGRectMake(0, kScreenHeight/5, kScreenWidth, kScreenHeight/15) placeholder:@"用  户  名" imageName:@""];
     [self addSubview:_userNameText];

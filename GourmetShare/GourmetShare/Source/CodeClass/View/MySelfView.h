@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @class LTView;
-@interface MySelfView : UIView
+@interface MySelfView : UIScrollView
 
 @property (nonatomic,strong)UIImageView *headImage;
 

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @class LTView;
-@interface RegisterView : UIView
+@interface RegisterView : UIScrollView
 @property (nonatomic,strong) LTView * userNameText;
 @property (nonatomic,strong) LTView * passWordText;
 @property (nonatomic,strong) LTView * confirmText;
