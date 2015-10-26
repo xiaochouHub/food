@@ -9,6 +9,7 @@
 #import "ShareTableViewController.h"
 #import "ShareDetailViewController.h"
 #import "GetShareDataTool.h"
+#import "myshareTableViewCell.h"
 @interface ShareTableViewController ()<UIAlertViewDelegate>
 @property(nonatomic,strong)NSMutableArray *dataArr;
 @property(nonatomic,strong)UIAlertView *alert;
@@ -20,7 +21,7 @@
     
     [super viewDidLoad];
     self.alert.delegate = self;
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+    [self.tableView registerClass:[myshareTableViewCell class] forCellReuseIdentifier:@"cell"];
     self.dataArr = [NSMutableArray array];
     if ([RegisterDataTool shareRegisterData].LoginName == nil) {
         
@@ -95,15 +96,27 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    myshareTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     StuffModle *model = self.dataArr[indexPath.row];
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.albums[0]]];
-    cell.textLabel.text = model.title;
+    [cell.picture sd_setImageWithURL:[NSURL URLWithString:model.albums[0]]];
+    cell.name.text = model.title;
+//    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.albums[0]]];
+//    cell.textLabel.text = model.title;
     
     return cell;
 }
-
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    StuffModle *model = self.dataArr[indexPath.row];
+    MoreShareViewController *share = [[MoreShareViewController alloc]init];
+    share.stuff = model;
+    [self.navigationController pushViewController:share animated:YES];
+    
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 100;
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
