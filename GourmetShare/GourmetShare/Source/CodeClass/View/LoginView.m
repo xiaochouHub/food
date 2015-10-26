@@ -40,7 +40,7 @@
     
     CGColorRef colorref = CGColorCreate(colorSpace,(CGFloat[]){ 1, 0, 0, 1 });
     
-    [_loginButton.layer setBorderColor:colorref];//边框颜色
+    [_loginButton.layer setBorderColor:[[UIColor blueColor] CGColor]];//边框颜色
     [self addSubview:_loginButton];
     
     self.registButton = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -51,7 +51,7 @@
     [_registButton.layer setCornerRadius:10.0]; //设置矩形四个圆角半径
     [_registButton.layer setBorderWidth:1.0]; //边框宽度
     
-    [_registButton.layer setBorderColor:colorref];//边框颜色
+    [_registButton.layer setBorderColor:[[UIColor blueColor] CGColor]];//边框颜色
     [self addSubview:_registButton];
     
     self.changeButton = [UIButton buttonWithType:UIButtonTypeSystem];

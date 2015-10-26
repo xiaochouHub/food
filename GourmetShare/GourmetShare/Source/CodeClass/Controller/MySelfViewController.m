@@ -30,8 +30,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"whiteback.jpg"]];
-    
+//    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"whiteback.jpg"]];
+    self.view.backgroundColor = [UIColor whiteColor];
     UIBarButtonItem *changInfo = [[UIBarButtonItem alloc]initWithTitle:@"修改资料" style:UIBarButtonItemStylePlain target:self action:@selector(changInfo:)];
     self.navigationItem.rightBarButtonItem = changInfo;
     if ([RegisterDataTool shareRegisterData].LoginName != nil) {

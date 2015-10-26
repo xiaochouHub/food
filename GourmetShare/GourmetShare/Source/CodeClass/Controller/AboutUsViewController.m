@@ -20,8 +20,9 @@
     UILabel *name = [[UILabel alloc]initWithFrame:CGRectMake(0, 200, CGRectGetWidth([[UIScreen mainScreen]bounds]), 30)];
     name.backgroundColor = [UIColor orangeColor];
     name.textAlignment = UITextAlignmentCenter;
-    name.text = @"作者:XXXXXXXX";
+    name.text = @"作者:姜云亭 马文豪 仲亚琨";
     [self.view addSubview:name];
+    [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
     // Do any additional setup after loading the view.
 }
 

@@ -49,7 +49,7 @@
     
     CGColorRef colorref = CGColorCreate(colorSpace,(CGFloat[]){ 1, 0, 0, 1 });
     
-    [_registButton.layer setBorderColor:colorref];//边框颜色
+    [_registButton.layer setBorderColor:[[UIColor blueColor] CGColor]];//边框颜色
     
     [self addSubview:_registButton];
 }

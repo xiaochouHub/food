@@ -13,8 +13,8 @@
 -(UILabel *)newsLabel
 {
     if (_newsLabel == nil) {
-        _newsLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]) - 40, 50)];
-        _newsLabel.backgroundColor = [UIColor orangeColor];
+        _newsLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]) - 20, 50)];
+//        _newsLabel.backgroundColor = [UIColor orangeColor];
         [self.contentView addSubview:_newsLabel];
     }
     return _newsLabel;

@@ -12,6 +12,8 @@
 
 @property (nonatomic,strong)UIScrollView *back;
 
+@property (nonatomic,strong)UILabel *name;
+
 @property (nonatomic,strong)UIImageView *myImage;
 
 @property (nonatomic,strong)UILabel *nameLabel;
