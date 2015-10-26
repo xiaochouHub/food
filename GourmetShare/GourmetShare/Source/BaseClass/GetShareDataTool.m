@@ -34,7 +34,6 @@ static GetShareDataTool *gs;
     NSData *imageData = UIImageJPEGRepresentation(image, 0.01);
     AVFile *file = [AVFile fileWithName:fileName data:imageData];
     [file save];
-    NSLog(@"%@",file.url);
     [_postShareite setObject:sid forKey:@"sid"];
     [_postShareite setObject:userName forKey:@"userName"];
     [_postShareite setObject:file.url forKey:@"albums"];
@@ -66,7 +65,6 @@ static GetShareDataTool *gs;
                 s.sid = [q valueForKey:@"sid"];
                 s.shareName = [q valueForKey:@"userName"];
                 NSMutableArray *temp = [NSMutableArray array];
-                NSLog(@"%@",[q valueForKey:@"albums"]);
                 [temp addObject:[q valueForKey:@"albums"]];
                 s.albums = temp;
                 s.imtro = [q valueForKey:@"imtro"];
@@ -92,7 +90,6 @@ static GetShareDataTool *gs;
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             // 检索成功
-            NSLog(@"%ld",objects.count);
             for (AVQuery *q in objects) {
                 StuffModle *s = [[StuffModle alloc]init];
                 s.sid = [q valueForKey:@"sid"];
