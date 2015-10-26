@@ -8,15 +8,31 @@
 
 #import "ShareTableViewController.h"
 #import "ShareDetailViewController.h"
-
+#import "GetShareDataTool.h"
 @interface ShareTableViewController ()
-
+@property(nonatomic,strong)NSMutableArray *dataArr;
 @end
 
 @implementation ShareTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+    self.dataArr = [NSMutableArray array];
+    if ([RegisterDataTool shareRegisterData].LoginName == nil) {
+        
+    }
+    else
+    {
+        [[GetShareDataTool shareShareData]getShareWithUserName:[RegisterDataTool shareRegisterData].LoginName PassValue:^(NSArray *array) {
+            self.dataArr = (NSMutableArray *)array;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView reloadData];
+                
+            });
+        }];
+        
+    }
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"我要分享" style:UIBarButtonItemStyleDone target:self action:@selector(rightAction:)];
     
@@ -56,23 +72,25 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 #warning Incomplete implementation, return the number of sections
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete implementation, return the number of rows
-    return 0;
+    NSLog(@"%ld",self.dataArr.count);
+    return self.dataArr.count;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    StuffModle *model = self.dataArr[indexPath.row];
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.albums[0]]];
+    cell.textLabel.text = model.title;
     
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.

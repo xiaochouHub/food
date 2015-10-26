@@ -151,7 +151,7 @@
 //            }];
 //        
 //    }];
-    [self nethandle];
+    //[self nethandle];
     self.mView.contentSize = CGSizeMake(self.mView.bounds.size.width, self.mView.bounds.size.height + 50);
     
     // 设置轮播图
@@ -163,8 +163,9 @@
     // 添加"更多"事件
     [self.mView.moreButton1 addTarget:self action:@selector(moreButton1Action:) forControlEvents:UIControlEventTouchUpInside];
     [self.mView.moreButton2 addTarget:self action:@selector(moreButton2Action:) forControlEvents:UIControlEventTouchUpInside];
-    
+    [self p_data];
     [self setupRefresh];
+    //[self p_data];
     
 //    self.mView.backgroundColor = [UIColor clearColor];
     
@@ -299,7 +300,7 @@
                 
                 [self.mView.threeImageView1 sd_setImageWithURL:[NSURL URLWithString:self.pic_url]];
                 self.mView.threeLabel1.text = model2.title;
-                
+                [self p_data];
                 // 轮播图数据
                 StuffModle *model3 = self.dataArr[0];
                 for (NSMutableString *str in model3.albums) {
@@ -343,46 +344,10 @@
         }];
         
     }];
-    [[GetShareDataTool shareShareData]getShareWithPassValue:^(NSArray *array) {
-      
-        self.comdataArr = (NSMutableArray *)array;
-        if (array.count<1) {
-            return ;
-        }
-        else if (array.count<2)
-        {
-            StuffModle *stu1 = self.comdataArr[0];
-            [self.mView.oneImageView2 sd_setImageWithURL:[NSURL URLWithString:stu1.albums[0]]];
-            self.mView.oneLabel2.text =  stu1.title;
-        }
-        else if (array.count<3)
-        {
-            StuffModle *stu1 = self.comdataArr[0];
-            [self.mView.oneImageView2 sd_setImageWithURL:[NSURL URLWithString:stu1.albums[0]]];
-            self.mView.oneLabel2.text =  stu1.title;
-            
-            StuffModle *stu2 = self.comdataArr[1];
-            [self.mView.twoImageView2 sd_setImageWithURL:[NSURL URLWithString:stu2.albums[0]]];
-            self.mView.twoLabel2.text =  stu2.title;
-        }
-        else if (array.count<4)
-        {
-            StuffModle *stu1 = self.comdataArr[0];
-            [self.mView.oneImageView2 sd_setImageWithURL:[NSURL URLWithString:stu1.albums[0]]];
-            self.mView.oneLabel2.text =  stu1.title;
-            
-            StuffModle *stu2 = self.comdataArr[1];
-            [self.mView.twoImageView2 sd_setImageWithURL:[NSURL URLWithString:stu2.albums[0]]];
-            self.mView.twoLabel2.text =  stu2.title;
-            
-            StuffModle *stu3 = self.comdataArr[2];
-            [self.mView.threeImageView2 sd_setImageWithURL:[NSURL URLWithString:stu3.albums[0]]];
-            self.mView.threeLabel2.text =  stu3.title;
-        }
-        [self nethandle];
-    }];
+    
     
     [self nethandle];
+    NSLog(@"**%@",self.comdataArr);
     self.mView.contentSize = CGSizeMake(self.mView.bounds.size.width, self.mView.bounds.size.height + 120);
     
     
@@ -394,7 +359,52 @@
     
 }
 
+-(void)p_data
+{
+    [[GetShareDataTool shareShareData]getShareWithPassValue:^(NSArray *array) {
+        
+        self.comdataArr = (NSMutableArray *)array;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (array.count<1) {
+                //return ;
+            }
+            else if (array.count<2)
+            {
+                StuffModle *stu1 = self.comdataArr[0];
+                [self.mView.oneImageView2 sd_setImageWithURL:[NSURL URLWithString:stu1.albums[0]]];
+                self.mView.oneLabel2.text =  stu1.title;
+            }
+            else if (array.count<3)
+            {
+                StuffModle *stu1 = self.comdataArr[0];
+                [self.mView.oneImageView2 sd_setImageWithURL:[NSURL URLWithString:stu1.albums[0]]];
+                self.mView.oneLabel2.text =  stu1.title;
+                
+                StuffModle *stu2 = self.comdataArr[1];
+                [self.mView.twoImageView2 sd_setImageWithURL:[NSURL URLWithString:stu2.albums[0]]];
+                self.mView.twoLabel2.text =  stu2.title;
+            }
+            else
+            {
+                StuffModle *stu1 = self.comdataArr[0];
+                [self.mView.oneImageView2 sd_setImageWithURL:[NSURL URLWithString:stu1.albums[0]]];
+                self.mView.oneLabel2.text =  stu1.title;
+                
+                StuffModle *stu2 = self.comdataArr[1];
+                [self.mView.twoImageView2 sd_setImageWithURL:[NSURL URLWithString:stu2.albums[0]]];
+                self.mView.twoLabel2.text =  stu2.title;
+                
+                StuffModle *stu3 = self.comdataArr[2];
+                [self.mView.threeImageView2 sd_setImageWithURL:[NSURL URLWithString:stu3.albums[0]]];
+                self.mView.threeLabel2.text =  stu3.title;
+            }
+            [self nethandle];
+        });
+        
+    }];
+    [self nethandle];
 
+}
 -(void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index
 {
     if (self.dataArr[index] == nil) {
