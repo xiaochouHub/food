@@ -59,8 +59,11 @@
     
     priNC.tabBarItem = [[UITabBarItem alloc]initWithTabBarSystemItem:UITabBarSystemItemFeatured tag:103];
     
+    SearchViewController *sVC = [[SearchViewController alloc]init];
+    UINavigationController *sNC = [[UINavigationController alloc]initWithRootViewController:sVC];
+    sNC.tabBarItem = [[UITabBarItem alloc]initWithTabBarSystemItem:UITabBarSystemItemFeatured tag:104];
     //放它管理的controller
-    self.viewControllers = @[popNC,gouNC,priNC];
+    self.viewControllers = @[popNC,gouNC,sNC,priNC];
 
     
     self.delegate = self;
