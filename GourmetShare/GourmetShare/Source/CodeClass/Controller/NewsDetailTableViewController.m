@@ -58,7 +58,7 @@
         index++;
     }
     
-    
+    [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
    
 }
 -(CGFloat)heightforlabel:(NSString *)str

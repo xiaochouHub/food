@@ -30,8 +30,8 @@
     }];
     
     [self.tableView registerClass:[CategoryDetailTableViewCell class] forCellReuseIdentifier:@"cell"];
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"yellowback.jpg"]];
-
+//    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"yellowback.jpg"]];
+    self.view.backgroundColor = [UIColor whiteColor];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     

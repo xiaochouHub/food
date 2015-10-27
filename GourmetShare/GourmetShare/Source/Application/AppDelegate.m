@@ -30,7 +30,6 @@
                       clientKey:@"Gl0QDkWpsyzUJqPA7PSGdUyQ"];
     [AVAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     // 还记得换肤吗
-    [[UINavigationBar appearance] setBarTintColor:[UIColor purpleColor]];
     [AVOSCloud setApplicationId:@"DaQm5YhilP9COj1beEYipuM1"
                       clientKey:@"Gl0QDkWpsyzUJqPA7PSGdUyQ"];
     [AVAnalytics trackAppOpenedWithLaunchOptions:launchOptions];

@@ -18,7 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor grayColor];
+    self.view.backgroundColor = [UIColor whiteColor];
     self.dataArr = [NSMutableArray array];
     [self.tableView registerClass:[NewsTableViewCell class] forCellReuseIdentifier:@"news"];
     [[GetNewsDataTool shareGetNewsData]getNewsDataWithPassValue:^(NSArray *array) {
@@ -28,7 +28,7 @@
         });
         
     }];
-   
+    
     [self setupRefresh];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;

@@ -27,7 +27,7 @@
 //    self.categoryButton1.backgroundColor = [UIColor orangeColor];
     self.categoryButton1.layer.cornerRadius = 5;
     self.categoryButton1.layer.borderWidth = 1;
-    self.categoryButton1.layer.borderColor = [[UIColor whiteColor]CGColor];
+    self.categoryButton1.layer.borderColor = [[UIColor grayColor]CGColor];
     [self.categoryButton1 setTintColor:[UIColor blackColor]];
     [self.categoryButton1 setTitle:@"菜谱" forState:UIControlStateNormal];
     [self.contentView addSubview:_categoryButton1];
@@ -37,7 +37,7 @@
 //    self.categoryButton2.backgroundColor = [UIColor orangeColor];
     self.categoryButton2.layer.cornerRadius = 5;
     self.categoryButton2.layer.borderWidth = 1;
-    self.categoryButton2.layer.borderColor = [[UIColor whiteColor]CGColor];
+    self.categoryButton2.layer.borderColor = [[UIColor grayColor]CGColor];
     [self.categoryButton2 setTintColor:[UIColor blackColor]];
     [self.contentView addSubview:_categoryButton2];
     
@@ -46,7 +46,7 @@
 //    self.categoryButton3.backgroundColor = [UIColor orangeColor];
     self.categoryButton3.layer.cornerRadius = 5;
     self.categoryButton3.layer.borderWidth = 1;
-    self.categoryButton3.layer.borderColor = [[UIColor whiteColor]CGColor];
+    self.categoryButton3.layer.borderColor = [[UIColor grayColor]CGColor];
     [self.categoryButton3 setTintColor:[UIColor blackColor]];
     [self.contentView addSubview:_categoryButton3];
     
@@ -55,7 +55,7 @@
 //    self.categoryButton4.backgroundColor = [UIColor orangeColor];
     self.categoryButton4.layer.cornerRadius = 5;
     self.categoryButton4.layer.borderWidth = 1;
-    self.categoryButton4.layer.borderColor = [[UIColor whiteColor]CGColor];
+    self.categoryButton4.layer.borderColor = [[UIColor grayColor]CGColor];
     [self.categoryButton4 setTintColor:[UIColor blackColor]];
     [self.contentView addSubview:_categoryButton4];
     
@@ -64,7 +64,7 @@
 //    self.categoryButton5.backgroundColor = [UIColor orangeColor];
     self.categoryButton5.layer.cornerRadius = 5;
     self.categoryButton5.layer.borderWidth = 1;
-    self.categoryButton5.layer.borderColor = [[UIColor whiteColor]CGColor];
+    self.categoryButton5.layer.borderColor = [[UIColor grayColor]CGColor];
     [self.categoryButton5 setTintColor:[UIColor blackColor]];
     [self.contentView addSubview:_categoryButton5];
     
@@ -73,7 +73,7 @@
 //    self.categoryButton6.backgroundColor = [UIColor orangeColor];
     self.categoryButton6.layer.cornerRadius = 5;
     self.categoryButton6.layer.borderWidth = 1;
-    self.categoryButton6.layer.borderColor = [[UIColor whiteColor]CGColor];
+    self.categoryButton6.layer.borderColor = [[UIColor grayColor]CGColor];
     [self.categoryButton6 setTintColor:[UIColor blackColor]];
     [self.contentView addSubview:_categoryButton6];
     
