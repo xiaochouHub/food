@@ -49,6 +49,12 @@
     [super viewDidLoad];
     
     self.comdataArr = [NSMutableArray array];
+    
+    if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"curNetStatus"] isEqualToString:@"none"]) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"网络故障,请检查网络" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+        
+    }
 //    // 轮播图图片数组
 //    self.picArr = [NSMutableArray array];
 //    // 轮播图标题

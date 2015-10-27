@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import <AVOSCloud/AVOSCloud.h>
+#import "Reachability.h"
 @interface AppDelegate ()
 
 @end
@@ -16,7 +17,34 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [UMSocialData setAppKey:@"507fcab25270157b37000010"];
+    
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    // 实例化一个网络判断工具的对象
+    Reachability *ablity = [Reachability reachabilityForInternetConnection];
+    
+    if (ablity.currentReachabilityStatus == ReachableViaWiFi) {
+        [ud setValue:@"wifi" forKey:@"curNetStatus"];
+        NSLog(@"=====当前网络状态是WiFi");
+    }
+    else if(ablity.currentReachabilityStatus == ReachableViaWWAN)
+    {
+        [ud setValue:@"3G" forKey:@"curNetStatus"];
+        NSLog(@"=====当前网络状态是3G");
+    }
+    else if(ablity.currentReachabilityStatus == NotReachable)
+    {
+        [ud setValue:@"none" forKey:@"curNetStatus"];
+        NSLog(@"======现在没网");
+        
+    }
+    
+    [ablity startNotifier];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(networkStatusChanged:) name:kReachabilityChangedNotification object:ablity];
+    
+    
+    
+    [UMSocialData setAppKey:@"562f339d67e58eba010037e1"];
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
@@ -38,6 +66,29 @@
     }];
      
      return YES;
+}
+-(void)networkStatusChanged:(NSNotificationCenter *)sender
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    
+    // 实例化一个网络判断工具的对象
+    Reachability *ablity = [Reachability reachabilityForInternetConnection];
+    
+    if (ablity.currentReachabilityStatus == ReachableViaWiFi) {
+        [ud setValue:@"wifi" forKey:@"curNetStatus"];
+        NSLog(@"=====当前网络状态是WiFi");
+    }
+    else if(ablity.currentReachabilityStatus == ReachableViaWWAN)
+    {
+        [ud setValue:@"3G" forKey:@"curNetStatus"];
+        NSLog(@"=====当前网络状态是3G");
+    }
+    else if(ablity.currentReachabilityStatus == NotReachable)
+    {
+        [ud setValue:@"none" forKey:@"curNetStatus"];
+        NSLog(@"======现在没网");
+    }
+    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
