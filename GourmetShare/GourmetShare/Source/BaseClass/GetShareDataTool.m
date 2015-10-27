@@ -116,11 +116,13 @@ static GetShareDataTool *gs;
     AVQuery *query = [AVQuery queryWithClassName:@"postShare"];
     [query whereKey:@"userName" equalTo:userName];
     [query whereKey:@"sid" equalTo:sid];
-    if ([query findObjects] < 0) {
+    if ([query findObjects] > 0) {
         AVObject *q =[query findObjects][0];
         if ([q delete]) {
             AVQuery *imageQuery = [AVQuery queryWithClassName:@"_File"];
-            [imageQuery whereKey:@"url" equalTo:[q valueForKey:@"albums"][0]];
+            NSMutableArray *temp = [NSMutableArray array];
+            [temp addObject:[q valueForKey:@"albums"]];
+            [imageQuery whereKey:@"url" equalTo:temp[0]];
             AVFile *deleteFile = [AVFile fileWithAVObject:[imageQuery findObjects][0]];
             [deleteFile deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 

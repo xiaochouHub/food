@@ -13,6 +13,7 @@
 @interface ShareTableViewController ()<UIAlertViewDelegate>
 @property(nonatomic,strong)NSMutableArray *dataArr;
 @property(nonatomic,strong)UIAlertView *alert;
+@property(nonatomic,strong)UIButton *btn;
 @end
 
 @implementation ShareTableViewController
@@ -23,6 +24,43 @@
     self.alert.delegate = self;
     [self.tableView registerClass:[myshareTableViewCell class] forCellReuseIdentifier:@"cell"];
     self.dataArr = [NSMutableArray array];
+    [self p_data];
+    [self setupRefresh];
+    UIBarButtonItem *edit = [[UIBarButtonItem alloc]initWithTitle:@"编辑" style:UIBarButtonItemStyleDone target:self action:@selector(btnAction)];
+    UIBarButtonItem *share = [[UIBarButtonItem alloc]initWithTitle:@"我要分享" style:UIBarButtonItemStyleDone target:self action:@selector(rightAction:)];
+    NSArray *btnArr = [NSArray arrayWithObjects:share,edit, nil];
+    self.navigationItem.rightBarButtonItems = btnArr;
+    [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
+    
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
+    
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+// 下拉刷新
+-(void)setupRefresh
+{
+    //1.添加刷新控件
+    UIRefreshControl *control=[[UIRefreshControl alloc]init];
+    [control addTarget:self action:@selector(refreshStateChange:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:control];
+    
+    //2.马上进入刷新状态，并不会触发UIControlEventValueChanged事件
+    [control beginRefreshing];
+    
+    // 3.加载数据
+    [self refreshStateChange:control];
+    
+}
+// 数据请求
+-(void)p_data
+{
     if ([RegisterDataTool shareRegisterData].LoginName == nil) {
         
     }
@@ -37,20 +75,14 @@
         }];
         
     }
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"我要分享" style:UIBarButtonItemStyleDone target:self action:@selector(rightAction:)];
-    [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)refreshStateChange:(UIRefreshControl *)control
+{
+    
+    [self p_data];
+    // 3. 结束刷新
+    [control endRefreshing];
+    
 }
 
 -(void)rightAction:(UIBarButtonItem *)sender
@@ -117,6 +149,26 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 100;
+}
+-(void)btnAction
+{
+    [self.tableView setEditing:!self.tableView.editing animated:YES];
+}
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+-(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewCellEditingStyleDelete;
+}
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    StuffModle *model = self.dataArr[indexPath.row];
+    [[GetShareDataTool shareShareData]deleteShareWithUserName:[RegisterDataTool shareRegisterData].LoginName Sid:model.sid];
+    [self.dataArr removeObjectAtIndex:indexPath.row];
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+    
 }
 /*
 // Override to support conditional editing of the table view.

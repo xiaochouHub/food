@@ -55,7 +55,7 @@
     [self addSubview:_registButton];
     
     self.changeButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    self.changeButton.frame = CGRectMake(kScreenWidth/19, kScreenHeight*0.94, kScreenWidth/6.5, kScreenHeight*0.04);
+    self.changeButton.frame = CGRectMake(kScreenWidth/19, kScreenHeight*0.94, 150, kScreenHeight*0.04);
     [self.changeButton setTitle:@"忘记密码" forState:UIControlStateNormal];
     _changeButton.titleLabel.font = [UIFont systemFontOfSize: 15.0];
     [_changeButton.layer setMasksToBounds:YES];
