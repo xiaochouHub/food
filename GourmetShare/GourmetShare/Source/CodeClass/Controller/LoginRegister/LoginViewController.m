@@ -27,8 +27,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.backImage = [[UIImageView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
-    self.backImage.image = [UIImage imageNamed:@"whiteback.jpg"];
-    _lv.backgroundColor = [UIColor colorWithPatternImage:self.backImage.image];
+//    self.backImage.image = [UIImage imageNamed:@"whiteback.jpg"];
+//    _lv.backgroundColor = [UIColor colorWithPatternImage:self.backImage.image];
+    _lv.backgroundColor = [UIColor whiteColor];
     
     
     [_lv.registButton addTarget:self action:@selector(registButtonAction:) forControlEvents:UIControlEventTouchUpInside];
