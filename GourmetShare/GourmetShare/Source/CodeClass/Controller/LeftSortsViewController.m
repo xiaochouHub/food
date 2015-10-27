@@ -13,6 +13,8 @@
 #import "DownloadTableViewController.h"
 #import "MySelfTableViewController.h"
 #import "MySelfViewController.h"
+#import "RegisterDataTool.h"
+#import "UserInfoModle.h"
 
 @interface LeftSortsViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITableView *tableview;
@@ -42,7 +44,44 @@
     [_lv.headButton addTarget:self action:@selector(headButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     //button置为顶层view，不然事件不能触发
     [_lv bringSubviewToFront:_lv.headButton];
+    [[RegisterDataTool shareRegisterData] addObserver:self forKeyPath:@"LoginName" options:NSKeyValueObservingOptionNew context:nil];
     
+    [_lv.headButton setBackgroundImage:[UIImage imageNamed:@"user.png"] forState:UIControlStateNormal];
+    _lv.headName.text = @"未登录";
+    
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
+{
+    [self p_setupHeadImage];
+}
+
+-(void)p_setupHeadImage
+{
+    if ([RegisterDataTool shareRegisterData].LoginName != nil) {
+        
+        _lv.headName.text = [RegisterDataTool shareRegisterData].userInfo.nickname;
+        
+        //是否有本地头像
+        NSString *uniquePath = [[RegisterDataTool shareRegisterData] imageFilePath:[RegisterDataTool shareRegisterData].LoginName];
+        
+        BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:uniquePath];
+        
+        if (!blHave) {
+            if ([RegisterDataTool shareRegisterData].userInfo.headImage != nil) {
+                UIImageView *tempImage = [[UIImageView alloc]init];
+                [tempImage sd_setImageWithURL:[NSURL URLWithString:[RegisterDataTool shareRegisterData].userInfo.headImage]];
+                [_lv.headButton setBackgroundImage:tempImage.image forState:UIControlStateNormal];
+            }
+        }else {
+            [_lv.headButton setBackgroundImage:[UIImage imageWithData:[NSData dataWithContentsOfFile:uniquePath]] forState:UIControlStateNormal];
+        }
+    }
+    else
+    {
+        [_lv.headButton setBackgroundImage:[UIImage imageNamed:@"user.png"] forState:UIControlStateNormal];
+        _lv.headName.text = @"未登录";
+    }
 }
 
 - (void)headButtonAction:(UIButton *)sender
@@ -104,6 +143,12 @@
     AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     if (indexPath.row == 0) {
         [tempAppDelegate.LeftSlideVC closeLeftView];//返回首页
+        MainPageViewController *mpVC = [[MainPageViewController alloc] init];
+        
+        [tempAppDelegate.LeftSlideVC closeLeftView];//个人信息
+        
+        [tempAppDelegate.mainNavigationController pushViewController:mpVC animated:NO];
+        
     } else if (indexPath.row == 1) {
         MySelfViewController *msVC = [[MySelfViewController alloc] init];
         
@@ -191,7 +236,8 @@
     }
     else if (alertView.tag == 102 && buttonIndex == 0)
     {
-        [RegisterDataTool shareRegisterData].LoginName = nil;
+        //[RegisterDataTool shareRegisterData].LoginName = nil;
+        [[RegisterDataTool shareRegisterData] setValue:nil forKey:@"LoginName"];
         
         UIAlertView *a = [[UIAlertView alloc]initWithTitle:@"已注销!" message:nil delegate:self cancelButtonTitle:@"确认" otherButtonTitles: nil];
         a.tag = 104;

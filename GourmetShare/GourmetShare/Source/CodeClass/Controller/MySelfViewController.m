@@ -40,7 +40,7 @@
         [self p_setupView];
     }
     _mv.headImage.userInteractionEnabled = YES;
-    
+    _mv.headImage.image = [UIImage imageNamed:@"user.png"];
     UITapGestureRecognizer *singleTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(choosepictureAction)];
     [_mv.headImage addGestureRecognizer:singleTap1];
     _isChangHead = NO;
@@ -59,13 +59,11 @@
     NSString *uniquePath = [[RegisterDataTool shareRegisterData] imageFilePath:[RegisterDataTool shareRegisterData].LoginName];
     BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:uniquePath];
     if (!blHave) {
-        
+        if (_userInfo.headImage != nil) {
+            [_mv.headImage sd_setImageWithURL:[NSURL URLWithString:_userInfo.headImage]];
+        }
     }else {
         _mv.headImage.image = [UIImage imageWithData:[NSData dataWithContentsOfFile:uniquePath]];
-    }
-        
-    if (_userInfo.headImage != nil) {
-        [_mv.headImage sd_setImageWithURL:[NSURL URLWithString:_userInfo.headImage]];
     }
 }
 

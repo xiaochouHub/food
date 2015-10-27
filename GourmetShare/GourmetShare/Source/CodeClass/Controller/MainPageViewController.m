@@ -7,11 +7,11 @@
 //
 
 #import "MainPageViewController.h"
-
-
+#import "RegisterDataTool.h"
+#import "UserInfoModle.h"
 @interface MainPageViewController ()<UITabBarControllerDelegate>
 
-
+@property (nonatomic,strong)UIBarButtonItem * ButtonItem;
 
 @end
 
@@ -21,22 +21,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"主界面";
- 
-//    [[GetFoodDataTool shareGetFoodData] getFoodDataWithPassValue:^(NSArray *array) {
-//        
-//        
-//       
-//    }];
 
-    
-    
     self.view.backgroundColor = [UIColor whiteColor];
     
     UIButton *menuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     menuBtn.frame = CGRectMake(0, 0, 30, 30);
     menuBtn.layer.cornerRadius = 15;
     menuBtn.layer.masksToBounds = YES;
-    [menuBtn setBackgroundImage:[UIImage imageNamed:@"back.jpg"] forState:UIControlStateNormal];
+    [menuBtn setBackgroundImage:[UIImage imageNamed:@"user.png"] forState:UIControlStateNormal];
     [menuBtn addTarget:self action:@selector(openOrCloseLeftList) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:menuBtn];
     
@@ -84,8 +76,15 @@
     
     self.selectedIndex = 1;
     
-//    [[UINavigationBar appearance]setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
+    [[RegisterDataTool shareRegisterData] addObserver:self forKeyPath:@"LoginName" options:NSKeyValueObservingOptionNew context:nil];
+    [self p_setupHeadImage];
 }
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
+{
+    [self p_setupHeadImage];
+}
+
 // 点击tabbar刷新
 -(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
@@ -97,6 +96,7 @@
         [pop setupRefresh];
     }
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -119,7 +119,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    //NSLog(@"viewWillDisappear");
+
     AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [tempAppDelegate.LeftSlideVC setPanEnabled:NO];
 }
@@ -127,9 +127,49 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    //NSLog(@"viewWillAppear");
+    
     AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [tempAppDelegate.LeftSlideVC setPanEnabled:YES];
+    
+}
+
+
+-(void)p_setupHeadImage
+{
+    UIButton  *menuBtnTemp = [UIButton buttonWithType:UIButtonTypeCustom];
+    menuBtnTemp.frame = CGRectMake(0, 0, 30, 30);
+    menuBtnTemp.layer.cornerRadius = 15;
+    menuBtnTemp.layer.masksToBounds = YES;
+    [menuBtnTemp addTarget:self action:@selector(openOrCloseLeftList) forControlEvents:UIControlEventTouchUpInside];
+    
+    if ([RegisterDataTool shareRegisterData].LoginName != nil) {
+
+        //是否有本地头像
+        NSString *uniquePath = [[RegisterDataTool shareRegisterData] imageFilePath:[RegisterDataTool shareRegisterData].LoginName];
+        BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:uniquePath];
+        
+        if (!blHave) {
+            if ([RegisterDataTool shareRegisterData].userInfo.headImage != nil) {
+                UIImageView *tempImage = [[UIImageView alloc]init];
+                [tempImage sd_setImageWithURL:[NSURL URLWithString:[RegisterDataTool shareRegisterData].userInfo.headImage]];
+                
+                [menuBtnTemp setBackgroundImage:tempImage.image forState:UIControlStateNormal];
+
+                self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:menuBtnTemp];
+            }
+        }else {
+
+            [menuBtnTemp setBackgroundImage:[UIImage imageWithData:[NSData dataWithContentsOfFile:uniquePath]] forState:UIControlStateNormal];
+
+            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:menuBtnTemp];
+        }
+    }
+    else
+    {
+        [menuBtnTemp setBackgroundImage:[UIImage imageNamed:@"user.png"] forState:UIControlStateNormal];
+
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:menuBtnTemp];
+    }
 }
 
 /*

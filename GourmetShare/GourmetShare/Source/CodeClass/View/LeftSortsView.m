@@ -24,13 +24,12 @@
     self.backgroundColor = [UIColor clearColor];
     self.headButton = [UIButton buttonWithType:UIButtonTypeSystem];
     self.headButton.frame = CGRectMake(kScreenWidth/16, kScreenHeight/10 , kScreenWidth/5, kScreenWidth/5);
-    self.headButton.backgroundColor = [UIColor redColor];
     self.headButton.layer.masksToBounds = YES;
     self.headButton.layer.cornerRadius = self.headButton.frame.size.height/2;
+    
     [self addSubview:_headButton];
     
     self.headName = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.headButton.frame)+10, CGRectGetMinY(self.headButton.frame)+(kScreenWidth/5 -kScreenWidth/14)/2, kScreenWidth/4, kScreenWidth/14)];
-    self.headName.backgroundColor = [UIColor redColor];
     [self addSubview:_headName];
     
     

@@ -105,11 +105,12 @@ static RegisterDataTool *rd;
 -(BOOL)LoginWithUserName:(NSString *)userName Password:(NSString *)password
 {
     self.LoginName = [NSString string];
+    [_LoginName addObserver:self forKeyPath:@"login" options:NSKeyValueObservingOptionNew context:nil];
+    
     NSError *error = [[NSError alloc]init];
     self.userInfo= [[UserInfoModle alloc]init];
     //邮箱登陆
     if ([AVUser logInWithUsername:userName password:password error:&error]) {
-        _LoginName = userName;
         AVQuery *queryemail = [AVUser query];
         [queryemail whereKey:@"email" equalTo:userName];
         NSLog(@"%ld",[queryemail findObjects].count);
@@ -132,7 +133,7 @@ static RegisterDataTool *rd;
                 [self downloadWithURL:_userInfo.headImage];
             }
         }
-
+        [self setValue:userName forKey:@"LoginName"];
         return YES;
     }
     AVQuery *query = [AVUser query];
@@ -142,8 +143,6 @@ static RegisterDataTool *rd;
         AVQuery *q = [query findObjects][0];
         NSString *email = [q valueForKey:@"email"];
         if ([AVUser logInWithUsername:email password:password error:&error]) {
-            
-            _LoginName = email;
             
             _userInfo.headImage = [q valueForKey:@"headImage"];
             _userInfo.nickname = [q valueForKey:@"nickname"];
@@ -159,7 +158,7 @@ static RegisterDataTool *rd;
             if (!blHave) {
                 [self downloadWithURL:_userInfo.headImage];
             }
-            
+            [self setValue:email forKey:@"LoginName"];
             return YES;
         }
     }
