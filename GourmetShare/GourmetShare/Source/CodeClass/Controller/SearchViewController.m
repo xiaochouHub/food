@@ -27,8 +27,8 @@
     UIApplication *app = [UIApplication sharedApplication];
     [app setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     self.sv.search.delegate = self;
-    //UITextField *searchfield  = [[self.sv.search subviews] lastObject];
-    //[searchfield setReturnKeyType:UIReturnKeyDone];
+   self.sv.search.placeholder = @"请输入";
+    self.sv.search.showsCancelButton = YES;
     self.sv.search.keyboardType = UIKeyboardAppearanceDefault;
     
     UIToolbar * topView = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
@@ -122,6 +122,7 @@
 -(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
     NSLog(@"haha");
+    [self.sv.search resignFirstResponder];
     
 }
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
@@ -132,6 +133,10 @@
         self.dataArr = (NSMutableArray *)array;
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.sv.searchList reloadData];
+            if (self.dataArr.count<1) {
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"无搜索结果" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [alert show];
+            }
         });
     }];
     [self.sv.search resignFirstResponder];//键盘回收

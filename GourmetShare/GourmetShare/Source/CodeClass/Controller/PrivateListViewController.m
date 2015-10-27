@@ -91,7 +91,7 @@
         else
         {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"确定注销" message:@"注销" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:@"取消", nil];
-        [RegisterDataTool shareRegisterData].LoginName = nil;
+        
         alert.tag = 102;
         [alert show];
         }
@@ -122,6 +122,7 @@
     else if (alertView.tag == 102 && buttonIndex == 0)
     {
         UIAlertView *a = [[UIAlertView alloc]initWithTitle:@"已注销!" message:nil delegate:self cancelButtonTitle:@"确认" otherButtonTitles: nil];
+        [RegisterDataTool shareRegisterData].LoginName = nil;
         a.tag = 104;
         [a show];
     }

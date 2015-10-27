@@ -12,10 +12,21 @@
 
 @interface PopInfoListViewController ()
 @property(nonatomic,strong)NSMutableArray *dataArr;
+@property(nonatomic,strong)MBProgressHUD *hud;
 @end
 
 @implementation PopInfoListViewController
-
+// 第三方小菊花
+- (void)p_setupProgressHud
+{
+    self.hud = [[MBProgressHUD alloc] initWithView:self.view];
+    _hud.frame = self.view.bounds;
+    _hud.minSize = CGSizeMake(100, 100);
+    _hud.mode = MBProgressHUDModeIndeterminate;
+    [self.view addSubview:_hud];
+    
+    [_hud show:YES];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -28,7 +39,7 @@
         });
         
     }];
-    
+    [self p_setupProgressHud];
     [self setupRefresh];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -57,6 +68,7 @@
         self.dataArr = (NSMutableArray *)array;
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
+            self.hud.hidden = YES;
         });
         
     }];

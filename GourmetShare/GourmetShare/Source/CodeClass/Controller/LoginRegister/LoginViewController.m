@@ -14,10 +14,21 @@
 @interface LoginViewController ()<UIAlertViewDelegate> 
 @property (nonatomic,strong) UIImageView *backImage;
 @property (nonatomic,strong)LoginView *lv;
+@property(nonatomic,strong)MBProgressHUD *hud;
 @end
 
 @implementation LoginViewController
-
+// 第三方小菊花
+- (void)p_setupProgressHud
+{
+    self.hud = [[MBProgressHUD alloc] initWithView:self.view];
+    _hud.frame = self.view.bounds;
+    _hud.minSize = CGSizeMake(100, 100);
+    _hud.mode = MBProgressHUDModeIndeterminate;
+    [self.view addSubview:_hud];
+    
+    [_hud show:YES];
+}
 -(void)loadView
 {
     self.lv = [[LoginView alloc]initWithFrame:[UIScreen mainScreen].bounds];
@@ -49,12 +60,14 @@
 
 -(void)loginButtonAction:(UIButton *)sender
 {
+    [self p_setupProgressHud];
     NSString *name = [_lv.userNameLT inputFieldText];
     NSString *password = [_lv.passWordLT inputFieldText];
     //登录时，用户名和密码不能为空
     if ([name isEqualToString:@""] || [password isEqualToString:@""]) {
         
         [self p_showAlertView:@"提示" message:@"用户名和密码不能为空"];
+        self.hud.hidden = YES;
         return;
     }
     /*
@@ -70,12 +83,14 @@
     }
      */
     if ([[RegisterDataTool shareRegisterData]LoginWithUserName:name Password:password]) {
+        self.hud.hidden = YES;
         MainPageViewController *mvc = [[MainPageViewController alloc]init];
         [self.navigationController pushViewController:mvc animated:YES];
     }
     else
     {
         [self p_showAlertView:@"提示" message:@"登录名或密码错误"];
+        self.hud.hidden = YES;
     }
     
 }
