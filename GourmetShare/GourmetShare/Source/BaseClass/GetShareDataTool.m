@@ -119,8 +119,11 @@ static GetShareDataTool *gs;
     if ([query findObjects] < 0) {
         AVObject *q =[query findObjects][0];
         if ([q delete]) {
-            AVFile *file = [AVFile fileWithURL:[q valueForKey:@"albums"]];
-            [file deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            AVQuery *imageQuery = [AVQuery queryWithClassName:@"_File"];
+            [imageQuery whereKey:@"url" equalTo:[q valueForKey:@"albums"][0]];
+            AVFile *deleteFile = [AVFile fileWithAVObject:[imageQuery findObjects][0]];
+            [deleteFile deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                
             }];
             return YES;
         }

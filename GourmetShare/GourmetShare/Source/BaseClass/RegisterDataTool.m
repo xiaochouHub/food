@@ -240,13 +240,12 @@ static RegisterDataTool *rd;
         [self deleteFile:[self imageFilePath:_LoginName]];
         
         [UIImagePNGRepresentation(headImage)writeToFile:[self imageFilePath:_LoginName]   atomically:YES];
-//        AVQuery *imageQuery = [AVQuery queryWithClassName:@"_File"];
-//        [imageQuery whereKey:@"url" equalTo:_oldHeadImageUrl];
-//        
-//        AVFile *deleteFile = [AVFile fileWithAVObject:[imageQuery findObjects][0]];
-//        [deleteFile deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//        
-//        }];
+        AVQuery *imageQuery = [AVQuery queryWithClassName:@"_File"];
+        [imageQuery whereKey:@"url" equalTo:_oldHeadImageUrl];
+        AVFile *deleteFile = [AVFile fileWithAVObject:[imageQuery findObjects][0]];
+        [deleteFile deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        
+        }];
         return YES;
     }
     
