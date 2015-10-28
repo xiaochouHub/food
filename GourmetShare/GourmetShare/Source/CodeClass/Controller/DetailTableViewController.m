@@ -393,8 +393,8 @@
 //    }
     // 分享到新浪微博
     [UMSocialSnsService presentSnsIconSheetView:self
-                                         appKey:@"507fcab25270157b37000010"
-                                      shareText:@"从美食广场APP分享"
+                                         appKey:@"562f339d67e58eba010037e1"
+                                      shareText:@"从美食分享街APP分享"
                                      shareImage:image
                                 shareToSnsNames:@[UMShareToSina]
                                        delegate:nil];
