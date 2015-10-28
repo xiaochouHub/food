@@ -179,9 +179,12 @@
     // 保存图片至本地，方法见下文
     [self saveImage:image withName:@"currentImage.png"];
     
-    NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"currentImage.png"];
+    NSString *cachesPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
+    
+    NSString *fullPath = [cachesPath stringByAppendingPathComponent:@"currentImage.png"];
     
     UIImage *savedImage = [[UIImage alloc] initWithContentsOfFile:fullPath];
+
     
     _isFullScreen = NO;
     
@@ -200,7 +203,10 @@ NSData * UIImageJPEGRepresentation ( UIImage *image, CGFloat compressionQuality)
     NSData *imageData = UIImageJPEGRepresentation(currentImage, 0.5);
     // 获取沙盒目录
     
-    NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:imageName];
+    NSString *cachesPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
+    
+    NSString *fullPath = [cachesPath stringByAppendingPathComponent:imageName];
+    
     // 将图片写入文件
     
     [imageData writeToFile:fullPath atomically:NO];

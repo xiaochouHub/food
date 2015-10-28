@@ -229,6 +229,12 @@
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (alertView.tag == 101 && buttonIndex == 0) {
+        NSString *cachesPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
+        
+        NSFileManager *manager = [NSFileManager defaultManager];
+        
+        //删除
+        [manager removeItemAtPath:cachesPath error:nil];
         
         UIAlertView *a = [[UIAlertView alloc]initWithTitle:@"已清除缓存!" message:nil delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil];
         a.tag = 103;
