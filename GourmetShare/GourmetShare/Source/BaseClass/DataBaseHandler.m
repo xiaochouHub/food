@@ -55,7 +55,6 @@ static DataBaseHandler *dbh;
     self.db = [FMDatabase databaseWithPath:[self databaseFilePath]];
     //判断数据库是否已经打开，如果没有打开，提示失败
     if (![_db open]) {
-        NSLog(@"数据库打开失败");
         return;
     }
     
@@ -66,7 +65,6 @@ static DataBaseHandler *dbh;
     if(![_db tableExists:@"postCategory"])
     {
         if ([_db executeUpdate:@"CREATE TABLE postCategory(name TEXT, parentId TEXT) "]) {
-            NSLog(@"创建完成");
         }
     }
 }
@@ -92,7 +90,6 @@ static DataBaseHandler *dbh;
 {
     self.db = [FMDatabase databaseWithPath:[self databaseFilePath]];
     if (![_db open]) {
-        NSLog(@"数据库打开失败");
         return nil;
     }
     
@@ -125,7 +122,6 @@ static DataBaseHandler *dbh;
     self.db = [FMDatabase databaseWithPath:[self databaseFilePath]];
     //判断数据库是否已经打开，如果没有打开，提示失败
     if (![_db open]) {
-        NSLog(@"数据库打开失败");
         return;
     }
     
@@ -136,7 +132,6 @@ static DataBaseHandler *dbh;
     if(![_db tableExists:@"postList"])
     {
         if ([_db executeUpdate:@"CREATE TABLE postList(lid TEXT ,name TEXT, parentId TEXT) "]) {
-            NSLog(@"创建完成");
         }
     }
 }
@@ -163,7 +158,6 @@ static DataBaseHandler *dbh;
 {
     self.db = [FMDatabase databaseWithPath:[self databaseFilePath]];
     if (![_db open]) {
-        NSLog(@"数据库打开失败");
         return nil;
     }
     
@@ -194,7 +188,6 @@ static DataBaseHandler *dbh;
 {
     self.db = [FMDatabase databaseWithPath:[self databaseFilePath]];
     if (![_db open]) {
-        NSLog(@"数据库打开失败");
         return nil;
     }
     
@@ -231,7 +224,6 @@ static DataBaseHandler *dbh;
     self.db = [FMDatabase databaseWithPath:[self databaseFilePath]];
     //判断数据库是否已经打开，如果没有打开，提示失败
     if (![_db open]) {
-        NSLog(@"数据库打开失败");
         return;
     }
     
@@ -242,7 +234,7 @@ static DataBaseHandler *dbh;
     if(![_db tableExists:@"postStuff"])
     {
         if ([_db executeUpdate:@"CREATE TABLE postStuff(lid TEXT ,albums TEXT, burden TEXT,sid TEXT ,imtro TEXT, ingredients TEXT,steps TEXT ,tags TEXT, title TEXT) "]) {
-            NSLog(@"创建完成");
+ 
         }
     }
 }
@@ -312,7 +304,6 @@ static DataBaseHandler *dbh;
 {
     self.db = [FMDatabase databaseWithPath:[self databaseFilePath]];
     if (![_db open]) {
-        NSLog(@"数据库打开失败");
         return nil;
     }
     
@@ -361,7 +352,6 @@ static DataBaseHandler *dbh;
     self.db = [FMDatabase databaseWithPath:[self databaseFilePath]];
     //判断数据库是否已经打开，如果没有打开，提示失败
     if (![_db open]) {
-        NSLog(@"数据库打开失败");
         return;
     }
     
@@ -373,7 +363,6 @@ static DataBaseHandler *dbh;
     {
         NSString *sql = [NSString stringWithFormat:@"CREATE TABLE User (albums TEXT, burden TEXT,sid TEXT ,imtro TEXT, ingredients TEXT,steps TEXT ,tags TEXT, title TEXT) "];
         if ([_db executeUpdate:sql]) {
-            NSLog(@"创建完成");
         }
     }
 }
@@ -466,15 +455,12 @@ static DataBaseHandler *dbh;
     NSString *uniquePath = [self imageFilePath:aURL Sid:sid];
     BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:uniquePath];
     if (!blHave) {
-        NSLog(@"no  have");
         return ;
     }else {
-        NSLog(@" have");
         BOOL blDele= [fileManager removeItemAtPath:uniquePath error:nil];
         if (blDele) {
-            NSLog(@"dele success");
+
         }else {
-            NSLog(@"dele fail");
         }
         
     }

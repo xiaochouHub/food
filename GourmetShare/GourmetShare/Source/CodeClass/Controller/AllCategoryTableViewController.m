@@ -67,7 +67,7 @@
     CategoryDetailTableViewController *detail = [[CategoryDetailTableViewController alloc]init];
     FoodCategoryModel *model = self.dataArr[indexPath.row]; 
     detail.parid = model.parentId;
-    //NSLog(@"第二个%@",model.parentId);
+
     [self.navigationController pushViewController:detail animated:YES];
     
 }
@@ -124,7 +124,7 @@
             [cell.categoryButton6 setTitle:[self.btnArr[5]valueForKey:@"name"] forState:UIControlStateNormal];
 
         }
-        NSLog(@"%@",self.btnArr);
+
 
         
 

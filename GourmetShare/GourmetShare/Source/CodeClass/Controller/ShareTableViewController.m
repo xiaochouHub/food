@@ -123,7 +123,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete implementation, return the number of rows
-    NSLog(@"%ld",self.dataArr.count);
+  
     return self.dataArr.count;
 }
 

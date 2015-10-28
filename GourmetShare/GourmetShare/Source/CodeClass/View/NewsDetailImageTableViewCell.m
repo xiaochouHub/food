@@ -14,10 +14,8 @@
 {
     if (_newsImage == nil) {
         _newsImage = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, kScreenWidth-20, 180)];
-        //_newsImage.backgroundColor = [UIColor redColor];
         [self.contentView addSubview:_newsImage];
-//        self.newsImage.contentMode = UIViewContentModeScaleAspectFit
-//        ;
+
     }
     return _newsImage;
 }

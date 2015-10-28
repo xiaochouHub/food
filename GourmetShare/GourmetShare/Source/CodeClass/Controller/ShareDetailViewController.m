@@ -167,16 +167,7 @@
     [picker dismissViewControllerAnimated:YES completion:^{}];
     
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    /* 此处info 有六个值
-     * UIImagePickerControllerMediaType; // an NSString UTTypeImage)
-     * UIImagePickerControllerOriginalImage;  // a UIImage 原始图片
-     * UIImagePickerControllerEditedImage;    // a UIImage 裁剪后图片
-     * UIImagePickerControllerCropRect;       // an NSValue (CGRect)
-     * UIImagePickerControllerMediaURL;       // an NSURL
-     * UIImagePickerControllerReferenceURL    // an NSURL that references an asset in the AssetsLibrary framework
-     * UIImagePickerControllerMediaMetadata    // an NSDictionary containing metadata from a captured photo
-     */
-    // 保存图片至本地，方法见下文
+   
     [self saveImage:image withName:@"currentImage.png"];
     
     NSString *cachesPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];

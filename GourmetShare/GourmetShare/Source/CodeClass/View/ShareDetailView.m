@@ -28,8 +28,6 @@
     [self addSubview:_backScroll];
     
     self.shareImage = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetMaxX([[UIScreen mainScreen]bounds]) - 140, 20, 120, 210)];
-//    self.shareImage.image = [UIImage imageNamed:@"tupian.jpg"];
-//    self.shareImage.backgroundColor = [UIColor lightGrayColor];
     self.shareImage.layer.borderWidth = 1;
     self.shareImage.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     [self.backScroll addSubview:_shareImage];

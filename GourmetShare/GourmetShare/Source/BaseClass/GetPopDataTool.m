@@ -44,7 +44,6 @@ static GetPopDataTool *pData;
             }
             passValue(self.dataArray);
         } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-            NSLog(@"%@",error);
         }];
         
     });
@@ -71,14 +70,11 @@ static GetPopDataTool *pData;
         NSString *html = operation.responseString;
         NSData* data=[html dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-        NSLog(@"%@",[[dict objectForKey:docid] allKeys]);
        self.newsdetail = [[NewsDetail alloc]init];
         [self.newsdetail setValuesForKeysWithDictionary:[dict objectForKey:docid]];
-//        NSLog(@"%@--%@--%@--%@--%@",nDetail.body,nDetail.docid,nDetail.dkeys,nDetail.img,nDetail.title);
         detail(self.newsdetail);
     }
          failure: ^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@", error);
     }];
  
 }

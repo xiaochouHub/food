@@ -125,7 +125,6 @@
     else
     {
         NSMutableString *picStr = new.image[0];
-        NSLog(@"%@",picStr);
         [cell.titleImage sd_setImageWithURL:[NSURL URLWithString:picStr]];
     }
    

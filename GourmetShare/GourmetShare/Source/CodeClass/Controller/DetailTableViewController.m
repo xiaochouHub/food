@@ -116,9 +116,6 @@
     self.burdenArr = (NSMutableArray *)[self.stuffmodel.burden componentsSeparatedByString:@";"];
     
     
-    NSLog(@"%@",self.stepArr);
-    
-    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -228,7 +225,6 @@
     }
     else if(section == 5)
     {
-        NSLog(@"%lu",self.stuffmodel.steps.count);
         return self.stuffmodel.steps.count;
         
     }
@@ -383,14 +379,6 @@
     //调整contentOffset
     self.tableView.contentOffset = CGPointMake(0, self.tableView.contentOffset.y -200);
     
-//    NSFileManager *managerFile = [NSFileManager defaultManager];
-//    
-//    NSString *filePath = @"/Users/mawenhao/Desktop/cell.png";
-//    
-//    if (![managerFile fileExistsAtPath:filePath]) {
-//        //将图片写到Documents文件
-//        [UIImagePNGRepresentation(image)writeToFile: filePath  atomically:YES];
-//    }
     // 分享到新浪微博
     [UMSocialSnsService presentSnsIconSheetView:self
                                          appKey:@"562f339d67e58eba010037e1"

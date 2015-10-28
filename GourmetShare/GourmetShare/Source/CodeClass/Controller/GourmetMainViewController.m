@@ -353,7 +353,6 @@
     
     
     [self nethandle];
-    NSLog(@"**%@",self.comdataArr);
     self.mView.contentSize = CGSizeMake(self.mView.bounds.size.width, self.mView.bounds.size.height + 120);
     
     
