@@ -9,5 +9,8 @@
 #import "UserInfoModle.h"
 
 @implementation UserInfoModle
+-(void)setValue:(id)value forUndefinedKey:(NSString *)key
+{
 
+}
 @end

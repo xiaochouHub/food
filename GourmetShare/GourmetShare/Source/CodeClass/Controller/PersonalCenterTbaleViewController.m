@@ -248,7 +248,8 @@
     else if (alertView.tag == 102 && buttonIndex == 0)
     {
         UIAlertView *a = [[UIAlertView alloc]initWithTitle:@"已注销!" message:nil delegate:self cancelButtonTitle:@"确认" otherButtonTitles: nil];
-        [RegisterDataTool shareRegisterData].LoginName = nil;
+        [[RegisterDataTool shareRegisterData] setValue:nil forKey:@"LoginName"];
+        [AVUser logOut];  //清除缓存用户对象
         a.tag = 104;
         [a show];
     }

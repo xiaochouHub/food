@@ -10,6 +10,7 @@
 #import <AVOSCloud/AVOSCloud.h>
 #import "Reachability.h"
 #import "RegisterDataTool.h"
+#import "UserInfoModle.h"
 @interface AppDelegate ()
 
 @end
@@ -55,18 +56,25 @@
     [AVOSCloud setApplicationId:@"DaQm5YhilP9COj1beEYipuM1"
                       clientKey:@"Gl0QDkWpsyzUJqPA7PSGdUyQ"];
     [AVAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-
-    [AVOSCloud setApplicationId:@"DaQm5YhilP9COj1beEYipuM1"
-                      clientKey:@"Gl0QDkWpsyzUJqPA7PSGdUyQ"];
-    [AVAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-    [[GetNewsDataTool shareGetNewsData]getNewsDataWithPassValue:^(NSArray *array) {
-        
-    }];
     
     AVUser *currentUser = [AVUser currentUser];
     if (currentUser != nil) {
-        NSLog(@"%@",currentUser.username);
-      [RegisterDataTool shareRegisterData].LoginName = currentUser.username;
+        
+        [RegisterDataTool shareRegisterData].LoginName = currentUser.username;
+     
+        AVQuery *queryemail = [AVQuery queryWithClassName:@"_User"];
+        
+        [queryemail whereKey:@"email" equalTo:currentUser.username];
+        
+        if ([queryemail findObjects].count > 0) {
+            AVObject *q = [queryemail findObjects][0];
+
+            [RegisterDataTool shareRegisterData].userInfo = [[UserInfoModle alloc]init];
+
+            [[RegisterDataTool shareRegisterData].userInfo setValuesForKeysWithDictionary:[q valueForKey:@"localData"]];
+            
+            [RegisterDataTool shareRegisterData].userInfo.email = currentUser.username;
+        }
     }
      return YES;
 }
