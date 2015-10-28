@@ -23,7 +23,6 @@
     self.MyImage = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetMaxX([[UIScreen mainScreen]bounds]) / 2 - 50, 50, 100, 100)];
     self.MyImage.layer.cornerRadius = 50;
     self.MyImage.layer.masksToBounds = YES;
-    self.MyImage.image = [UIImage imageNamed:@"3.jpg"];
     [self.contentView addSubview:_MyImage];
 }
 

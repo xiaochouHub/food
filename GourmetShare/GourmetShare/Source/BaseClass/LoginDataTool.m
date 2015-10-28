@@ -103,8 +103,7 @@ static LoginDataTool *ld;
                 }
                 passValue(food);
             } else {
-                // 输出错误信息
-                NSLog(@"Error: %@ %@", error, [error userInfo]);
+
             }
         }];
     });
@@ -134,8 +133,7 @@ static LoginDataTool *ld;
                 }
                 passValue(new);
             } else {
-                // 输出错误信息
-                NSLog(@"Error: %@ %@", error, [error userInfo]);
+
             }
         }];
     });

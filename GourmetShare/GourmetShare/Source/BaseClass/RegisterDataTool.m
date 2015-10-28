@@ -113,7 +113,6 @@ static RegisterDataTool *rd;
     if ([AVUser logInWithUsername:userName password:password error:&error]) {
         AVQuery *queryemail = [AVUser query];
         [queryemail whereKey:@"email" equalTo:userName];
-        NSLog(@"%ld",[queryemail findObjects].count);
         if ([queryemail findObjects].count > 0) {
             
             AVObject *q = [queryemail findObjects][0];

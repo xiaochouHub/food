@@ -24,7 +24,6 @@
         self.dataArr = (NSMutableArray *)array;
         dispatch_async(dispatch_get_main_queue(), ^{
             if (self.dataArr.count<1) {
-                //return ;
             }
             else
             {

@@ -82,8 +82,7 @@ static GetFoodDataTool *gf;
                 passValue(self.dataArr);
                 [[DataBaseHandler shareGetFoodData]insertFoodCategoryWith:self.dataArr];
             } else {
-                // 输出错误信息
-                NSLog(@"Error: %@ %@", error, [error userInfo]);
+               
             }
         }];
         }
@@ -230,9 +229,7 @@ static GetFoodDataTool *gf;
                 }
                 passVallue(ListArr);
             } else {
-                // 输出错误信息
-                NSLog(@"Error: %@ %@", error, [error userInfo]);
-            }
+                         }
         }];
     });
 }
@@ -261,8 +258,7 @@ static GetFoodDataTool *gf;
                     passVallue(_dataListArr);
                     [[DataBaseHandler shareGetFoodData]insertPostListWith:self.dataListArr];
                 } else {
-                    // 输出错误信息
-                    NSLog(@"Error: %@ %@", error, [error userInfo]);
+                   
                 }
             }];
         }
@@ -286,7 +282,7 @@ static GetFoodDataTool *gf;
             [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
                 if (!error) {
                     // 检索成功
-                    NSLog(@"%ld",objects.count);
+                   
                     for (AVQuery *q in objects) {
                         FoodListModle *f = [[FoodListModle alloc]init];
                         f.lid = [q valueForKey:@"lid"];
@@ -298,9 +294,7 @@ static GetFoodDataTool *gf;
                     [[DataBaseHandler shareGetFoodData]insertPostListWith:self.dataListArr];
                     
                 } else {
-                    // 输出错误信息
-                    NSLog(@"Error: %@ %@", error, [error userInfo]);
-                }
+                                  }
             }];
         }
         else{
@@ -333,7 +327,6 @@ static GetFoodDataTool *gf;
             [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
                 if (!error) {
                     // 检索成功
-                    NSLog(@"%ld",objects.count);
                     for (AVQuery *q in objects) {
                         StuffModle *s = [[StuffModle alloc]init];
                         s.albums = [q valueForKey:@"albums"];
@@ -353,9 +346,7 @@ static GetFoodDataTool *gf;
                     passVallue(tempArr);
                     [[DataBaseHandler shareGetFoodData]insertPostStuffWithStuffArr:tempArr lib:lid];
                 } else {
-                    // 输出错误信息
-                    NSLog(@"Error: %@ %@", error, [error userInfo]);
-                }
+                           }
             }];
         }
         else
@@ -377,7 +368,6 @@ static GetFoodDataTool *gf;
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (!error) {
                 // 检索成功
-                NSLog(@"%ld",objects.count);
                 for (AVQuery *q in objects) {
                     StuffModle *s = [[StuffModle alloc]init];
                     s.albums = [q valueForKey:@"albums"];
@@ -396,8 +386,7 @@ static GetFoodDataTool *gf;
                 }
                 passVallue(tempArr);
             } else {
-                // 输出错误信息
-                NSLog(@"Error: %@ %@", error, [error userInfo]);
+               
             }
         }];
     });
@@ -416,7 +405,7 @@ static GetFoodDataTool *gf;
             [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
                 if (!error) {
                     // 检索成功
-                    NSLog(@"%ld",objects.count);
+                   
                     AVQuery *q = objects[0];
                     StuffModle *s = [[StuffModle alloc]init];
                     s.albums = [q valueForKey:@"albums"];
@@ -433,8 +422,7 @@ static GetFoodDataTool *gf;
                     s.title = [q valueForKey:@"title"];
                     stuff(s);
                 } else {
-                    // 输出错误信息
-                    NSLog(@"Error: %@ %@", error, [error userInfo]);
+                    
                 }
             }];
         }
@@ -445,36 +433,6 @@ static GetFoodDataTool *gf;
     });
 }
 
-//-(StuffModle *)getFoodInfoWithTitle:(NSString *)Title stuff:(Stuff)stuff
-//{
-//    dispatch_queue_t globl_t = dispatch_get_global_queue(0, 0);
-//    
-//    dispatch_async(globl_t, ^{
-//        AVQuery *query = [AVQuery queryWithClassName:@"postStuff"];
-//        [query whereKey:@"title" equalTo:Title];
-//        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-//            if (!error) {
-//                // 检索成功
-//                NSLog(@"%ld",objects.count);
-//                AVQuery *q = objects[0];
-//                StuffModle *s = [[StuffModle alloc]init];
-//                s.albums = [q valueForKey:@"albums"];
-//                s.burden = [q valueForKey:@"burden"];
-//                s.sid = [q valueForKey:@"sid"];
-//                s.imtro = [q valueForKey:@"imtro"];
-//                s.ingredients = [q valueForKey:@"ingredients"];
-//                s.steps = [q valueForKey:@"steps"];
-//                s.tags = [q valueForKey:@"tags"];
-//                s.title = [q valueForKey:@"title"];
-//                stuff(s);
-//                
-//            } else {
-//                // 输出错误信息
-//                NSLog(@"Error: %@ %@", error, [error userInfo]);
-//            }
-//        }];
-//    });
-//}
 
 
 -(StuffModle *)getPopFoodInfoWithSid:(NSString *)sid

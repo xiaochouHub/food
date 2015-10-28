@@ -74,8 +74,7 @@ static GetShareDataTool *gs;
             }
             passVallue(tempArr);
         } else {
-            // 输出错误信息
-            NSLog(@"Error: %@ %@", error, [error userInfo]);
+
         }
     }];
 }
@@ -104,8 +103,7 @@ static GetShareDataTool *gs;
             }
             passVallue(tempArr);
         } else {
-            // 输出错误信息
-            NSLog(@"Error: %@ %@", error, [error userInfo]);
+
         }
     }];
 }

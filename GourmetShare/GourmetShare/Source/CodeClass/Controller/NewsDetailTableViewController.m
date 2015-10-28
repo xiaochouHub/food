@@ -52,7 +52,7 @@
         if ([str isEqualToString:@"img"])
         {
             [_picDict setValue:_picArr[picIndex] forKey:[NSString stringWithFormat:@"%d",index]];
-            NSLog(@"%@第几%d个",_picArr[picIndex],index);
+
             picIndex++;
         }
         index++;
@@ -98,7 +98,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete implementation, return the number of rows
-    //NSLog(@"%ld",self.conArr.count + self.picArr.count +1);
+
     return self.conArr.count +1 ;
 }
 
@@ -118,9 +118,7 @@
     }
     else{
         if ([self.conArr[indexPath.row-1] isEqualToString:@"img"]) {
-            NSLog(@"%ld",indexPath.row);
             NSString *picStr = [_picDict valueForKey:[NSString stringWithFormat:@"%ld",indexPath.row-1]];
-            NSLog(@"%@",picStr);
             NewsDetailImageTableViewCell *newsImage = [[NewsDetailImageTableViewCell alloc]init];
             [newsImage.newsImage sd_setImageWithURL:[NSURL URLWithString:picStr]];
             self.isImage = YES;

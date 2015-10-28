@@ -52,7 +52,6 @@ static GetFavouriteDataTool *gf;
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             // 检索成功
-            NSLog(@"%ld",objects.count);
             for (AVQuery *q in objects) {
                 StuffModle *s = [[StuffModle alloc]init];
                 s.albums = [q valueForKey:@"albums"];
@@ -71,8 +70,7 @@ static GetFavouriteDataTool *gf;
             }
             passVallue(tempArr);
         } else {
-            // 输出错误信息
-            NSLog(@"Error: %@ %@", error, [error userInfo]);
+
         }
     }];
 }

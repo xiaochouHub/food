@@ -41,9 +41,9 @@
             [tempArr addObject:[str substringFromIndex:2]];
         }
     }
-//    NSLog(@"%@",tempArr);
+
     _bodyArr = tempArr;
-    NSLog(@"%@",_bodyArr);
+
 }
 
 -(void)setImg:(NSArray *)img

@@ -116,18 +116,15 @@
 }
 -(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
-    NSLog(@"momo");
     [self.sv.search resignFirstResponder];//键盘回收
 }
 -(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
-    NSLog(@"haha");
     [self.sv.search resignFirstResponder];
     
 }
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    NSLog(@"hehe");
     [[SearchDataTool shareSearchData]searchWithKeyword:self.sv.search.text PassValue:^(NSArray *array) {
       
         self.dataArr = (NSMutableArray *)array;

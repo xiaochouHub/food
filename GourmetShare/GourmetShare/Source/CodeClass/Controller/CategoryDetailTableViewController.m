@@ -54,7 +54,7 @@
     FoodListModle *model = self.dataArr[indexPath.row];
     menu.lastid = model.lid;
     
-    NSLog(@"%@",menu.lastid);
+
     [self.navigationController pushViewController:menu animated:YES];
     
 }

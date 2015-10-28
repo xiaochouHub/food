@@ -24,7 +24,6 @@
     
     self.categoryButton1 = [UIButton buttonWithType:UIButtonTypeSystem];
     self.categoryButton1.frame = CGRectMake(CGRectGetMaxX(self.categoryLabel.frame) + 10, 30, CGRectGetWidth([[UIScreen mainScreen]bounds]) / 6 - 5, 30);
-//    self.categoryButton1.backgroundColor = [UIColor orangeColor];
     self.categoryButton1.layer.cornerRadius = 5;
     self.categoryButton1.layer.borderWidth = 1;
     self.categoryButton1.layer.borderColor = [[UIColor grayColor]CGColor];
@@ -34,7 +33,6 @@
     
     self.categoryButton2 = [UIButton buttonWithType:UIButtonTypeSystem];
     self.categoryButton2.frame = CGRectMake(CGRectGetMaxX(self.categoryButton1.frame) + 10, CGRectGetMinY(self.categoryButton1.frame), CGRectGetWidth([[UIScreen mainScreen]bounds]) / 6 - 5, 30);
-//    self.categoryButton2.backgroundColor = [UIColor orangeColor];
     self.categoryButton2.layer.cornerRadius = 5;
     self.categoryButton2.layer.borderWidth = 1;
     self.categoryButton2.layer.borderColor = [[UIColor grayColor]CGColor];
@@ -43,7 +41,6 @@
     
     self.categoryButton3 = [UIButton buttonWithType:UIButtonTypeSystem];
     self.categoryButton3.frame = CGRectMake(CGRectGetMaxX(self.categoryButton2.frame) + 10, CGRectGetMinY(self.categoryButton1.frame), CGRectGetWidth([[UIScreen mainScreen]bounds]) / 6 - 5, 30);
-//    self.categoryButton3.backgroundColor = [UIColor orangeColor];
     self.categoryButton3.layer.cornerRadius = 5;
     self.categoryButton3.layer.borderWidth = 1;
     self.categoryButton3.layer.borderColor = [[UIColor grayColor]CGColor];
@@ -52,7 +49,6 @@
     
     self.categoryButton4 = [UIButton buttonWithType:UIButtonTypeSystem];
     self.categoryButton4.frame = CGRectMake(CGRectGetMinX(self.categoryButton1.frame), CGRectGetMaxY(self.categoryButton1.frame) + 20, CGRectGetWidth([[UIScreen mainScreen]bounds]) / 6 - 5, 30);
-//    self.categoryButton4.backgroundColor = [UIColor orangeColor];
     self.categoryButton4.layer.cornerRadius = 5;
     self.categoryButton4.layer.borderWidth = 1;
     self.categoryButton4.layer.borderColor = [[UIColor grayColor]CGColor];
@@ -61,7 +57,6 @@
     
     self.categoryButton5 = [UIButton buttonWithType:UIButtonTypeSystem];
     self.categoryButton5.frame = CGRectMake(CGRectGetMaxX(self.categoryButton4.frame) + 10, CGRectGetMinY(self.categoryButton4.frame), CGRectGetWidth([[UIScreen mainScreen]bounds]) / 6 - 5, 30);
-//    self.categoryButton5.backgroundColor = [UIColor orangeColor];
     self.categoryButton5.layer.cornerRadius = 5;
     self.categoryButton5.layer.borderWidth = 1;
     self.categoryButton5.layer.borderColor = [[UIColor grayColor]CGColor];
@@ -70,7 +65,7 @@
     
     self.categoryButton6 = [UIButton buttonWithType:UIButtonTypeSystem];
     self.categoryButton6.frame = CGRectMake(CGRectGetMaxX(self.categoryButton5.frame) + 10, CGRectGetMinY(self.categoryButton4.frame), CGRectGetWidth([[UIScreen mainScreen]bounds]) / 6 - 5, 30);
-//    self.categoryButton6.backgroundColor = [UIColor orangeColor];
+
     self.categoryButton6.layer.cornerRadius = 5;
     self.categoryButton6.layer.borderWidth = 1;
     self.categoryButton6.layer.borderColor = [[UIColor grayColor]CGColor];

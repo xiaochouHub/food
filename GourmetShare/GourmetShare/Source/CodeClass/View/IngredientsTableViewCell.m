@@ -23,11 +23,11 @@
 {
     
     self.nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]) / 2 - 30, 30)];
-    self.nameLabel.text = @"食盐";
+
     [self.contentView addSubview:_nameLabel];
     
     self.numLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.nameLabel.frame), CGRectGetMinY(self.nameLabel.frame), CGRectGetWidth([[UIScreen mainScreen]bounds]) / 2 - 30, 30)];
-    self.numLabel.text = @"适量";
+
     self.numLabel.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:_numLabel];
 }
