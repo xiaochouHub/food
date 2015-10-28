@@ -59,8 +59,6 @@
     
     AVUser *currentUser = [AVUser currentUser];
     if (currentUser != nil) {
-        
-        [RegisterDataTool shareRegisterData].LoginName = currentUser.username;
      
         AVQuery *queryemail = [AVQuery queryWithClassName:@"_User"];
         
@@ -75,6 +73,7 @@
             
             [RegisterDataTool shareRegisterData].userInfo.email = currentUser.username;
         }
+        [RegisterDataTool shareRegisterData].LoginName = currentUser.username;
     }
      return YES;
 }

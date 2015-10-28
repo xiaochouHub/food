@@ -115,10 +115,9 @@
             cell.titleImage.image = [UIImage imageNamed:@"usercenter_blog.png"];
             cell.titleName.text = @"清除缓存";
         }else if (indexPath.row == 6) {
-            cell.titleImage.image = [UIImage imageNamed:@"main_user_gray.png"];
+            cell.titleImage.image = [UIImage imageNamed:@"usercenter_delete.png"];
             cell.titleName.text = @"注销";
-        }
-        else if (indexPath.row == 7) {
+        }else if (indexPath.row == 7) {
             cell.titleImage.image = [UIImage imageNamed:@"main_user_gray.png"];
             cell.titleName.text = @"关于我们";
         }
