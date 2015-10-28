@@ -112,6 +112,7 @@
         sheet = [[UIActionSheet alloc] initWithTitle:@"选择" delegate:self cancelButtonTitle:nil destructiveButtonTitle:@"取消" otherButtonTitles:@"从相册选择", nil];
         
     }
+    [self.share.myButton resignFirstResponder];
     
     sheet.tag = 255;
     
