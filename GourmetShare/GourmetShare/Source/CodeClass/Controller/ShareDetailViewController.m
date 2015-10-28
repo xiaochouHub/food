@@ -98,6 +98,7 @@
 // 选择图片
 -(void)choosepictureAction
 {
+    [self dismissKeyBoard];
     UIActionSheet *sheet;
     
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
@@ -112,7 +113,7 @@
         sheet = [[UIActionSheet alloc] initWithTitle:@"选择" delegate:self cancelButtonTitle:nil destructiveButtonTitle:@"取消" otherButtonTitles:@"从相册选择", nil];
         
     }
-    [self.share.myButton resignFirstResponder];
+    
     
     sheet.tag = 255;
     
@@ -242,6 +243,7 @@ NSData * UIImageJPEGRepresentation ( UIImage *image, CGFloat compressionQuality)
 
 -(void)dismissKeyBoard
 {
+    [self.share.myButton resignFirstResponder];
     [self.share.stepText resignFirstResponder];
     [self.share.materialText resignFirstResponder];
     [self.share.nameText resignFirstResponder];
