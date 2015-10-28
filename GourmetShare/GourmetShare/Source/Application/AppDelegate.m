@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import <AVOSCloud/AVOSCloud.h>
 #import "Reachability.h"
+#import "RegisterDataTool.h"
 @interface AppDelegate ()
 
 @end
@@ -61,7 +62,12 @@
     [[GetNewsDataTool shareGetNewsData]getNewsDataWithPassValue:^(NSArray *array) {
         
     }];
-     
+    
+    AVUser *currentUser = [AVUser currentUser];
+    if (currentUser != nil) {
+        NSLog(@"%@",currentUser.username);
+      [RegisterDataTool shareRegisterData].LoginName = currentUser.username;
+    }
      return YES;
 }
 -(void)networkStatusChanged:(NSNotificationCenter *)sender
