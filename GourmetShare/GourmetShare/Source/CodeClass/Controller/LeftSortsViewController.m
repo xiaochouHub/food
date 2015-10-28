@@ -34,7 +34,7 @@
     [super viewDidLoad];
     
     self.backImage = [[UIImageView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
-    self.backImage.image = [UIImage imageNamed:@"back.jpg"];
+    self.backImage.image = [UIImage imageNamed:@"leftback.png"];
     _lv.backgroundColor = [UIColor colorWithPatternImage:self.backImage.image];
     
     _lv.tableview.dataSource = self;
