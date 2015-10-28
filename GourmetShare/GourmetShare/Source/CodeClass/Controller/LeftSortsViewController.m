@@ -242,7 +242,6 @@
     }
     else if (alertView.tag == 102 && buttonIndex == 0)
     {
-        //[RegisterDataTool shareRegisterData].LoginName = nil;
         [[RegisterDataTool shareRegisterData] setValue:nil forKey:@"LoginName"];
         
         UIAlertView *a = [[UIAlertView alloc]initWithTitle:@"已注销!" message:nil delegate:self cancelButtonTitle:@"确认" otherButtonTitles: nil];

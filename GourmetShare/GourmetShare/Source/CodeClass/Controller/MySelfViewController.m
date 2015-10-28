@@ -30,21 +30,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"whiteback.jpg"]];
+    [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     UIBarButtonItem *changInfo = [[UIBarButtonItem alloc]initWithTitle:@"修改资料" style:UIBarButtonItemStylePlain target:self action:@selector(changInfo:)];
     self.navigationItem.rightBarButtonItem = changInfo;
-    _mv.headImage.userInteractionEnabled = YES;
-    _mv.headImage.image = [UIImage imageNamed:@"user.png"];
-    UITapGestureRecognizer *singleTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(choosepictureAction)];
-    [_mv.headImage addGestureRecognizer:singleTap1];
-    _isChangHead = NO;
     if ([RegisterDataTool shareRegisterData].LoginName != nil) {
         self.userInfo = [[UserInfoModle alloc]init];
         _userInfo = [RegisterDataTool shareRegisterData].userInfo;
         [self p_setupView];
+    }else
+    {
+        _mv.headImage.image = [UIImage imageNamed:@"user.png"];
     }
-
+    _mv.headImage.userInteractionEnabled = YES;
+    
+    UITapGestureRecognizer *singleTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(choosepictureAction)];
+    [_mv.headImage addGestureRecognizer:singleTap1];
+    _isChangHead = NO;
 }
 -(void)p_setupView
 {

@@ -9,6 +9,7 @@
 #import "MainPageViewController.h"
 #import "RegisterDataTool.h"
 #import "UserInfoModle.h"
+#import "PersonalCenterTbaleViewController.h"
 @interface MainPageViewController ()<UITabBarControllerDelegate>
 
 @property (nonatomic,strong)UIBarButtonItem * ButtonItem;
@@ -49,13 +50,13 @@
     
     gouNC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"美食广场" image:[UIImage imageNamed:@"homehome.png"] tag:102];
     
-    PrivateListViewController *priVC = [[PrivateListViewController alloc]init];
+    PersonalCenterTbaleViewController *priVC = [[PersonalCenterTbaleViewController alloc]init];
     
     UINavigationController *priNC = [[UINavigationController alloc]initWithRootViewController:priVC];
     
     priNC.tabBarItem = [[UITabBarItem alloc]initWithTabBarSystemItem:UITabBarSystemItemFeatured tag:103];
     
-    priNC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"用户" image:[UIImage imageNamed:@"userpng.png"] tag:104];
+    priNC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"个人中心" image:[UIImage imageNamed:@"userpng.png"] tag:104];
     
     SearchViewController *sVC = [[SearchViewController alloc]init];
     UINavigationController *sNC = [[UINavigationController alloc]initWithRootViewController:sVC];

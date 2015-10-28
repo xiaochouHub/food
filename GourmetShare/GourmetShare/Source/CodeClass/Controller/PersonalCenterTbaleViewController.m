@@ -17,7 +17,7 @@
 #import "RegisterDataTool.h"
 #import "UserInfoModle.h"
 @interface PersonalCenterTbaleViewController ()
-
+@property(nonatomic,strong)UIAlertView *alert;
 @end
 
 @implementation PersonalCenterTbaleViewController
@@ -64,14 +64,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    return 7;
+    return 8;
 }
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 0) {
-        return kScreenWidth*0.8;
+        return kScreenWidth*0.6;
     }
     return 55;
 }
@@ -84,7 +84,10 @@
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        cell.headImageView.image = [UIImage imageNamed:@"user.png"];
+        [cell.headImageView setImage:[UIImage imageNamed:@"user.png"] forState:UIControlStateNormal] ;
+        
+        [cell.headImageView addTarget:self action:@selector(LoginAction) forControlEvents:UIControlEventTouchUpInside];
+        
         cell.nameLable.text =@"未登录";
         
         return cell;
@@ -111,7 +114,11 @@
         } else if (indexPath.row == 5) {
             cell.titleImage.image = [UIImage imageNamed:@"usercenter_blog.png"];
             cell.titleName.text = @"清除缓存";
-        } else if (indexPath.row == 6) {
+        }else if (indexPath.row == 6) {
+            cell.titleImage.image = [UIImage imageNamed:@"main_user_gray.png"];
+            cell.titleName.text = @"注销";
+        }
+        else if (indexPath.row == 7) {
             cell.titleImage.image = [UIImage imageNamed:@"main_user_gray.png"];
             cell.titleName.text = @"关于我们";
         }
@@ -142,15 +149,16 @@
                 if ([RegisterDataTool shareRegisterData].userInfo.headImage != nil) {
                     UIImageView *tempImage = [[UIImageView alloc]init];
                     [tempImage sd_setImageWithURL:[NSURL URLWithString:[RegisterDataTool shareRegisterData].userInfo.headImage]];
-                    cell.headImageView.image = tempImage.image;
+                    [cell.headImageView setImage:tempImage.image forState:UIControlStateNormal];
+                    
                 }
             }else {
-                cell.headImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfFile:uniquePath]];
+                [cell.headImageView setImage:[UIImage imageWithData:[NSData dataWithContentsOfFile:uniquePath]] forState:UIControlStateNormal];
             }
         }
         else
         {
-            cell.headImageView.image = [UIImage imageNamed:@"user.png"];
+            [cell.headImageView setImage:[UIImage imageNamed:@"user.png"]forState:UIControlStateNormal];
             cell.nameLable.text  = @"未登录";
         }
 
@@ -227,6 +235,13 @@
 {
     if (alertView.tag == 101 && buttonIndex == 0) {
         UIAlertView *a = [[UIAlertView alloc]initWithTitle:@"已清除缓存!" message:nil delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil];
+        NSString *cachesPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
+        
+        NSFileManager *manager = [NSFileManager defaultManager];
+        
+        //删除
+        [manager removeItemAtPath:cachesPath error:nil];
+        
         a.tag = 103;
         [a show];
     }
@@ -240,7 +255,25 @@
     else if (alertView.tag == 103 && buttonIndex == 0)
     {
         
+    }else
+    {
+        if (buttonIndex == 0) {
+            AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+            LoginViewController *login = [[LoginViewController alloc]init];
+            [tempAppDelegate.LeftSlideVC closeLeftView];
+            [tempAppDelegate.mainNavigationController pushViewController:login animated:YES];
+        }
     }
 }
+
+-(void)LoginAction
+{
+    if ([RegisterDataTool shareRegisterData].LoginName == nil) {
+        self.alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您还未登陆" delegate:self cancelButtonTitle:@"去登陆" otherButtonTitles:@"取消", nil];
+        [_alert show];
+        
+    }
+}
+
 
 @end
