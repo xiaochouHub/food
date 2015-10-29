@@ -169,7 +169,9 @@
     }
     else if (indexPath.row == 2) {
         if (userName == nil) {
-            [self p_showAlertView:@"提示" message:@"未登录"];
+            UIAlertView *alert1 = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您还未登陆" delegate:self cancelButtonTitle:@"去登陆" otherButtonTitles:@"取消", nil];
+            alert1.tag = 110;
+            [alert1 show];
         }
         else
         {
@@ -251,6 +253,13 @@
         [AVUser logOut];  //清除缓存用户对象
         a.tag = 104;
         [a show];
+    }
+    else if (alertView.tag == 110 &&buttonIndex == 0)
+    {
+        AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+        LoginViewController *login = [[LoginViewController alloc]init];
+        [tempAppDelegate.LeftSlideVC closeLeftView];
+        [tempAppDelegate.mainNavigationController pushViewController:login animated:YES];
     }
     else if (alertView.tag == 103 && buttonIndex == 0)
     {
