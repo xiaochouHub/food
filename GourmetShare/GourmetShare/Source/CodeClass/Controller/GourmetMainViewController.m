@@ -31,7 +31,6 @@
 @property(nonatomic,strong)NSMutableArray *titleArr;
 @property(nonatomic,strong)SDCycleScrollView *view1;
 @property(nonatomic,strong)NSMutableArray *comdataArr;
-
 @property (nonatomic,strong)MyScrollView *my;
 @end
 
@@ -52,9 +51,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.comdataArr = [NSMutableArray array];
-    self.my.contentSize = CGSizeMake(self.my.bounds.size.width, self.my.bounds.size.height * 2);
+    self.my.contentSize = CGSizeMake(self.my.bounds.size.width, self.my.bounds.size.height * 2.2);
     
     
     
@@ -264,8 +262,7 @@
     
     
     [self nethandle];
-    NSLog(@"**%@",self.comdataArr);
-    self.my.contentSize = CGSizeMake(self.my.bounds.size.width, self.my.bounds.size.height * 1.7);
+
     
     
     // 3. 结束刷新
@@ -342,6 +339,7 @@
                 self.my.fourLabel2.text = stu4.title;
             }
             //[self nethandle];
+        
         });
         
     }];

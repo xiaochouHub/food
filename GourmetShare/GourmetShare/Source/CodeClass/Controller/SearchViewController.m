@@ -11,9 +11,23 @@
 @interface SearchViewController ()<UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 @property(nonatomic,strong)SearchvView *sv;
 @property(nonatomic,strong)NSMutableArray *dataArr;
+@property(nonatomic,strong)MBProgressHUD* hud;
 @end
 
 @implementation SearchViewController
+
+// 第三方小菊花
+- (void)p_setupProgressHud
+{
+    self.hud = [[MBProgressHUD alloc] initWithView:self.view];
+    _hud.frame = self.view.bounds;
+    _hud.minSize = CGSizeMake(100, 100);
+    _hud.mode = MBProgressHUDModeIndeterminate;
+    [self.view addSubview:_hud];
+    
+    [_hud show:YES];
+}
+
 -(void)loadView
 {
     self.sv = [[SearchvView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
@@ -125,6 +139,7 @@
 }
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
+    [self p_setupProgressHud];
     [[SearchDataTool shareSearchData]searchWithKeyword:self.sv.search.text PassValue:^(NSArray *array) {
       
         self.dataArr = (NSMutableArray *)array;
@@ -132,10 +147,17 @@
             [self.sv.searchList reloadData];
             if (self.dataArr.count<1) {
                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"无搜索结果" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                self.hud.hidden = YES;
                 [alert show];
             }
+            else
+            {
+                self.hud.hidden = YES;
+            }
+        
         });
     }];
+    
     [self.sv.search resignFirstResponder];//键盘回收
 }
 

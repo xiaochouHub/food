@@ -12,12 +12,24 @@
 #import "GetShareDataTool.h"
 @interface MoreShareTableViewController ()
 @property(nonatomic,strong)NSMutableArray *dataArr;
+@property(nonatomic,strong)MBProgressHUD *hud;
 @end
 
 @implementation MoreShareTableViewController
-
+// 第三方小菊花
+- (void)p_setupProgressHud
+{
+    self.hud = [[MBProgressHUD alloc] initWithView:self.view];
+    _hud.frame = self.view.bounds;
+    _hud.minSize = CGSizeMake(100, 100);
+    _hud.mode = MBProgressHUDModeIndeterminate;
+    [self.view addSubview:_hud];
+    
+    [_hud show:YES];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self p_setupProgressHud];
     self.dataArr = [NSMutableArray array];
     [self.tableView registerClass:[MoreShareTableViewCell class] forCellReuseIdentifier:@"cell"];
     [[GetShareDataTool shareShareData]getShareWithPassValue:^(NSArray *array) {
@@ -30,6 +42,7 @@
                 [self.tableView reloadData];
             }
             
+            self.hud.hidden = YES;
         });
     }];
     [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];

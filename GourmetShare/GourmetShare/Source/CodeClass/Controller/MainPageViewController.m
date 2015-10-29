@@ -21,7 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"主界面";
+    self.title = @"美食分享街";
 
     self.view.backgroundColor = [UIColor whiteColor];
     
