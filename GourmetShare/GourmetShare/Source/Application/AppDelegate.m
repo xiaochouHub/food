@@ -43,7 +43,7 @@
     
     
     
-    [UMSocialData setAppKey:@"562f339d67e58eba010037e1"];
+    [UMSocialData setAppKey:@"507fcab25270157b37000010"];
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
