@@ -12,14 +12,14 @@
 @interface DownloadTableViewController ()
 
 @property (nonatomic,strong)NSMutableArray *dataArr;
-
+@property(nonatomic,assign)BOOL flag;
 @end
 
 @implementation DownloadTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.flag = YES;
     self.dataArr = (NSMutableArray *)[[DataBaseHandler shareGetFoodData]findStuff];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
@@ -36,7 +36,16 @@
 // 右键"编辑"事件
 -(void)rightAction:(UIBarButtonItem *)sender
 {
+    if (self.flag == YES) {
+        [self.navigationItem.rightBarButtonItem setTitle:@"完成"];
+    }
+    else
+    {
+        [self.navigationItem.rightBarButtonItem setTitle:@"编辑"];
+    }
+    
     [self.tableView setEditing:!self.tableView.editing animated:YES];
+    self.flag = !_flag;
 }
 // 是否可以被编辑
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

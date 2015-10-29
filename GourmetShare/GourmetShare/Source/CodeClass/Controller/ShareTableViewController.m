@@ -13,7 +13,8 @@
 @interface ShareTableViewController ()<UIAlertViewDelegate>
 @property(nonatomic,strong)NSMutableArray *dataArr;
 @property(nonatomic,strong)UIAlertView *alert;
-@property(nonatomic,strong)UIButton *btn;
+@property(nonatomic,strong)UIBarButtonItem *edit;
+@property(nonatomic,assign)BOOL flag;
 @end
 
 @implementation ShareTableViewController
@@ -22,14 +23,16 @@
     
     [super viewDidLoad];
     self.alert.delegate = self;
+    self.flag = YES;
     [self.tableView registerClass:[myshareTableViewCell class] forCellReuseIdentifier:@"cell"];
     self.dataArr = [NSMutableArray array];
     [self p_data];
     [self setupRefresh];
-    UIBarButtonItem *edit = [[UIBarButtonItem alloc]initWithTitle:@"编辑" style:UIBarButtonItemStyleDone target:self action:@selector(btnAction)];
+    self.edit = [[UIBarButtonItem alloc]initWithTitle:@"编辑" style:UIBarButtonItemStyleDone target:self action:@selector(btnAction)];
     UIBarButtonItem *share = [[UIBarButtonItem alloc]initWithTitle:@"我要分享" style:UIBarButtonItemStyleDone target:self action:@selector(rightAction:)];
-    NSArray *btnArr = [NSArray arrayWithObjects:share,edit, nil];
+    NSArray *btnArr = [NSArray arrayWithObjects:share,_edit, nil];
     self.navigationItem.rightBarButtonItems = btnArr;
+    
     [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
     
     // Uncomment the following line to preserve selection between presentations.
@@ -152,7 +155,17 @@
 }
 -(void)btnAction
 {
+    if (self.flag == YES) {
+        [self.edit setTitle:@"完成"];
+    }
+    else
+    {
+        [self.edit setTitle:@"编辑"];
+    }
+    
     [self.tableView setEditing:!self.tableView.editing animated:YES];
+    self.flag = !_flag;
+    
 }
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {

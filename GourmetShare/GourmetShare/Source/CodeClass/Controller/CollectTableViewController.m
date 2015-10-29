@@ -12,12 +12,14 @@
 #import "RegisterDataTool.h"
 @interface CollectTableViewController ()
 @property (nonatomic,strong) NSMutableArray *dataArr;
+@property(nonatomic,assign)BOOL flag;
 @end
 
 @implementation CollectTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.flag = YES;
     self.dataArr = [NSMutableArray array];
     [[GetFavouriteDataTool shareFavouriteData]getFavouriteWithUserName:self.userName PassValue:^(NSArray *array) {
         self.dataArr = (NSMutableArray *)array;
@@ -66,7 +68,15 @@
 
 -(void)rightAction:(UIBarButtonItem *)sender
 {
+    if (self.flag == YES) {
+        [self.navigationItem.rightBarButtonItem setTitle:@"完成"];
+    }
+    else
+    {
+        [self.navigationItem.rightBarButtonItem setTitle:@"编辑"];
+    }
     [self.tableView setEditing:!self.tableView.editing animated:YES];
+    self.flag = !_flag;
 }
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -81,6 +91,7 @@
     [[GetFavouriteDataTool shareFavouriteData]deleteFavouriteWith:self.dataArr[indexPath.row] UserName:[RegisterDataTool shareRegisterData].LoginName];
     [self.dataArr removeObjectAtIndex:indexPath.row];
     //    NSArray *temp = [NSArray arrayWithObject:indexPath];
+    
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
 }
 
