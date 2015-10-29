@@ -33,31 +33,14 @@
     self.tempArr = [NSMutableArray array];
     self.btnArr = [NSMutableArray array];
     self.str1 = [NSMutableString string];
-//    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"whiteback.jpg"]];
+
     self.view.backgroundColor = [UIColor whiteColor];
     // 删除返回按钮文字(只留箭头)
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+  
 }
--(void)viewWillAppear:(BOOL)animated
-{
-//    [[GetFoodDataTool shareGetFoodData] getFoodDataWithPassValue:^(NSArray *array) {
-//        
-//        self.dataArr = (NSMutableArray *)array;
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [self.tableView reloadData];
-//            
-//        });
-//        
-//    }];
-    
 
-}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -139,8 +122,6 @@
         
     }];
     cell.backgroundColor = [UIColor clearColor];
-//    cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"mosha.jpg"]];
-    // Configure the cell...
     
     return cell;
 }

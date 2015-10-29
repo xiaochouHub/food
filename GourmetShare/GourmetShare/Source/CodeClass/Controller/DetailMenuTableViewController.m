@@ -39,34 +39,11 @@
             });
         }];
     }
-//    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"redback.jpg"]];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+   
 }
--(void)viewWillAppear:(BOOL)animated
-{
-    
-//    [[GetFoodDataTool shareGetFoodData]getFoodListInfoWithId:self.lastid PassValues:^(NSMutableArray *arr) {
-//        
-//        
-//        self.dataArr = [[NSMutableArray alloc]init];
-//        self.dataArr = arr;
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            
-//            [self.tableView reloadData];
-//        });
-//    }];
-    
-    
-    
-    
 
-}
 -(void)viewDidDisappear:(BOOL)animated
 {
     [self.tableView reloadData];
@@ -109,8 +86,7 @@
     }
     [cell.menuimage sd_setImageWithURL:[NSURL URLWithString:self.pic_url]];
     cell.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:0.5];
-    //cell.menuLabel.text = @"菜单";
-    // Configure the cell...
+   
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

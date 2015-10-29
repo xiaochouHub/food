@@ -76,14 +76,7 @@
     self.height = 230;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.isShare = NO;//默认分享状态为NO
-//    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"back.jpg"]]];
-    
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 // 简介字符串截取高度

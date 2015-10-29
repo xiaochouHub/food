@@ -73,7 +73,7 @@
     [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
     self.tabBar.tintColor = [UIColor colorWithRed:20 / 255.0 green:160 / 255.0 blue:210 / 255.0 alpha:0.9];
     
-//    self.tabBar.barTintColor = [UIColor brownColor];
+
     
     self.selectedIndex = 1;
     
@@ -93,7 +93,7 @@
         UINavigationController *navigation =(UINavigationController *)viewController;
         PopInfoListViewController *pop = (PopInfoListViewController *)navigation.topViewController;
         
-        //[pop p_data];
+    
         [pop setupRefresh];
     }
 }

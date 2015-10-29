@@ -46,12 +46,7 @@
         });
     }];
     [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-}
+  }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -93,7 +88,7 @@
         
        [cell.myImage sd_setImageWithURL:[NSURL URLWithString:stuf.albums[0]]];
     });
-    // Configure the cell...
+
     
     return cell;
 }

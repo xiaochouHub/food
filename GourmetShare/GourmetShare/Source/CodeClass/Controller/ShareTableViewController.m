@@ -35,11 +35,7 @@
     
     [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -136,8 +132,7 @@
     StuffModle *model = self.dataArr[indexPath.row];
     [cell.picture sd_setImageWithURL:[NSURL URLWithString:model.albums[0]]];
     cell.name.text = model.title;
-//    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.albums[0]]];
-//    cell.textLabel.text = model.title;
+
     
     return cell;
 }

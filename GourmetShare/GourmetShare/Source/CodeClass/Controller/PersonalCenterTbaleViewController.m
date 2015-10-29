@@ -80,7 +80,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         PersonalCenterHeadCell *cell = [tableView dequeueReusableCellWithIdentifier:@"headCell" forIndexPath:indexPath];
-        //cell.frame = CGRectMake(0, 0, kScreenWidth, kScreenWidth*0.8);
+
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         

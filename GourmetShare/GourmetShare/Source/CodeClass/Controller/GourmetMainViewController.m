@@ -338,12 +338,12 @@
                 [self.my.fourImageView2 sd_setImageWithURL:[NSURL URLWithString:stu4.albums[0]]];
                 self.my.fourLabel2.text = stu4.title;
             }
-            //[self nethandle];
+ 
         
         });
         
     }];
-    // [self nethandle];
+
     
 }
 -(void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index

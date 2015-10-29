@@ -38,8 +38,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.backImage = [[UIImageView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
-//    self.backImage.image = [UIImage imageNamed:@"whiteback.jpg"];
-//    _lv.backgroundColor = [UIColor colorWithPatternImage:self.backImage.image];
     _lv.backgroundColor = [UIColor whiteColor];
     
     
@@ -70,18 +68,7 @@
         self.hud.hidden = YES;
         return;
     }
-    /*
-    NSString *passWord = [[RegisterDataTool shareRegisterData]
-                          getLoginWithName:[_lv.userNameLT inputFieldText]];
-    if ([[_lv.passWordLT inputFieldText] isEqualToString:passWord]) {
-        MainPageViewController *mvc = [[MainPageViewController alloc]init];
-        [self.navigationController pushViewController:mvc animated:YES];
-    }
-    else
-    {
-        [self p_showAlertView:@"提示" message:@"登录名或密码错误"];
-    }
-     */
+  
     if ([[RegisterDataTool shareRegisterData]LoginWithUserName:name Password:password]) {
         self.hud.hidden = YES;
         MainPageViewController *mvc = [[MainPageViewController alloc]init];
@@ -130,7 +117,7 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
 }
 
 //键盘回收

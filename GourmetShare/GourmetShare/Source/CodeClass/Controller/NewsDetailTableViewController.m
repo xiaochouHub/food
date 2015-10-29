@@ -34,11 +34,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.i = 0;
-
-    //[self.tableView registerClass:[NewsDetailImageTableViewCell class] forCellReuseIdentifier:@"newsImage"];
-    
-    //[self.tableView registerClass:[NewsDetailTableViewCell class] forCellReuseIdentifier:@"newsLabel"];
-    
     
     self.conArr = [NSMutableArray array];
     self.picArr = [NSMutableArray array];
@@ -120,7 +115,7 @@
     }
     else{
         if ([self.conArr[indexPath.row-1] isEqualToString:@"img"]) {
-            NSString *picStr = [_picDict valueForKey:[NSString stringWithFormat:@"%ld",indexPath.row-1]];
+            NSString *picStr = [_picDict valueForKey:[NSString stringWithFormat:@"%d",indexPath.row-1]];
             NewsDetailImageTableViewCell *newsImage = [[NewsDetailImageTableViewCell alloc]init];
             [newsImage.newsImage sd_setImageWithURL:[NSURL URLWithString:picStr]];
             self.isImage = YES;
@@ -128,8 +123,7 @@
         }
         else
         {
-            //        NewsDetailTableViewCell *newsLabel = [tableView dequeueReusableCellWithIdentifier:@"newsLabel" forIndexPath:indexPath];
-            NewsDetailTableViewCell *newsLabel = [[NewsDetailTableViewCell alloc]init];
+                        NewsDetailTableViewCell *newsLabel = [[NewsDetailTableViewCell alloc]init];
             newsLabel.newsLabel.text = self.conArr[indexPath.row-1];
             self.height = [self heightforlabel:self.conArr[indexPath.row-1]];
             CGRect temp = newsLabel.newsLabel.frame;

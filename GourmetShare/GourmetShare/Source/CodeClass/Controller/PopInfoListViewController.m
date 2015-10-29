@@ -41,11 +41,7 @@
     }];
     [self p_setupProgressHud];
     [self setupRefresh];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 -(void)setupRefresh
 {
@@ -129,7 +125,7 @@
     }
    
    
-    //[cell.titleImage sd_setImageWithURL:[NSURL URLWithString:new.image[0]]];
+  
     
     return cell;
 }

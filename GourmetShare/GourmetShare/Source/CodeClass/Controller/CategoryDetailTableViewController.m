@@ -30,14 +30,9 @@
     }];
     
     [self.tableView registerClass:[CategoryDetailTableViewCell class] forCellReuseIdentifier:@"cell"];
-//    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"yellowback.jpg"]];
+
     self.view.backgroundColor = [UIColor whiteColor];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-}
+   }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -79,9 +74,7 @@
     FoodListModle *model = self.dataArr[indexPath.row];
     cell.detailLabel.text = model.name;
     cell.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:0.5];
-    //cell.detailLabel.text = @"分类下的分类";
-    // Configure the cell...
-    
+       
     return cell;
 }
 

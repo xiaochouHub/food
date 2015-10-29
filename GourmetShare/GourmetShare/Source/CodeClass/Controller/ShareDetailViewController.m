@@ -36,7 +36,7 @@
     self.share.stepText.delegate = self;
     self.share.materialText.delegate = self;
     self.share.nameText.delegate = self;
-    // Do any additional setup after loading the view.
+ 
     UIToolbar * topView = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
     [topView setBarStyle:UIBarStyleBlackTranslucent];
     

@@ -90,7 +90,7 @@
 {
     [[GetFavouriteDataTool shareFavouriteData]deleteFavouriteWith:self.dataArr[indexPath.row] UserName:[RegisterDataTool shareRegisterData].LoginName];
     [self.dataArr removeObjectAtIndex:indexPath.row];
-    //    NSArray *temp = [NSArray arrayWithObject:indexPath];
+
     
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
 }
