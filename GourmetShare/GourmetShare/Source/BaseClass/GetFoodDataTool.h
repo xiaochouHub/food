@@ -51,16 +51,11 @@ typedef void(^Stuff)(StuffModle *stuff);
 -(void)getFoodListInfoWithName:(NSString *)name PassValue:(PassValue)passVallue;
 
 
-//根据index返回菜谱数据
-//-(StuffModle *)getFoodInfoWithIndex:(NSInteger)index;
-
 //根据菜谱ID返回菜谱数据
 -(StuffModle *)getFoodInfoWithSid:(NSString *)sid;
 -(StuffModle *)getPopFoodInfoWithSid:(NSString *)sid;
 -(void)getFoodInfoWithSid:(NSString *)sid stuff:(Stuff)stuff;
 
-//根据菜名返回菜谱数据
-//-(StuffModle *)getFoodInfoWithTitle:(NSString *)Title;
-//-(StuffModle *)getFoodInfoWithTitle:(NSString *)Title stuff:(Stuff)stuff;
+
 
 @end

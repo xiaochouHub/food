@@ -29,11 +29,6 @@
 - (void)insertPostStuffWithStuffArr:(NSArray *)stuff lib:(NSString *)lib;
 - (void)insertPostStuffWithStuffModle:(StuffModle *)stuffModle lib:(NSString *)lib;
 
-////删除
-//- (void)deleteStudentByNumber:(NSInteger)number;
-
-////修改
-//- (void)changeStudentByNumber:(NSInteger)number name:(NSString *)name;
 
 //查询
 - (NSArray *)getAllCategory;//显示全部
@@ -42,7 +37,6 @@
 - (NSArray *)findStuffByLid:(NSString *)lid;
 - (StuffModle *)findStuffBySid:(NSString *)sid;
 
-//- (NSArray *)findStudentByNumber:(NSInteger)number;//条件查询
 
 #pragma mark ========================User
 //下载菜谱表

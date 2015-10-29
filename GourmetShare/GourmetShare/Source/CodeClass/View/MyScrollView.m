@@ -50,7 +50,6 @@
     [self.backImage1 addSubview:_oneImageView1];
     
     self.oneLabel1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.oneImageView1.frame), CGRectGetMaxY(self.oneImageView1.frame), CGRectGetWidth(self.oneImageView1.frame), CGRectGetHeight(self.oneImageView1.frame) / 5)];
-//    self.oneLabel1.backgroundColor = [UIColor lightGrayColor];
     self.oneLabel1.font = [UIFont systemFontOfSize:15];
     [self.backImage1 addSubview:_oneLabel1];
     
@@ -99,7 +98,6 @@
     
     self.oneLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.oneImageView2.frame), CGRectGetMaxY(self.oneImageView2.frame), CGRectGetWidth(self.oneImageView2.frame), CGRectGetHeight(self.oneImageView2.frame) / 5)];
 
-    //    self.oneLabel1.backgroundColor = [UIColor lightGrayColor];
     self.oneLabel2.font = [UIFont systemFontOfSize:15];
     [self.backImage2 addSubview:_oneLabel2];
     

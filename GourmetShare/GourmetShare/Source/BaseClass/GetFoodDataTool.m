@@ -30,40 +30,6 @@ static GetFoodDataTool *gf;
 -(void)getFoodDataWithPassValue:(PassValue)passValue
 {
     
-//        NSURL *url = [NSURL URLWithString:listURL];
-//    
-//        NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url];
-//    
-//        AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-//        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-//    
-//            NSString *html = operation.responseString;
-//            NSData* data=[html dataUsingEncoding:NSUTF8StringEncoding];
-//            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-//            for (NSDictionary *d in [dict objectForKey:@"result"]) {
-//                FoodCategoryModel *fc = [[FoodCategoryModel alloc]init];
-//                fc.name = [d objectForKey:@"name"];
-//                fc.parentId = [d objectForKey:@"parentId"];
-//                NSMutableArray *flArray = [NSMutableArray array];
-//                for (NSDictionary *dict in [d objectForKey:@"list"]) {
-//                    FoodListModle *fl = [[FoodListModle alloc]init];
-//                    [fl setValuesForKeysWithDictionary:dict];
-//                    [flArray addObject:fl];
-//                    [self getFoodListInfoWithId:fl.lid PassValue:^(NSArray *array) {
-//                        
-//                    }];
-//                }
-//                fc.list = flArray;
-//                [self.dataArr addObject:fc];
-//            }
-//
-//        }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//    
-//        }];
-//        NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-//        [queue addOperation:operation];
-//        passValue(self.dataArr);
-
     dispatch_queue_t globl_t = dispatch_get_global_queue(0, 0);
     
     dispatch_async(globl_t, ^{
@@ -178,12 +144,6 @@ static GetFoodDataTool *gf;
 }
 
 
-//根据index返回菜谱数据
-//-(StuffModle *)getFoodInfoWithIndex:(NSInteger)index
-//{
-//    return self.dataListArr[index];
-//}
-
 //根据菜谱ID返回菜谱数据
 -(StuffModle *)getFoodInfoWithSid:(NSString *)sid
 {
@@ -195,16 +155,6 @@ static GetFoodDataTool *gf;
     return 0;
 }
 
-////根据菜名返回菜谱数据
-//-(StuffModle *)getFoodInfoWithTitle:(NSString *)Title
-//{
-//    for (StuffModle *f in self.dataListArr) {
-//        if ([f.title isEqualToString:Title]) {
-//            return f;
-//        }
-//    }
-//    return 0;
-//}
 
 
 #pragma mark ========================leancloud
