@@ -31,12 +31,6 @@
 {
     self.rv = [[RegisterView alloc]initWithFrame:[UIScreen mainScreen].bounds];
     self.view = _rv;
-    [_rv.userNameText setTextFieldDelegate:self];
-    [_rv.passWordText setTextFieldDelegate:self];
-    [_rv.confirmText setTextFieldDelegate:self];
-    [_rv.emailText setTextFieldDelegate:self];
-    [_rv.phoneNumberText setTextFieldDelegate:self];
-    
 }
 
 - (void)viewDidLoad {
@@ -44,11 +38,18 @@
     // Do any additional setup after loading the view.
     
     self.backImage = [[UIImageView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
-//    self.backImage.image = [UIImage imageNamed:@"whiteback.jpg"];
-//    _rv.backgroundColor = [UIColor colorWithPatternImage:self.backImage.image];
+
     _rv.backgroundColor = [UIColor whiteColor];
     
     [_rv.registButton addTarget:self action:@selector(registButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    [_rv.userNameText setTextFieldDelegate:self];
+    [_rv.passWordText setTextFieldDelegate:self];
+    [_rv.confirmText setTextFieldDelegate:self];
+    [_rv.emailText setTextFieldDelegate:self];
+    
+    _rv.emailText.inputField .tag = 200;
 }
 
 -(void)registButtonAction:(UIButton *)sender
@@ -149,19 +150,27 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
-    
+    if (textField.tag == 200) {
+        //设置视图不能滚动
+        [_rv adjustSubviewsWithKeyboardHide];
+    }else{
+        [_rv changeWithKeyboardHide];
+    }
     return YES;
 }
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+    if (textField.tag == 200) {
+        //设置视图可以滚动
+        [_rv adjustSubviewsWithKeyboardShow];
+    }else
+    {
+        [_rv changeWithKeyboardHide];
+    }
+    return YES;
+}
+
 
 @end

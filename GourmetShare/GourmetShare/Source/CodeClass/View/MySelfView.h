@@ -29,4 +29,11 @@
 
 @property (nonatomic,strong)UILabel *skillLabel;
 @property (nonatomic,strong)LTView *skillFiled;
+
+//键盘显示
+- (void)adjustSubviewsWithKeyboardShow;
+//键盘消失
+- (void)adjustSubviewsWithKeyboardHide;
+
+- (void)changeWithKeyboardHide;
 @end

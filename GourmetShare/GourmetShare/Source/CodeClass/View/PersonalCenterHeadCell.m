@@ -20,7 +20,7 @@
 -(void)p_setup
 {
     self.backImageView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenWidth*0.6)];
-    self.backImageView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"greenback.jpg"]];
+    self.backImageView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"center.png"]];
     [self addSubview:_backImageView];
     
     self.headImageView = [UIButton buttonWithType:UIButtonTypeCustom];

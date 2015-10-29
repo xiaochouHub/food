@@ -59,6 +59,8 @@
     }
     
     [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
+    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
    
 }
 -(CGFloat)heightforlabel:(NSString *)str

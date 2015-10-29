@@ -47,6 +47,7 @@
     UITapGestureRecognizer *singleTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(choosepictureAction)];
     [_mv.headImage addGestureRecognizer:singleTap1];
     _isChangHead = NO;
+    
 }
 -(void)p_setupView
 {
@@ -56,6 +57,16 @@
     [_mv.hobbyFiled outputFileText:_userInfo.hobby];
     [_mv.likeFoodFiled outputFileText:_userInfo.likeFood];
     [_mv.skillFiled outputFileText:_userInfo.skill];
+    
+    [_mv.nicknameFiled setTextFieldDelegate:self];
+    [_mv.emailFiled setTextFieldDelegate:self];
+    [_mv.genderFiled setTextFieldDelegate:self];
+    [_mv.hobbyFiled setTextFieldDelegate:self];
+    [_mv.likeFoodFiled setTextFieldDelegate:self];
+    [_mv.skillFiled setTextFieldDelegate:self];
+    _mv.hobbyFiled.inputField.tag = 200;
+    _mv.likeFoodFiled.inputField.tag = 201;
+    _mv.skillFiled.inputField.tag = 202;
     
     //是否有本地头像
     NSString *uniquePath = [[RegisterDataTool shareRegisterData] imageFilePath:[RegisterDataTool shareRegisterData].LoginName];
@@ -316,6 +327,32 @@ NSData * UIImageJPEGRepresentation ( UIImage *image, CGFloat compressionQuality)
         
     }
     
+}
+
+//键盘回收
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    if (textField.tag == 200 ||textField.tag == 201 ||textField.tag == 202) {
+        //设置视图不能滚动
+        [_mv adjustSubviewsWithKeyboardHide];
+    }else{
+        [_mv changeWithKeyboardHide];
+    }
+    return YES;
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    
+    if (textField.tag == 200 ||textField.tag == 201 ||textField.tag == 202) {
+        //设置视图可以滚动
+        [_mv adjustSubviewsWithKeyboardShow];
+    }else
+    {
+        [_mv changeWithKeyboardHide];
+    }
+    return YES;
 }
 
 

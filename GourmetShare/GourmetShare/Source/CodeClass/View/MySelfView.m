@@ -21,7 +21,6 @@
 
 -(void)p_setView
 {
-    self.contentSize = CGSizeMake(kScreenWidth, kScreenHeight*1.1);
     
     self.headImage = [[UIImageView alloc]initWithFrame:CGRectMake(kScreenWidth/2-kScreenWidth/8, kScreenHeight/9, kScreenWidth/4, kScreenWidth/4)];
     self.headImage.layer.cornerRadius = kScreenWidth/8;
@@ -74,7 +73,39 @@
     self.skillFiled = [[LTView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.skillLabel.frame), CGRectGetMinY(self.skillLabel.frame)-5, CGRectGetWidth([[UIScreen mainScreen]bounds]) / 3 * 2 - 30, CGRectGetHeight(self.skillLabel.frame)+10) placeholder:@"---" imageName:nil];
     [self addSubview:_skillFiled];
     
+    self.scrollEnabled = NO;
+}
+
+//键盘显示
+- (void)adjustSubviewsWithKeyboardShow
+{
+    self.contentSize = CGSizeMake(self.bounds.size.width, self.bounds.size.height + kScreenHeight*0.3);
+    [UIView animateWithDuration:0.2 animations:^{
+        self.contentOffset = CGPointMake(0, kScreenHeight*0.23);
+        
+    }];
+    self.scrollEnabled = YES;
+}
+
+//键盘消失
+- (void)adjustSubviewsWithKeyboardHide
+{
+    [UIView animateWithDuration:0.2 animations:^{
+        self.contentOffset = CGPointMake(0, -kScreenHeight*0.09);
+        
+    }];
+    self.scrollEnabled = NO;
     
+}
+
+- (void)changeWithKeyboardHide
+{
+    self.contentSize = CGSizeMake(self.bounds.size.width, self.bounds.size.height + kScreenHeight*0.3);
+    [UIView animateWithDuration:0.2 animations:^{
+        self.contentOffset = CGPointMake(0, 0);
+        
+    }];
+    self.scrollEnabled = YES;
 }
 
 @end

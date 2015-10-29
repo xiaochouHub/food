@@ -23,7 +23,7 @@
 {
     
     self.backgroundColor = [UIColor whiteColor];
-    self.userNameText = [[LTView alloc]initWithFrame:CGRectMake(0, kScreenHeight/5, kScreenWidth, kScreenHeight/15) placeholder:@"用  户  名" imageName:@""];
+    self.userNameText = [[LTView alloc]initWithFrame:CGRectMake(0, kScreenHeight/5.3, kScreenWidth, kScreenHeight/15) placeholder:@"用  户  名" imageName:@""];
     [self addSubview:_userNameText];
     
     self.passWordText = [[LTView alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.userNameText.frame), CGRectGetMaxY(self.userNameText.frame)+30, CGRectGetWidth(self.userNameText.frame), CGRectGetHeight(self.userNameText.frame))  placeholder:@"密     码" imageName:@""];
@@ -52,5 +52,41 @@
     [_registButton.layer setBorderColor:[[UIColor blueColor] CGColor]];//边框颜色
     
     [self addSubview:_registButton];
+    
+    self.scrollEnabled = NO;
 }
+
+//键盘显示
+- (void)adjustSubviewsWithKeyboardShow
+{
+    
+    self.contentSize = CGSizeMake(self.bounds.size.width, kScreenHeight*1.3);
+    [UIView animateWithDuration:0.2 animations:^{
+        self.contentOffset = CGPointMake(0, kScreenHeight*0.1);
+        
+    }];
+    self.scrollEnabled = YES;
+}
+
+//键盘消失
+- (void)adjustSubviewsWithKeyboardHide
+{
+    [UIView animateWithDuration:0.2 animations:^{
+        self.contentOffset = CGPointMake(0, -kScreenHeight*0.07);
+        
+    }];
+    self.scrollEnabled = NO;
+    
+}
+
+- (void)changeWithKeyboardHide
+{
+    self.contentSize = CGSizeMake(self.bounds.size.width, kScreenHeight*1.3);
+    [UIView animateWithDuration:0.2 animations:^{
+        self.contentOffset = CGPointMake(0, -kScreenHeight*0.04);
+        
+    }];
+    self.scrollEnabled = YES;
+}
+
 @end

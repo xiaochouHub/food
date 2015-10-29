@@ -15,4 +15,11 @@
 @property (nonatomic,strong) LTView * emailText;
 @property (nonatomic,strong) LTView * phoneNumberText;
 @property (nonatomic,strong) UIButton *registButton;
+
+//键盘显示
+- (void)adjustSubviewsWithKeyboardShow;
+//键盘消失
+- (void)adjustSubviewsWithKeyboardHide;
+
+- (void)changeWithKeyboardHide;
 @end
