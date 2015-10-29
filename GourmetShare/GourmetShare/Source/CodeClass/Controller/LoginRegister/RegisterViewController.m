@@ -91,27 +91,6 @@
         self.hud.hidden = YES;
         return;
     }
-    /*
-    NSInteger isRegister = [[RegisterDataTool shareRegisterData]getRegisterWith:registUser];
-    if (isRegister == 2) {
-        if (![[RegisterDataTool shareRegisterData]podRegisterWithEmail:registUser]) {
-            [self p_showAlertView:@"提示" message:@"请输入正确邮箱，或者此邮箱已注册，找回密码"];
-            return;
-        }
-        
-        [[RegisterDataTool shareRegisterData]podRegisterWith:registUser];
-        if ([[RegisterDataTool shareRegisterData]getRegisterWith:registUser] == 0) {
-            [self p_showAlertView:@"提示" message:@"注册成功"];
-        }else{
-            [self p_showAlertView:@"提示" message:@"注册失败"];
-            return;
-        }
-    }
-    if (isRegister == 0) {
-        [self p_showAlertView:@"提示" message:@"用户名已存在"];
-        return;
-    }
-    */
     
     NSInteger isRegister = [[RegisterDataTool shareRegisterData]podRegisterWithEmail:registUser];
     if (isRegister == 0) {
@@ -132,7 +111,6 @@
     [self.navigationController popViewControllerAnimated:YES];
     
 }
-
 
 //显示提示框
 - (void)p_showAlertView:(NSString *)title message:(NSString *)message

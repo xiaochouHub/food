@@ -7,6 +7,7 @@
 //
 
 #import "GetShareDataTool.h"
+#import "UserInfoModle.h"
 static GetShareDataTool *gs;
 @implementation GetShareDataTool
 //单例初始化工具类
@@ -40,6 +41,7 @@ static GetShareDataTool *gs;
     [_postShareite setObject:stuff.imtro forKey:@"imtro"];
     [_postShareite setObject:stuff.ingredients forKey:@"ingredients"];
     [_postShareite setObject:stuff.title forKey:@"title"];
+    [_postShareite setObject:[RegisterDataTool shareRegisterData].userInfo.nickname forKey:@"nickname"];
     
     NSError *error = [[NSError alloc]init];
     if ([_postShareite save:&error]) {
@@ -70,6 +72,7 @@ static GetShareDataTool *gs;
                 s.imtro = [q valueForKey:@"imtro"];
                 s.ingredients = [q valueForKey:@"ingredients"];
                 s.title = [q valueForKey:@"title"];
+                s.nickname = [q valueForKey:@"nickname"];
                 [tempArr addObject:s];
             }
             passVallue(tempArr);
@@ -99,6 +102,7 @@ static GetShareDataTool *gs;
                 s.imtro = [q valueForKey:@"imtro"];
                 s.ingredients = [q valueForKey:@"ingredients"];
                 s.title = [q valueForKey:@"title"];
+                s.nickname = [q valueForKey:@"nickname"];
                 [tempArr addObject:s];
             }
             passVallue(tempArr);

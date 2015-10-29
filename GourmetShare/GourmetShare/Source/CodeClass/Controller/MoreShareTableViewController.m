@@ -73,7 +73,7 @@
     StuffModle *stuf = self.dataArr[indexPath.row];
     
     cell.nameLabel.text = stuf.title;
-    cell.userLabel.text = stuf.shareName;
+    cell.userLabel.text = stuf.nickname;
     dispatch_queue_t globl_t = dispatch_get_global_queue(0, 0);
     
     dispatch_async(globl_t, ^{
