@@ -60,9 +60,9 @@
 - (void)adjustSubviewsWithKeyboardShow
 {
     
-    self.contentSize = CGSizeMake(self.bounds.size.width, kScreenHeight*1.3);
+    self.contentSize = CGSizeMake(self.bounds.size.width, kScreenHeight*1.4);
     [UIView animateWithDuration:0.2 animations:^{
-        self.contentOffset = CGPointMake(0, kScreenHeight*0.1);
+        self.contentOffset = CGPointMake(0, kScreenHeight*0.3);
         
     }];
     self.scrollEnabled = YES;
@@ -80,7 +80,7 @@
 }
 - (void)changeWithKeyboardHide
 {
-    self.contentSize = CGSizeMake(self.bounds.size.width, kScreenHeight*1.3);
+    self.contentSize = CGSizeMake(self.bounds.size.width, kScreenHeight*1.4);
     [UIView animateWithDuration:0.2 animations:^{
         self.contentOffset = CGPointMake(0, -kScreenHeight*0.04);
         

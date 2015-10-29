@@ -28,7 +28,7 @@
     self.headImage.image = [UIImage imageNamed:@"3.jpg"];
     [self addSubview:_headImage];
     
-    self.nicknameLabel = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/10, CGRectGetMaxY(self.headImage.frame)+kScreenHeight/20, kScreenWidth/5, kScreenHeight/19)];
+    self.nicknameLabel = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth/15, CGRectGetMaxY(self.headImage.frame)+kScreenHeight/20, kScreenWidth/4, kScreenHeight/19)];
     self.nicknameLabel.text = @"昵       称:";
     [self addSubview:_nicknameLabel];
     
@@ -72,19 +72,18 @@
     
     self.skillFiled = [[LTView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.skillLabel.frame), CGRectGetMinY(self.skillLabel.frame)-5, CGRectGetWidth([[UIScreen mainScreen]bounds]) / 3 * 2 - 30, CGRectGetHeight(self.skillLabel.frame)+10) placeholder:@"---" imageName:nil];
     [self addSubview:_skillFiled];
+    self.contentSize = CGSizeMake(kScreenWidth, kScreenHeight*1.4);
     
-    self.scrollEnabled = NO;
 }
 
 //键盘显示
 - (void)adjustSubviewsWithKeyboardShow
 {
-    self.contentSize = CGSizeMake(self.bounds.size.width, self.bounds.size.height + kScreenHeight*0.3);
+    self.contentSize = CGSizeMake(self.bounds.size.width, self.bounds.size.height + kScreenHeight*0.4);
     [UIView animateWithDuration:0.2 animations:^{
-        self.contentOffset = CGPointMake(0, kScreenHeight*0.23);
+        self.contentOffset = CGPointMake(0, kScreenHeight*0.4);
         
     }];
-    self.scrollEnabled = YES;
 }
 
 //键盘消失
@@ -94,7 +93,6 @@
         self.contentOffset = CGPointMake(0, -kScreenHeight*0.09);
         
     }];
-    self.scrollEnabled = NO;
     
 }
 
@@ -105,7 +103,6 @@
         self.contentOffset = CGPointMake(0, 0);
         
     }];
-    self.scrollEnabled = YES;
 }
 
 @end
