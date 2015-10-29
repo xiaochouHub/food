@@ -78,7 +78,6 @@
     self.scrollEnabled = NO;
     
 }
-
 - (void)changeWithKeyboardHide
 {
     self.contentSize = CGSizeMake(self.bounds.size.width, kScreenHeight*1.3);
