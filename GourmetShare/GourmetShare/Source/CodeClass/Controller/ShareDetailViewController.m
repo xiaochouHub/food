@@ -43,7 +43,7 @@
     UIBarButtonItem * btnSpace = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(2, 5, CGRectGetWidth([[UIScreen mainScreen]bounds]), 25);
+    btn.frame = CGRectMake(2, 5, CGRectGetWidth([[UIScreen mainScreen]bounds]), kScreenHeight*0.03);
     [btn addTarget:self action:@selector(dismissKeyBoard) forControlEvents:UIControlEventTouchUpInside];
     [btn setTitle:@"   ↓收起↓" forState:UIControlStateNormal];
     UIBarButtonItem *doneBtn = [[UIBarButtonItem alloc]initWithCustomView:btn];
@@ -252,7 +252,7 @@ NSData * UIImageJPEGRepresentation ( UIImage *image, CGFloat compressionQuality)
 // 防止键盘遮挡
 -(BOOL)textViewShouldBeginEditing:(UITextView *)textView
 {
-    CGFloat offset = self.view.frame.size.height - (textView.frame.origin.y + textView.frame.size.height + 210);
+    CGFloat offset = self.view.frame.size.height - (textView.frame.origin.y + textView.frame.size.height + kScreenHeight*0.13);
     if (offset <= 0) {
         [UIView animateWithDuration:0.3 animations:^{
             CGRect frame = self.view.frame;
@@ -272,6 +272,7 @@ NSData * UIImageJPEGRepresentation ( UIImage *image, CGFloat compressionQuality)
     }];
     return YES;
 }
+
 
 -(void)ba
 {

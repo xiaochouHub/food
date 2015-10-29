@@ -125,7 +125,7 @@
     } else if (indexPath.row == 2) {
         cell.textLabel.text = @"我的收藏";
     } else if (indexPath.row == 3) {
-        cell.textLabel.text = @"我的分享";
+        cell.textLabel.text = @"我的菜谱";
     } else if (indexPath.row == 4) {
         cell.textLabel.text = @"本地下载";
     } else if (indexPath.row == 5) {
