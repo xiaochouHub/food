@@ -168,7 +168,7 @@
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
 //    tableView.backgroundColor = [UIColor colorWithRed:200 / 255.0 green:200 / 255.0 blue:200 / 255.0 alpha:1];
-    tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"mosha.jpg"]];
+    tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"detailback.png"]];
     if (section == 0) {
         return @"菜名";
     }

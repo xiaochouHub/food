@@ -46,10 +46,10 @@
         else if ([[str substringToIndex:1] isEqualToString:@"p"])
         {
             [tempArray addObject:[str substringFromIndex:2]];
-        }else if ([[str substringToIndex:1] isEqualToString:@"s"])
+        }else if (str.length > 5  && [[str substringToIndex:1] isEqualToString:@"s"])
         {
             [tempArray addObject:[str substringFromIndex:6]];
-        }else if ([[str substringToIndex:1] isEqualToString:@"/"])
+        }else if (str.length > 8  && [[str substringToIndex:1] isEqualToString:@"/"])
         {
             [tempArray addObject:[str substringFromIndex:9]];
         }
