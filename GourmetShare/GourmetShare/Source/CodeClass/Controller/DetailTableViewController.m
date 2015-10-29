@@ -17,7 +17,7 @@
 #import "CollectTableViewController.h"
 #import "GetFavouriteDataTool.h"
 
-@interface DetailTableViewController ()
+@interface DetailTableViewController ()<UMSocialUIDelegate>
 @property(nonatomic,strong)NSMutableArray *groupArr;
 @property(nonatomic,strong)NSMutableDictionary *dataDic;
 @property(nonatomic,strong)NSMutableArray *stepArr;// 步骤数组
@@ -381,15 +381,29 @@
     
     // 分享到新浪微博
     [UMSocialSnsService presentSnsIconSheetView:self
-                                         appKey:@"562f339d67e58eba010037e1"
+                                         appKey:@"507fcab25270157b37000010"
                                       shareText:@"从美食分享街APP分享"
                                      shareImage:image
                                 shareToSnsNames:@[UMShareToSina]
-                                       delegate:nil];
+                                       delegate:self];
+    
 
     
     
     
+}
+-(void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response
+{
+    if(response.responseCode == UMSResponseCodeSuccess)
+    {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"分享成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"分享失败,请重新分享" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+    }
 }
 // 收藏
 -(void)collectAction:(UIBarButtonItem *)sender
