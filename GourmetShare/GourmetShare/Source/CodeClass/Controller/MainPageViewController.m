@@ -46,9 +46,9 @@
     
     UINavigationController *gouNC = [[UINavigationController alloc]initWithRootViewController:gouVC];
     
-    gouNC.tabBarItem = [[UITabBarItem alloc]initWithTabBarSystemItem:UITabBarSystemItemFeatured tag:102];
+    gouNC.tabBarItem = [[UITabBarItem alloc]initWithTabBarSystemItem:UITabBarSystemItemFeatured tag:500];
     
-    gouNC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"美食广场" image:[UIImage imageNamed:@"homehome.png"] tag:102];
+    gouNC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"美食广场" image:[UIImage imageNamed:@"home.tiff"] tag:500];
     
     PersonalCenterTbaleViewController *priVC = [[PersonalCenterTbaleViewController alloc]init];
     
