@@ -170,7 +170,7 @@
     self.fdataArr = [NSMutableArray array];
     self.dataArr = [NSMutableArray array];
     self.number = [self randomnum];
-    [[GetFoodDataTool shareGetFoodData]getListWithParentId:[NSMutableString stringWithFormat:@"%ld",self.number] PassValue:^(NSArray *array) {
+    [[GetFoodDataTool shareGetFoodData]getListWithParentId:[NSMutableString stringWithFormat:@"%ld",(long)self.number] PassValue:^(NSArray *array) {
         self.fdataArr = (NSMutableArray *)array;
         FoodListModle *model = self.fdataArr[0];
         [[GetFoodDataTool shareGetFoodData]getFoodListInfoWithId:model.lid PassValue:^(NSArray *array) {
